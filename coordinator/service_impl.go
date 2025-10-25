@@ -40,7 +40,7 @@ type serviceImpl struct {
 	ctxCancel context.CancelFunc
 }
 
-// NewService returns a new coordinator service with the specified core coordinator service.
+// NewServiceWith returns a new coordinator service with the specified core coordinator service.
 func NewServiceWith(service core.CoordinatorService) Service {
 	ctx, cancel := context.WithCancel(context.Background())
 	return &serviceImpl{
@@ -83,7 +83,7 @@ func (coord *serviceImpl) SetStateObject(t coordinator.StateType, obj coordinato
 	return txn.Commit()
 }
 
-// GetObject gets the object for the specified key and state type.
+// GetStateObject gets the state object for the specified key and state type.
 func (coord *serviceImpl) GetStateObject(t coordinator.StateType, key coordinator.Key) (coordinator.Object, error) {
 	txn, err := coord.Transact()
 	if err != nil {
@@ -98,7 +98,7 @@ func (coord *serviceImpl) GetStateObject(t coordinator.StateType, key coordinato
 	return obj, err
 }
 
-// GetRangeObjects gets the result set for the specified key and state type.
+// GetStateObjects gets the result set for the specified key and state type.
 func (coord *serviceImpl) GetStateObjects(t coordinator.StateType) (coordinator.ResultSet, error) {
 	txn, err := coord.Transact()
 	if err != nil {

@@ -25,7 +25,7 @@ type OffsetOption struct {
 // NoOffset represents a no offset option.
 var NoOffset = uint(0)
 
-// NewLimitOption returns a new offset option.
+// NewOffsetOption returns a new offset option.
 func NewOffsetOption(offset uint) *OffsetOption {
 	return &OffsetOption{
 		Offset: offset,

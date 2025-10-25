@@ -21,7 +21,7 @@ import (
 func TestKeyHeader(t *testing.T) {
 	type expected struct {
 		tp  HeaderType
-		ver Version
+		ver KeyVersion
 		doc DocumentType
 		idx IndexType
 	}

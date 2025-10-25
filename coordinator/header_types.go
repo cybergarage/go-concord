@@ -15,7 +15,7 @@
 package coordinator
 
 const (
-	V1 = Version(1)
+	V1 = KeyVersion(1)
 )
 
 const (
@@ -39,12 +39,12 @@ var (
 	JobObjectKeyHeader     = [2]byte{byte(JobHeaderObject), byte(byte(CBOR) | HeaderByteFromVersion(V1))}
 )
 
-func HeaderByteFromVersion(v Version) byte {
+func HeaderByteFromVersion(v KeyVersion) byte {
 	return (byte(v<<4) & 0x70)
 }
 
-func VertionFromHeaderByte(b byte) Version {
-	return Version((b >> 4) & 0x07)
+func VertionFromHeaderByte(b byte) KeyVersion {
+	return KeyVersion((b >> 4) & 0x07)
 }
 
 func TypeFromHeaderByte(b byte) byte {

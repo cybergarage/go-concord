@@ -24,13 +24,13 @@ type DocumentType byte
 // KeyHeader represents a header for all keys.
 type KeyHeader [2]byte
 
-// Version represents a version.
-type Version byte
+// KeyVersion represents a version.
+type KeyVersion byte
 
 // IndexType represents an index type.
 type IndexType byte
 
-// NewKeyHeader creates a new key header from the specified bytes.
+// NewKeyHeaderFrom creates a new key header from the specified bytes.
 func NewKeyHeaderFrom(b []byte) KeyHeader {
 	var header KeyHeader
 	copy(header[:], b)
@@ -43,7 +43,7 @@ func (header KeyHeader) Type() HeaderType {
 }
 
 // Version returns a version.
-func (header KeyHeader) Version() Version {
+func (header KeyHeader) Version() KeyVersion {
 	return VertionFromHeaderByte(header[1])
 }
 
