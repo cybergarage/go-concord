@@ -12,36 +12,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package coordinator
 
 import (
-	"time"
-
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins"
+	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
 )
 
-type BaseCoordinator struct {
-	plugins.Config
-	coordinator.KeyCoder
-	*time.Ticker
+// Store represents a coordination store inteface.
+type Store interface {
+	// SetKeyCoder sets the key coder.
+	SetKeyCoder(coder KeyCoder)
+	// DecodeKey returns the decoded key from the specified bytes if available, otherwise returns an error.
+	DecodeKey([]byte) (Key, error)
+	// EncodeKey returns the encoded bytes from the specified key if available, otherwise returns an error.
+	EncodeKey(Key) ([]byte, error)
+	// Transact begin a new transaction.
+	Transact() (Transaction, error)
 }
 
-// NewBaseCoordinator returns a new base coordinator instance.
-func NewBaseCoordinator() *BaseCoordinator {
-	return &BaseCoordinator{
-		KeyCoder: nil,
-		Config:   plugins.NewConfig(),
-		Ticker:   time.NewTicker(time.Second),
-	}
-}
-
-// ServiceType returns the plug-in service type.
-func (coord *BaseCoordinator) ServiceType() plugins.ServiceType {
-	return plugins.CoordinatorService
-}
-
-// SetKeyCoder sets the key coder.
-func (coord *BaseCoordinator) SetKeyCoder(coder coordinator.KeyCoder) {
-	coord.KeyCoder = coder
+// Coordinator represents a coordination service.
+type Coordinator interface {
+	Store
+	cluster.Node
+	// SetNode sets the coordinator node.
+	SetNode(node cluster.Node)
+	// SetStateObject sets the state object for the specified key.
+	SetStateObject(t StateType, obj Object) error
+	// GetObject gets the object for the specified key and state type.
+	GetStateObject(t StateType, key Key) (Object, error)
+	// GetRangeObjects gets the result set for the specified key and state type.
+	GetStateObjects(t StateType) (ResultSet, error)
+	// PostMessage posts the specified message to the coordinator.
+	PostMessage(msg Message) error
+	// AddObserver adds the specified observer to the coordinator.
+	AddObserver(observer Observer) error
 }

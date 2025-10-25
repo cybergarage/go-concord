@@ -12,21 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package core
 
 import (
-	"github.com/cybergarage/puzzledb-go/puzzledb/document"
+	"github.com/cybergarage/puzzledb-go/puzzledb/store/kv"
 )
 
-// Key represents an unique key for a key-value object.
-type Key = document.Key
-
-// NewKey returns a new blank key.
-func NewKey() Key {
-	return document.NewKey()
-}
-
-// NewKeyWith returns a new key from the specified key elements.
-func NewKeyWith(elems ...any) Key {
-	return document.NewKeyWith(elems...)
-}
+const (
+	CoordinatorObject  = kv.HeaderType('C')
+	NotificationObject = kv.HeaderType('N')
+)

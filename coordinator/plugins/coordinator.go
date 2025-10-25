@@ -12,20 +12,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package core
 
 import (
-	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
+	"time"
+
 	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
 	"github.com/cybergarage/puzzledb-go/puzzledb/plugins"
 )
 
-// Service is an interface for the coordinator service.
-type Service interface {
-	coordinator.Coordinator
-	plugins.Service
-	// SetNodeState posts the specified node status to the coordinator.
-	SetNodeState(node cluster.Node) error
-	// GetClusterState gets the current cluster state.
-	GetClusterState(cluster string) (cluster.Cluster, error)
+type BaseCoordinator struct {
+	plugins.Config
+	coordinator.KeyCoder
+	*time.Ticker
+}
+
+// NewBaseCoordinator returns a new base coordinator instance.
+func NewBaseCoordinator() *BaseCoordinator {
+	return &BaseCoordinator{
+		KeyCoder: nil,
+		Config:   plugins.NewConfig(),
+		Ticker:   time.NewTicker(time.Second),
+	}
+}
+
+// ServiceType returns the plug-in service type.
+func (coord *BaseCoordinator) ServiceType() plugins.ServiceType {
+	return plugins.CoordinatorService
+}
+
+// SetKeyCoder sets the key coder.
+func (coord *BaseCoordinator) SetKeyCoder(coder coordinator.KeyCoder) {
+	coord.KeyCoder = coder
 }
