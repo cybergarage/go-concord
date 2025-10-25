@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package core
 
 // ResultSet represents a result set which includes range operation results.
 type ResultSet interface {

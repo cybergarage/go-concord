@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package core
 
 // Observer is an interface to receive a message.
 type Observer interface {
