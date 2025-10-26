@@ -15,7 +15,7 @@
 package core
 
 import (
-	"github.com/cybergarage/puzzledb-go/puzzledb/document"
+	"github.com/cybergarage/go-coordinator/coordinator/document"
 )
 
 // Key represents an unique key for a key-value object.

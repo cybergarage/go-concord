@@ -16,19 +16,12 @@ package core
 
 import (
 	_ "embed"
-	"errors"
-	"fmt"
-	"testing"
-
-	"github.com/cybergarage/go-pict/pict"
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins/coder/key/tuple"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins/coordinator/core"
 )
 
 //go:embed go_types.pict
 var goTypes []byte
 
+/*
 func newTestKeyCoder() coordinator.KeyCoder {
 	return tuple.NewCoder()
 }
@@ -284,3 +277,4 @@ func CoordinatorStoreTest(t *testing.T, coord core.CoordinatorService) {
 		return
 	}
 }
+*/

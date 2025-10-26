@@ -15,7 +15,7 @@
 package core
 
 import (
-	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
+	"github.com/cybergarage/go-coordinator/coordinator/cluster"
 )
 
 // NewMessageScanKey returns a new scan message key to get the latest message clock.

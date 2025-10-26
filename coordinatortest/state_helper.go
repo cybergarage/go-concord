@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
+	"github.com/cybergarage/go-coordinator/coordinator/cluster"
 	"github.com/cybergarage/puzzledb-go/puzzledb/plugins/coordinator"
 )
 

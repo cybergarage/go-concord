@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package plugins
 
 import (
 	"context"
@@ -21,10 +21,9 @@ import (
 	"time"
 
 	"github.com/cybergarage/go-cbor/cbor"
+	"github.com/cybergarage/go-coordinator/coordinator/cluster"
+	"github.com/cybergarage/go-coordinator/coordinator/core"
 	"github.com/cybergarage/go-logger/log"
-	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins/coordinator/core"
 )
 
 const (
@@ -32,34 +31,27 @@ const (
 )
 
 type serviceImpl struct {
-	core.CoordinatorService
-	observers []coordinator.Observer
-	cluster.Node
-	*MessageQueue
+	Coordinator
+	observers []Observer
+	*core.MessageQueue
 	ctx       context.Context
 	ctxCancel context.CancelFunc
 }
 
 // NewServiceWith returns a new coordinator service with the specified core coordinator service.
-func NewServiceWith(service core.CoordinatorService) Service {
+func NewServiceWith(coord Coordinator) Service {
 	ctx, cancel := context.WithCancel(context.Background())
 	return &serviceImpl{
-		CoordinatorService: service,
-		Node:               cluster.NewNode(),
-		observers:          make([]coordinator.Observer, 0),
-		MessageQueue:       NewMessageQueue(),
-		ctx:                ctx,
-		ctxCancel:          cancel,
+		Coordinator:  coord,
+		observers:    make([]Observer, 0),
+		MessageQueue: core.NewMessageQueue(),
+		ctx:          ctx,
+		ctxCancel:    cancel,
 	}
 }
 
-// SetNode sets the coordinator node.
-func (coord *serviceImpl) SetNode(node cluster.Node) {
-	coord.Node = node
-}
-
 // AddObserver adds the specified observer.
-func (coord *serviceImpl) AddObserver(newObserver coordinator.Observer) error {
+func (coord *serviceImpl) AddObserver(newObserver Observer) error {
 	for _, observer := range coord.observers {
 		if observer == newObserver {
 			return nil
@@ -70,13 +62,13 @@ func (coord *serviceImpl) AddObserver(newObserver coordinator.Observer) error {
 }
 
 // SetStateObject sets the state object for the specified key.
-func (coord *serviceImpl) SetStateObject(t coordinator.StateType, obj coordinator.Object) error {
+func (coord *serviceImpl) SetStateObject(t StateType, obj Object) error {
 	txn, err := coord.Transact()
 	if err != nil {
 		return err
 	}
-	steteKey := coordinator.NewStateKeyWith(t, obj.Key()...)
-	err = txn.Set(coordinator.NewObjectWith(steteKey, obj.Bytes()))
+	stateKey := core.NewStateKeyWith(t, obj.Key()...)
+	err = txn.Set(core.NewObjectWith(stateKey, obj.Bytes()))
 	if err != nil {
 		return errors.Join(err, txn.Cancel())
 	}
@@ -84,13 +76,13 @@ func (coord *serviceImpl) SetStateObject(t coordinator.StateType, obj coordinato
 }
 
 // GetStateObject gets the state object for the specified key and state type.
-func (coord *serviceImpl) GetStateObject(t coordinator.StateType, key coordinator.Key) (coordinator.Object, error) {
+func (coord *serviceImpl) GetStateObject(t StateType, key Key) (Object, error) {
 	txn, err := coord.Transact()
 	if err != nil {
 		return nil, err
 	}
-	steteKey := coordinator.NewStateKeyWith(t, key...)
-	obj, err := txn.Get(steteKey)
+	stateKey := core.NewStateKeyWith(t, key...)
+	obj, err := txn.Get(stateKey)
 	if err != nil {
 		return nil, errors.Join(err, txn.Cancel())
 	}
@@ -99,12 +91,12 @@ func (coord *serviceImpl) GetStateObject(t coordinator.StateType, key coordinato
 }
 
 // GetStateObjects gets the result set for the specified key and state type.
-func (coord *serviceImpl) GetStateObjects(t coordinator.StateType) (coordinator.ResultSet, error) {
+func (coord *serviceImpl) GetStateObjects(t StateType) (ResultSet, error) {
 	txn, err := coord.Transact()
 	if err != nil {
 		return nil, err
 	}
-	rs, err := txn.GetRange(coordinator.NewScanStateKeyWith(t))
+	rs, err := txn.GetRange(core.NewScanStateKeyWith(t))
 	if err != nil {
 		return nil, errors.Join(err, txn.Cancel())
 	}
@@ -113,21 +105,21 @@ func (coord *serviceImpl) GetStateObjects(t coordinator.StateType) (coordinator.
 }
 
 // nofityMessage posts the specified message to the observers.
-func (coord *serviceImpl) nofityMessage(msg coordinator.Message) {
+func (coord *serviceImpl) nofityMessage(msg Message) {
 	for _, observer := range coord.observers {
 		observer.OnMessageReceived(msg)
 	}
 }
 
-func (coord *serviceImpl) getLatestMessages(txn coordinator.Transaction) (coordinator.ResultSet, error) {
-	key := coordinator.NewMessageScanKey()
+func (coord *serviceImpl) getLatestMessages(txn Transaction) (ResultSet, error) {
+	key := core.NewMessageScanKey()
 	rs, err := txn.GetRange(
 		key,
-		coordinator.NewOrderOptionWith(coordinator.OrderDesc))
+		core.NewOrderOptionWith(core.OrderDesc))
 	return rs, err
 }
 
-func (coord *serviceImpl) notifyUpdateMessages(txn coordinator.Transaction) error {
+func (coord *serviceImpl) notifyUpdateMessages(txn Transaction) error {
 	rs, err := coord.getLatestMessages(txn)
 	if err != nil {
 		return err
@@ -135,9 +127,9 @@ func (coord *serviceImpl) notifyUpdateMessages(txn coordinator.Transaction) erro
 
 	localClock := coord.Clock()
 
-	msgs := []coordinator.Message{}
+	msgs := []Message{}
 	for rs.Next() {
-		msgObj := coordinator.NewMessageObject()
+		msgObj := core.NewMessageObject()
 		obj := rs.Object()
 		err = obj.Unmarshal(msgObj)
 		if err != nil {
@@ -154,8 +146,8 @@ func (coord *serviceImpl) notifyUpdateMessages(txn coordinator.Transaction) erro
 			continue
 		}
 
-		msg := coordinator.NewMessageFrom(msgObj)
-		msgs = append([]coordinator.Message{msg}, msgs...)
+		msg := core.NewMessageFrom(msgObj)
+		msgs = append([]Message{msg}, msgs...)
 
 		coord.SetReceivedClock(msgObj.MsgClock)
 	}
@@ -168,7 +160,7 @@ func (coord *serviceImpl) notifyUpdateMessages(txn coordinator.Transaction) erro
 	return nil
 }
 
-func (coord *serviceImpl) getLatestMessageClock(txn coordinator.Transaction) (cluster.Clock, error) {
+func (coord *serviceImpl) getLatestMessageClock(txn Transaction) (cluster.Clock, error) {
 	rs, err := coord.getLatestMessages(txn)
 	if err != nil {
 		return 0, err
@@ -178,7 +170,7 @@ func (coord *serviceImpl) getLatestMessageClock(txn coordinator.Transaction) (cl
 		return 0, nil
 	}
 
-	msgObj := coordinator.NewMessageObject()
+	msgObj := core.NewMessageObject()
 	obj := rs.Object()
 	err = obj.Unmarshal(msgObj)
 	if err != nil {
@@ -188,8 +180,8 @@ func (coord *serviceImpl) getLatestMessageClock(txn coordinator.Transaction) (cl
 	return msgObj.MsgClock, nil
 }
 
-// PostMessage posts the specified message to the coordinator.
-func (coord *serviceImpl) PostMessage(msg coordinator.Message) error {
+// PostMessage posts the specified message to the
+func (coord *serviceImpl) PostMessage(msg Message) error {
 	coord.Lock()
 	defer coord.Unlock()
 
@@ -198,11 +190,11 @@ func (coord *serviceImpl) PostMessage(msg coordinator.Message) error {
 	return nil
 }
 
-// postMessage posts the specified message to the coordinator.
-func (coord *serviceImpl) postMessage(txn coordinator.Transaction, msg coordinator.Message) error {
+// postMessage posts the specified message to the
+func (coord *serviceImpl) postMessage(txn Transaction, msg Message) error {
 	localClock := coord.IncrementClock()
 
-	obj, err := coordinator.NewMessageObjectWith(msg, coord, localClock)
+	obj, err := core.NewMessageObjectWith(msg, coord, localClock)
 	if err != nil {
 		return errors.Join(err, txn.Cancel())
 	}
@@ -214,8 +206,8 @@ func (coord *serviceImpl) postMessage(txn coordinator.Transaction, msg coordinat
 
 	log.Infof("SEND message: %s %s (%d)", obj.FromHost, msg.Event().String(), obj.MsgClock)
 
-	key := coordinator.NewMessageKeyWith(msg, localClock)
-	err = txn.Set(coordinator.NewObjectWith(key, objBytes))
+	key := core.NewMessageKeyWith(msg, localClock)
+	err = txn.Set(core.NewObjectWith(key, objBytes))
 	if err != nil {
 		return err
 	}
@@ -223,15 +215,15 @@ func (coord *serviceImpl) postMessage(txn coordinator.Transaction, msg coordinat
 	return nil
 }
 
-func (coord *serviceImpl) postNodeState(txn coordinator.Transaction, node cluster.Node) error {
-	key := NewNodeKeyWith(node)
-	obj := NewNodeObjectWith(node)
+func (coord *serviceImpl) postNodeState(txn Transaction, node cluster.Node) error {
+	key := core.NewNodeKeyWith(node)
+	obj := core.NewNodeObjectWith(node)
 	objBytes, err := cbor.Marshal(obj)
 	if err != nil {
 		return err
 	}
 
-	err = txn.Set(coordinator.NewObjectWith(key, objBytes))
+	err = txn.Set(core.NewObjectWith(key, objBytes))
 	if err != nil {
 		return err
 	}
@@ -239,7 +231,7 @@ func (coord *serviceImpl) postNodeState(txn coordinator.Transaction, node cluste
 	return nil
 }
 
-// SetNodeState posts the specified node state to the coordinator.
+// SetNodeState posts the specified node state to the
 func (coord *serviceImpl) SetNodeState(node cluster.Node) error {
 	coord.Lock()
 	defer coord.Unlock()
@@ -272,21 +264,21 @@ func (coord *serviceImpl) GetClusterState(name string) (cluster.Cluster, error) 
 		return nil, err
 	}
 
-	rs, err := txn.GetRange(NewClusterScanKeyWith(name))
+	rs, err := txn.GetRange(core.NewClusterScanKeyWith(name))
 	if err != nil {
 		return nil, errors.Join(err, txn.Cancel())
 	}
 
 	nodes := []cluster.Node{}
 	for rs.Next() {
-		nodeObj := NewNodeObject()
+		nodeObj := core.NewNodeObject()
 		obj := rs.Object()
 		err = obj.Unmarshal(nodeObj)
 		if err != nil {
 			return nil, errors.Join(err, txn.Cancel())
 		}
 
-		node, err := NewNodeWith(nodeObj)
+		node, err := core.NewNodeWith(nodeObj)
 		if err != nil {
 			return nil, errors.Join(err, txn.Cancel())
 		}
@@ -301,12 +293,8 @@ func (coord *serviceImpl) GetClusterState(name string) (cluster.Cluster, error) 
 	return cluster.NewClusterWith(name, nodes), nil
 }
 
-// Start starts this etcd coordinator.
+// Start starts this etcd
 func (coord *serviceImpl) Start() error { // nolint:gocognit
-	if err := coord.CoordinatorService.Start(); err != nil {
-		return err
-	}
-
 	txn, err := coord.Transact()
 	if err != nil {
 		return err
@@ -334,7 +322,7 @@ func (coord *serviceImpl) Start() error { // nolint:gocognit
 			log.Warnf("coordinator worker: %s", err)
 		}
 
-		pushPostedMessages := func(postedMsgs []coordinator.Message) {
+		pushPostedMessages := func(postedMsgs []Message) {
 			for n := len(postedMsgs) - 1; 0 <= n; n-- {
 				coord.PushMessage(postedMsgs[n])
 			}
@@ -369,7 +357,7 @@ func (coord *serviceImpl) Start() error { // nolint:gocognit
 
 				// Post message if there is no message in the queue
 
-				postedMsgs := []coordinator.Message{}
+				postedMsgs := []Message{}
 				msg, err := coord.PopMessage()
 				for msg != nil && err == nil {
 					err = coord.postMessage(txn, msg)
@@ -382,7 +370,7 @@ func (coord *serviceImpl) Start() error { // nolint:gocognit
 					msg, err = coord.PopMessage()
 				}
 
-				if err != nil && !errors.Is(err, coordinator.ErrNoMessage) {
+				if err != nil && !errors.Is(err, core.ErrNoMessage) {
 					logError(errors.Join(err, txn.Cancel()))
 					coord.Unlock()
 					continue
@@ -415,14 +403,9 @@ func (coord *serviceImpl) Start() error { // nolint:gocognit
 	return nil
 }
 
-// Stop stops this etcd coordinator.
+// Stop stops this etcd
 func (coord *serviceImpl) Stop() error {
 	coord.ctxCancel()
 	<-coord.ctx.Done()
-
-	if err := coord.CoordinatorService.Stop(); err != nil {
-		return err
-	}
-
 	return nil
 }

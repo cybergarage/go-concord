@@ -15,11 +15,42 @@
 package plugins
 
 import (
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins"
+	"github.com/cybergarage/go-coordinator/coordinator/cluster"
+	"github.com/cybergarage/go-coordinator/coordinator/core"
 )
 
-type CoordinatorService interface {
-	coordinator.Store
-	plugins.Service
+// Coordinator is an interface for the coordinator.
+type Coordinator = core.Coordinator
+
+// Observer is an interface for the coordinator observer.
+type Observer = core.Observer
+
+// MessageQueue is an interface for the coordinator message queue.
+type MessageQueue = core.MessageQueue
+
+// StateType represents the coordinator state type.
+type StateType = core.StateType
+
+// Message represents a coordinator message.
+type Message = core.Message
+
+// ResultSet represents a coordinator result set.
+type ResultSet = core.ResultSet
+
+// Key represents a coordinator key.
+type Key = core.Key
+
+// Transaction represents a coordinator transaction.
+type Transaction = core.Transaction
+
+// Object represents a coordinator object.
+type Object = core.Object
+
+// Service is an interface for the coordinator service.
+type Service interface {
+	Coordinator
+	// SetNodeState posts the specified node status to the
+	SetNodeState(node cluster.Node) error
+	// GetClusterState gets the current cluster state.
+	GetClusterState(cluster string) (cluster.Cluster, error)
 }

@@ -17,7 +17,7 @@ package core
 import (
 	"testing"
 
-	plugin "github.com/cybergarage/puzzledb-go/puzzledb/plugins/coordinator"
+	plugin "github.com/cybergarage/go-coordinator/coordinator/plugins"
 )
 
 func CoordinatorsTest(t *testing.T, coord []plugin.Service) {

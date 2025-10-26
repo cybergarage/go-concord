@@ -18,8 +18,8 @@ import (
 	"errors"
 
 	"github.com/apple/foundationdb/bindings/go/src/fdb"
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins/coordinator/core"
+	coordinator "github.com/cybergarage/go-coordinator/coordinator/core"
+	"github.com/cybergarage/go-coordinator/coordinator/plugins"
 )
 
 const (
@@ -28,14 +28,14 @@ const (
 )
 
 type Coordinator struct {
-	*core.BaseCoordinator
+	*plugins.BaseCoordinator
 	fdb.Database
 }
 
 // NewCoordinator returns a new etcd coordinator instance.
-func NewCoordinator() core.CoordinatorService {
+func NewCoordinator() plugins.Service {
 	return &Coordinator{ //nolint:all
-		BaseCoordinator: core.NewBaseCoordinator(),
+		BaseCoordinator: plugins.NewBaseCoordinator(),
 	}
 }
 

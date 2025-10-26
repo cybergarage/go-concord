@@ -17,8 +17,8 @@ package memdb
 import (
 	"errors"
 
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins/coordinator/core"
+	"github.com/cybergarage/go-coordinator/coordinator"
+	"github.com/cybergarage/go-coordinator/coordinator/plugins"
 	"github.com/hashicorp/go-memdb"
 )
 
@@ -32,14 +32,14 @@ const (
 var sharedMemDB *memdb.MemDB = nil
 
 type Coordinator struct {
-	*core.BaseCoordinator
+	*plugins.BaseCoordinator
 	*memdb.MemDB
 }
 
 // NewCoordinator returns a new etcd coordinator instance.
-func NewCoordinator() core.CoordinatorService {
+func NewCoordinator() plugins.Service {
 	return &Coordinator{
-		BaseCoordinator: core.NewBaseCoordinator(),
+		BaseCoordinator: plugins.NewBaseCoordinator(),
 		MemDB:           nil,
 	}
 }

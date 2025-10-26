@@ -15,7 +15,7 @@
 package memdb
 
 import (
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
+	coordinator "github.com/cybergarage/go-coordinator/coordinator/core"
 	"github.com/hashicorp/go-memdb"
 )
 

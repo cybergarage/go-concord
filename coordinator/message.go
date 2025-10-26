@@ -12,20 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package coordinator
 
 import (
-	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins"
+	"github.com/cybergarage/go-coordinator/coordinator/core"
 )
 
-// Service is an interface for the coordinator service.
-type Service interface {
-	coordinator.Coordinator
-	plugins.Service
-	// SetNodeState posts the specified node status to the coordinator.
-	SetNodeState(node cluster.Node) error
-	// GetClusterState gets the current cluster state.
-	GetClusterState(cluster string) (cluster.Cluster, error)
-}
+// Message represents a coordinator message.
+type Message = core.Message

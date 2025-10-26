@@ -17,8 +17,7 @@ package core
 import (
 	"time"
 
-	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
+	"github.com/cybergarage/go-coordinator/coordinator/cluster"
 	"github.com/google/uuid"
 )
 
@@ -49,18 +48,18 @@ func NewNodeWith(obj *NodeObject) (cluster.Node, error) {
 }
 
 // NewNodeScanKey returns a new scan node key to get all node states.
-func NewNodeScanKey() coordinator.Key {
-	return coordinator.NewKeyWith(coordinator.StateObjectKeyHeader[:], byte(NodeState))
+func NewNodeScanKey() Key {
+	return NewKeyWith(StateObjectKeyHeader[:], byte(NodeState))
 }
 
 // NewClusterScanKeyWith returns a new scan node key to get all node states with the specified cluster.
-func NewClusterScanKeyWith(cluster string) coordinator.Key {
-	return coordinator.NewKeyWith(coordinator.StateObjectKeyHeader[:], byte(NodeState), cluster)
+func NewClusterScanKeyWith(cluster string) Key {
+	return NewKeyWith(StateObjectKeyHeader[:], byte(NodeState), cluster)
 }
 
 // NewNodeKeyWith returns a new node key with the specified node.
-func NewNodeKeyWith(node cluster.Node) coordinator.Key {
-	return coordinator.NewKeyWith(coordinator.StateObjectKeyHeader[:], byte(NodeState), node.Cluster(), node.ID().String())
+func NewNodeKeyWith(node cluster.Node) Key {
+	return NewKeyWith(StateObjectKeyHeader[:], byte(NodeState), node.Cluster(), node.ID().String())
 }
 
 // NewNodeObject returns a new node object.

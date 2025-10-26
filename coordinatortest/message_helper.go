@@ -19,9 +19,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	plugin "github.com/cybergarage/puzzledb-go/puzzledb/plugins/coordinator"
+	"github.com/cybergarage/go-coordinator/coordinator"
+	"github.com/cybergarage/go-coordinator/coordinator/cluster"
+	"github.com/cybergarage/go-coordinator/coordinator/core"
+	"github.com/cybergarage/go-coordinator/coordinator/plugins"
 )
 
 type testObserver struct {
@@ -67,7 +68,7 @@ func (observer *testObserver) IsEventReceived(msg coordinator.Message) bool {
 	return false
 }
 
-func CoordinatorMessageTest(t *testing.T, coords []plugin.Service) {
+func CoordinatorMessageTest(t *testing.T, coords []plugins.Service) {
 	t.Helper()
 
 	observer := newTestObserver()
@@ -91,9 +92,9 @@ func CoordinatorMessageTest(t *testing.T, coords []plugin.Service) {
 		obj := &testMessage{
 			Value: n,
 		}
-		msg, err := coordinator.NewMessageWith(
-			coordinator.UserMessage,
-			coordinator.CreatedEvent,
+		msg, err := core.NewMessageWith(
+			core.UserMessage,
+			core.CreatedEvent,
 			obj)
 		if err != nil {
 			t.Error(err)
@@ -125,7 +126,7 @@ func CoordinatorMessageTest(t *testing.T, coords []plugin.Service) {
 			break
 		}
 		// Waits for the received messages
-		time.Sleep(plugin.DefaultStoreScanInterval)
+		time.Sleep(plugins.DefaultStoreScanInterval)
 	}
 
 	// Checks the received messages
