@@ -1,4 +1,4 @@
-// Copyright (C) 2025 The go-concord Authors.
+// Copyright (C) 2022 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,11 +17,13 @@ package plugins
 import (
 	"time"
 
-	"github.com/cybergarage/go-concord/concord/core"
+	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/plugins"
 )
 
 type BaseCoordinator struct {
-	core.KeyCoder
+	plugins.Config
+	coordinator.KeyCoder
 	*time.Ticker
 }
 
@@ -29,11 +31,17 @@ type BaseCoordinator struct {
 func NewBaseCoordinator() *BaseCoordinator {
 	return &BaseCoordinator{
 		KeyCoder: nil,
+		Config:   plugins.NewConfig(),
 		Ticker:   time.NewTicker(time.Second),
 	}
 }
 
+// ServiceType returns the plug-in service type.
+func (coord *BaseCoordinator) ServiceType() plugins.ServiceType {
+	return plugins.CoordinatorService
+}
+
 // SetKeyCoder sets the key coder.
-func (coord *BaseCoordinator) SetKeyCoder(coder core.KeyCoder) {
+func (coord *BaseCoordinator) SetKeyCoder(coder coordinator.KeyCoder) {
 	coord.KeyCoder = coder
 }
