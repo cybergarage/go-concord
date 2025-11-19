@@ -19,8 +19,8 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/cybergarage/go-concord/concord/plugins/coordinator"
 	"github.com/cybergarage/go-coordinator/coordinator/cluster"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins/coordinator"
 )
 
 func truncateCoordinatorStore(coord coordinator.Service) error {

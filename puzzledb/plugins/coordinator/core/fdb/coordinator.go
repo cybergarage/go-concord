@@ -18,8 +18,8 @@ import (
 	"errors"
 
 	"github.com/apple/foundationdb/bindings/go/src/fdb"
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins/coordinator/core"
+	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/plugins/coordinator/core"
 )
 
 const (

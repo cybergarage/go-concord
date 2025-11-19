@@ -17,8 +17,8 @@ package coordinator
 import (
 	"time"
 
-	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
+	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/coordinator"
 	"github.com/google/uuid"
 )
 

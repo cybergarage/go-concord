@@ -15,8 +15,8 @@
 package core
 
 import (
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins"
+	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/plugins"
 )
 
 type CoordinatorService interface {

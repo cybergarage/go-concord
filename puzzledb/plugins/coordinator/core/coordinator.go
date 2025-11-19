@@ -17,8 +17,8 @@ package core
 import (
 	"time"
 
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins"
+	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/plugins"
 )
 
 type BaseCoordinator struct {

@@ -21,10 +21,10 @@ import (
 	"time"
 
 	"github.com/cybergarage/go-cbor/cbor"
+	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/plugins/coordinator/core"
 	"github.com/cybergarage/go-logger/log"
-	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins/coordinator/core"
 )
 
 const (

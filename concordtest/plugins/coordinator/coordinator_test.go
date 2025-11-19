@@ -18,8 +18,8 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/cybergarage/go-concord/concord/plugins/coordinator"
 	"github.com/cybergarage/go-logger/log"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins/coordinator"
 	"github.com/cybergarage/puzzledb-go/puzzledbtest"
 )
 

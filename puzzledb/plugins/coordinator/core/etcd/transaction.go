@@ -15,7 +15,7 @@
 package etcd
 
 import (
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
+	"github.com/cybergarage/go-concord/concord/coordinator"
 )
 
 type transaction struct {

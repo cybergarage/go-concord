@@ -15,7 +15,7 @@
 package coordinator
 
 import (
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
+	"github.com/cybergarage/go-concord/concord/coordinator"
 )
 
 // MessageQueue is a queue for coordinator message.

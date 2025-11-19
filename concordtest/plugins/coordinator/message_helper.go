@@ -19,9 +19,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	plugin "github.com/cybergarage/puzzledb-go/puzzledb/plugins/coordinator"
+	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/coordinator"
+	plugin "github.com/cybergarage/go-concord/concord/plugins/coordinator"
 )
 
 type testObserver struct {

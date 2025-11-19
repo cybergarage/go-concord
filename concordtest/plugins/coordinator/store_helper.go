@@ -20,10 +20,10 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/plugins/coder/key/tuple"
+	"github.com/cybergarage/go-concord/concord/plugins/coordinator/core"
 	"github.com/cybergarage/go-pict/pict"
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins/coder/key/tuple"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins/coordinator/core"
 )
 
 //go:embed go_types.pict

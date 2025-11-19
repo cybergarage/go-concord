@@ -18,7 +18,7 @@ import (
 	"fmt"
 
 	"github.com/cybergarage/go-cbor/cbor"
-	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
+	"github.com/cybergarage/go-concord/concord/cluster"
 	"github.com/google/uuid"
 )
 

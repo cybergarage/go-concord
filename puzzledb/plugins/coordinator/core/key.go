@@ -15,7 +15,7 @@
 package core
 
 import (
-	"github.com/cybergarage/puzzledb-go/puzzledb/store/kv"
+	"github.com/cybergarage/go-concord/concord/store/kv"
 )
 
 const (

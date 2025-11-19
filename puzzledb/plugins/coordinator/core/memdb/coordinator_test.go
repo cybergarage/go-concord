@@ -17,7 +17,7 @@ package memdb
 import (
 	"testing"
 
-	"github.com/cybergarage/puzzledb-go/puzzledbtest/plugins/coordinator"
+	"github.com/cybergarage/go-concord/concordtest/plugins/coordinator"
 )
 
 func TestCoordinator(t *testing.T) {

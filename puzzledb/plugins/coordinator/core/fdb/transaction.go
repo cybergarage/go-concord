@@ -16,7 +16,7 @@ package fdb
 
 import (
 	"github.com/apple/foundationdb/bindings/go/src/fdb"
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
+	"github.com/cybergarage/go-concord/concord/coordinator"
 )
 
 // transaction represents a transaction instance.

@@ -15,9 +15,9 @@
 package coordinator
 
 import (
-	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
-	"github.com/cybergarage/puzzledb-go/puzzledb/coordinator"
-	"github.com/cybergarage/puzzledb-go/puzzledb/plugins"
+	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/plugins"
 )
 
 // Service is an interface for the coordinator service.

@@ -15,7 +15,7 @@
 package coordinator
 
 import (
-	"github.com/cybergarage/puzzledb-go/puzzledb/cluster"
+	"github.com/cybergarage/go-concord/concord/cluster"
 )
 
 // Store represents a coordination store inteface.

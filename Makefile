@@ -23,10 +23,10 @@ HOSTNAME=$(shell hostname)
 LOG_DIR=log
 
 GIT_ROOT=github.com/cybergarage
-PRODUCT_NAME=go-coordinator
+PRODUCT_NAME=go-concord
 MODULE_ROOT=${GIT_ROOT}/${PRODUCT_NAME}
 
-PKG_NAME=coordinator
+PKG_NAME=concord
 PKG_VER=$(shell git tag | tail -n 1)
 PKG_COVER=${PKG_NAME}-cover
 PKG_ROOT=${MODULE_ROOT}/${PKG_NAME}
@@ -50,7 +50,7 @@ format: version
 	gofmt -s -w ${PKG_SRC_ROOT} ${TEST_SRC_ROOT}
 
 vet: format
-	go vet ${PKG} ${TEST_PKG}
+	go vet ${PKG}/... ${TEST_PKG}/...
 
 lint: format
 	golangci-lint run ${PKG_SRC_ROOT}/... ${TEST_SRC_ROOT}/...
