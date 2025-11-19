@@ -1,4 +1,4 @@
-// Copyright (C) 2025 The go-concord Authors.
+// Copyright (C) 2022 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ import (
 	"time"
 
 	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/coordinator"
 	"github.com/google/uuid"
 )
 
@@ -48,18 +49,18 @@ func NewNodeWith(obj *NodeObject) (cluster.Node, error) {
 }
 
 // NewNodeScanKey returns a new scan node key to get all node states.
-func NewNodeScanKey() Key {
-	return NewKeyWith(StateObjectKeyHeader[:], byte(NodeState))
+func NewNodeScanKey() coordinator.Key {
+	return coordinator.NewKeyWith(coordinator.StateObjectKeyHeader[:], byte(NodeState))
 }
 
 // NewClusterScanKeyWith returns a new scan node key to get all node states with the specified cluster.
-func NewClusterScanKeyWith(cluster string) Key {
-	return NewKeyWith(StateObjectKeyHeader[:], byte(NodeState), cluster)
+func NewClusterScanKeyWith(cluster string) coordinator.Key {
+	return coordinator.NewKeyWith(coordinator.StateObjectKeyHeader[:], byte(NodeState), cluster)
 }
 
 // NewNodeKeyWith returns a new node key with the specified node.
-func NewNodeKeyWith(node cluster.Node) Key {
-	return NewKeyWith(StateObjectKeyHeader[:], byte(NodeState), node.Cluster(), node.ID().String())
+func NewNodeKeyWith(node cluster.Node) coordinator.Key {
+	return coordinator.NewKeyWith(coordinator.StateObjectKeyHeader[:], byte(NodeState), node.Cluster(), node.ID().String())
 }
 
 // NewNodeObject returns a new node object.

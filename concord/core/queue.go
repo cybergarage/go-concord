@@ -1,4 +1,4 @@
-// Copyright (C) 2025 The go-concord Authors.
+// Copyright (C) 2022 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,32 +14,36 @@
 
 package core
 
+import (
+	"github.com/cybergarage/go-concord/concord/coordinator"
+)
+
 // MessageQueue is a queue for coordinator message.
 type MessageQueue struct {
-	messages []Message
+	messages []coordinator.Message
 }
 
 // NewMessageQueue returns a new messageQueue.
 func NewMessageQueue() *MessageQueue {
 	return &MessageQueue{
-		messages: make([]Message, 0),
+		messages: make([]coordinator.Message, 0),
 	}
 }
 
 // EnqueueMessage appends a message to the queue.
-func (q *MessageQueue) EnqueueMessage(msg Message) {
+func (q *MessageQueue) EnqueueMessage(msg coordinator.Message) {
 	q.messages = append(q.messages, msg)
 }
 
 // PushMessage pushes a message to the queue.
-func (q *MessageQueue) PushMessage(msg Message) {
-	q.messages = append([]Message{msg}, q.messages...)
+func (q *MessageQueue) PushMessage(msg coordinator.Message) {
+	q.messages = append([]coordinator.Message{msg}, q.messages...)
 }
 
 // PopMessage removes a message from the queue.
-func (q *MessageQueue) PopMessage() (Message, error) {
+func (q *MessageQueue) PopMessage() (coordinator.Message, error) {
 	if len(q.messages) == 0 {
-		return nil, ErrNoMessage
+		return nil, coordinator.ErrNoMessage
 	}
 	msg := q.messages[0]
 	q.messages = q.messages[1:]
