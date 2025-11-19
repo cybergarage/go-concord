@@ -1,4 +1,4 @@
-// Copyright (C) 2022 The go-concord Authors.
+// Copyright (C) 2025 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package core
 
-const (
-	Unknown = "unknown"
-)
+// ResultSet represents a result set which includes range operation results.
+type ResultSet interface {
+	// Next moves the cursor forward next object from its current position.
+	Next() bool
+	// Object returns an object in the current position.
+	Object() Object
+}

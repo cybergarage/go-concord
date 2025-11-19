@@ -15,7 +15,7 @@
 package coordinator
 
 import (
-	"github.com/cybergarage/go-coordinator/coordinator/core"
+	"github.com/cybergarage/go-concord/concord/core"
 )
 
 // Message represents a coordinator message.

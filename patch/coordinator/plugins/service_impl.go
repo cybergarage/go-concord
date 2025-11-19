@@ -21,8 +21,8 @@ import (
 	"time"
 
 	"github.com/cybergarage/go-cbor/cbor"
-	"github.com/cybergarage/go-coordinator/coordinator/cluster"
-	"github.com/cybergarage/go-coordinator/coordinator/core"
+	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/core"
 	"github.com/cybergarage/go-logger/log"
 )
 

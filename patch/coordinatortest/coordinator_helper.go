@@ -17,7 +17,7 @@ package core
 import (
 	"testing"
 
-	plugin "github.com/cybergarage/go-coordinator/coordinator/plugins"
+	plugin "github.com/cybergarage/go-concord/concord/plugins"
 )
 
 func CoordinatorsTest(t *testing.T, coord []plugin.Service) {

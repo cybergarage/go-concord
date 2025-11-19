@@ -17,8 +17,8 @@ package memdb
 import (
 	"errors"
 
-	"github.com/cybergarage/go-coordinator/coordinator"
-	"github.com/cybergarage/go-coordinator/coordinator/plugins"
+	"github.com/cybergarage/go-concord/concord/plugins"
+	coordinator "github.com/cybergarage/go-coordinator/coordinator/core"
 	"github.com/hashicorp/go-memdb"
 )
 

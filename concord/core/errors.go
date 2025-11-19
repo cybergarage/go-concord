@@ -1,4 +1,4 @@
-// Copyright (C) 2022 The go-concord Authors.
+// Copyright (C) 2025 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,21 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package core
 
 import (
-	"github.com/cybergarage/go-concord/concord/document"
+	"errors"
+	"fmt"
 )
 
-// Key represents an unique key for a key-value object.
-type Key = document.Key
+var (
+	ErrInvalid      = errors.New("invalid")
+	ErrNotExist     = errors.New("not exist")
+	ErrNotSupported = errors.New("not supported")
+	ErrNoMessage    = errors.New("no message")
+)
 
-// NewKey returns a new blank key.
-func NewKey() Key {
-	return document.NewKey()
+func NewKeyNotExistError(v any) error {
+	return fmt.Errorf("key (%s) is %w", v, ErrNotExist)
 }
 
-// NewKeyWith returns a new key from the specified key elements.
-func NewKeyWith(elems ...any) Key {
-	return document.NewKeyWith(elems...)
+func NewErrNotSupported(v any) error {
+	return fmt.Errorf("%v is %w", v, ErrNotSupported)
+}
+
+func NewErrObjectNotSupported(v any) error {
+	return fmt.Errorf("%T is %w", v, ErrNotSupported)
 }

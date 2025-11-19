@@ -1,4 +1,4 @@
-// Copyright (C) 2022 The go-concord Authors.
+// Copyright (C) 2025 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,28 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package core
 
 import (
-	"errors"
-	"fmt"
+	"github.com/cybergarage/go-concord/concord/cluster"
 )
 
-var (
-	ErrInvalid      = errors.New("invalid")
-	ErrNotExist     = errors.New("not exist")
-	ErrNotSupported = errors.New("not supported")
-	ErrNoMessage    = errors.New("no message")
-)
-
-func NewKeyNotExistError(v any) error {
-	return fmt.Errorf("key (%s) is %w", v, ErrNotExist)
+// NewMessageScanKey returns a new scan message key to get the latest message clock.
+func NewMessageScanKey() Key {
+	return NewKeyWith(MessageObjectKeyHeader[:])
 }
 
-func NewErrNotSupported(v any) error {
-	return fmt.Errorf("%v is %w", v, ErrNotSupported)
-}
-
-func NewErrObjectNotSupported(v any) error {
-	return fmt.Errorf("%T is %w", v, ErrNotSupported)
+// NewMessageKeyWith returns a new message key with the specified message.
+func NewMessageKeyWith(msg Message, clock cluster.Clock) Key {
+	return NewKeyWith(MessageObjectKeyHeader[:], clock)
 }

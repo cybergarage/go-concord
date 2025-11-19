@@ -15,7 +15,7 @@
 package kv
 
 import (
-	"github.com/cybergarage/go-coordinator/coordinator/document"
+	"github.com/cybergarage/go-concord/concord/document"
 )
 
 // Key represents an object key.

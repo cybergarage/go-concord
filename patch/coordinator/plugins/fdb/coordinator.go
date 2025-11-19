@@ -18,8 +18,8 @@ import (
 	"errors"
 
 	"github.com/apple/foundationdb/bindings/go/src/fdb"
-	coordinator "github.com/cybergarage/go-coordinator/coordinator/core"
-	"github.com/cybergarage/go-coordinator/coordinator/plugins"
+	coordinator "github.com/cybergarage/go-concord/concord/core"
+	"github.com/cybergarage/go-concord/concord/plugins"
 )
 
 const (

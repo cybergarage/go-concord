@@ -19,10 +19,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cybergarage/go-coordinator/coordinator"
-	"github.com/cybergarage/go-coordinator/coordinator/cluster"
-	"github.com/cybergarage/go-coordinator/coordinator/core"
-	"github.com/cybergarage/go-coordinator/coordinator/plugins"
+	coordinator "github.com/cybergarage/go-concord/concord"
+	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/core"
+	"github.com/cybergarage/go-concord/concord/plugins"
 )
 
 type testObserver struct {

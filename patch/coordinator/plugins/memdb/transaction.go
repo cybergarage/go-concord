@@ -15,7 +15,7 @@
 package memdb
 
 import (
-	coordinator "github.com/cybergarage/go-coordinator/coordinator/core"
+	coordinator "github.com/cybergarage/go-concord/concord/core"
 	"github.com/hashicorp/go-memdb"
 )
 

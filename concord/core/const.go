@@ -1,4 +1,4 @@
-// Copyright (C) 2022 The go-concord Authors.
+// Copyright (C) 2025 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,10 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package core
 
-// Observer is an interface to receive a message.
-type Observer interface {
-	// OnMessageReceived is called when a message is received.
-	OnMessageReceived(msg Message)
-}
+const (
+	Unknown = "unknown"
+)

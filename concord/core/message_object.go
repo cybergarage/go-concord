@@ -1,4 +1,4 @@
-// Copyright (C) 2022 The go-concord Authors.
+// Copyright (C) 2025 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package core
 
 import (
 	"fmt"
@@ -113,7 +113,7 @@ func (obj *MessageObject) Type() MessageType {
 	return MessageType(obj.MsgType)
 }
 
-// EventType returns the message event type.
+// Event returns the message event type.
 func (obj *MessageObject) Event() EventType {
 	return EventType(obj.EvtType)
 }

@@ -1,4 +1,4 @@
-// Copyright (C) 2024 The go-concord Authors.
+// Copyright (C) 2025 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,13 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package core
 
-// ReadAllObjects reads all objects from the result set.
-func ReadAllObjects(rs ResultSet) ([]Object, error) {
-	objs := []Object{}
-	for rs.Next() {
-		objs = append(objs, rs.Object())
-	}
-	return objs, nil
+// Observer is an interface to receive a message.
+type Observer interface {
+	// OnMessageReceived is called when a message is received.
+	OnMessageReceived(msg Message)
 }

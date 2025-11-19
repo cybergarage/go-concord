@@ -1,4 +1,4 @@
-// Copyright (C) 2022 The go-concord Authors.
+// Copyright (C) 2025 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package core
 
 // StateType is a type of the state object.
 type StateType uint8
@@ -32,7 +32,7 @@ func (t StateType) String() string {
 	}
 }
 
-// NewStateKey returns a new state key.
+// NewStateKeyWith returns a new state key.
 func NewStateKeyWith(t StateType, elems ...any) Key {
 	storeKey := []any{StateObjectKeyHeader, t}
 	return append(storeKey, elems...)

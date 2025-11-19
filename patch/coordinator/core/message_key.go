@@ -15,7 +15,7 @@
 package core
 
 import (
-	"github.com/cybergarage/go-coordinator/coordinator/cluster"
+	"github.com/cybergarage/go-concord/concord/cluster"
 )
 
 // NewMessageScanKey returns a new scan message key to get the latest message clock.

@@ -17,7 +17,7 @@ package plugins
 import (
 	"time"
 
-	"github.com/cybergarage/go-coordinator/coordinator/core"
+	"github.com/cybergarage/go-concord/concord/core"
 )
 
 type BaseCoordinator struct {

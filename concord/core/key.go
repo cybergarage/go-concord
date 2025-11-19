@@ -1,4 +1,4 @@
-// Copyright (C) 2022 The go-concord Authors.
+// Copyright (C) 2025 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,18 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package core
 
 import (
-	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/document"
 )
 
-// NewMessageScanKey returns a new scan message key to get the latest message clock.
-func NewMessageScanKey() Key {
-	return NewKeyWith(MessageObjectKeyHeader[:])
+// Key represents an unique key for a key-value object.
+type Key = document.Key
+
+// NewKey returns a new blank key.
+func NewKey() Key {
+	return document.NewKey()
 }
 
-// NewMessageKeyWith returns a new message key with the specified message.
-func NewMessageKeyWith(msg Message, clock cluster.Clock) Key {
-	return NewKeyWith(MessageObjectKeyHeader[:], clock)
+// NewKeyWith returns a new key from the specified key elements.
+func NewKeyWith(elems ...any) Key {
+	return document.NewKeyWith(elems...)
 }

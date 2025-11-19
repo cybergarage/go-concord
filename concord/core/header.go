@@ -1,4 +1,4 @@
-// Copyright (C) 2022 The go-concord Authors.
+// Copyright (C) 2025 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package core
 
 import "fmt"
 
@@ -24,13 +24,13 @@ type DocumentType byte
 // KeyHeader represents a header for all keys.
 type KeyHeader [2]byte
 
-// Version represents a version.
-type Version byte
+// KeyVersion represents a version.
+type KeyVersion byte
 
 // IndexType represents an index type.
 type IndexType byte
 
-// NewKeyHeader creates a new key header from the specified bytes.
+// NewKeyHeaderFrom creates a new key header from the specified bytes.
 func NewKeyHeaderFrom(b []byte) KeyHeader {
 	var header KeyHeader
 	copy(header[:], b)
@@ -43,7 +43,7 @@ func (header KeyHeader) Type() HeaderType {
 }
 
 // Version returns a version.
-func (header KeyHeader) Version() Version {
+func (header KeyHeader) Version() KeyVersion {
 	return VertionFromHeaderByte(header[1])
 }
 

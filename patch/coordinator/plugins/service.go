@@ -15,8 +15,8 @@
 package plugins
 
 import (
-	"github.com/cybergarage/go-coordinator/coordinator/cluster"
-	"github.com/cybergarage/go-coordinator/coordinator/core"
+	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/core"
 )
 
 // Coordinator is an interface for the coordinator.

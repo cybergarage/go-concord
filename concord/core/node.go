@@ -17,7 +17,7 @@ package core
 import (
 	"time"
 
-	"github.com/cybergarage/go-coordinator/coordinator/cluster"
+	"github.com/cybergarage/go-concord/concord/cluster"
 	"github.com/google/uuid"
 )
 
