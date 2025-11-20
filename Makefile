@@ -37,7 +37,7 @@ PKG=${MODULE_ROOT}/${PKG_SRC_ROOT}
 TEST_SRC_ROOT=${PKG_NAME}test
 TEST_PKG=${MODULE_ROOT}/${TEST_SRC_ROOT}
 
-PHONY: test unittest format vet lint clean docker cmd certs proto protopkg doc-proto
+PHONY: test format vet lint clean
 .IGNORE: lint
 
 all: test
