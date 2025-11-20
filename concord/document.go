@@ -12,10 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package concord
 
-// Observer is an interface to receive a message.
-type Observer interface {
-	// OnMessageReceived is called when a message is received.
-	OnMessageReceived(msg Message)
-}
+import (
+	"github.com/cybergarage/go-concord/concord/document"
+)
+
+// Key represents a document key.
+type Key = document.Key

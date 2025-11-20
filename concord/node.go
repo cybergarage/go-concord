@@ -12,18 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package concord
 
 import (
 	"github.com/cybergarage/go-concord/concord/cluster"
 )
 
-// NewMessageScanKey returns a new scan message key to get the latest message clock.
-func NewMessageScanKey() Key {
-	return NewKeyWith(MessageObjectKeyHeader[:])
-}
-
-// NewMessageKeyWith returns a new message key with the specified message.
-func NewMessageKeyWith(msg Message, clock cluster.Clock) Key {
-	return NewKeyWith(MessageObjectKeyHeader[:], clock)
-}
+// Node represents a cluster node.
+type Node = cluster.Node

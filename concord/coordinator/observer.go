@@ -1,4 +1,4 @@
-// Copyright (C) 2022 The go-concord Authors.
+// Copyright (C) 2025 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,15 +14,8 @@
 
 package coordinator
 
-import (
-	"testing"
-
-	"github.com/cybergarage/go-concord/concord"
-)
-
-func CoordinatorsTest(t *testing.T, coord []concord.Service) {
-	t.Helper()
-	t.Run("message", func(t *testing.T) {
-		CoordinatorMessageTest(t, coord)
-	})
+// Observer is an interface to receive a message.
+type Observer interface {
+	// OnMessageReceived is called when a message is received.
+	OnMessageReceived(msg Message)
 }

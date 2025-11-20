@@ -12,22 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package document
 
-// An KeyDecoder decodes the specified bytes.
-type KeyDecoder interface {
-	// DecodeKey returns the decoded key from the specified bytes if available, otherwise returns an error.
-	DecodeKey([]byte) (Key, error)
+import (
+	"github.com/cybergarage/go-serix/serix/document"
+)
+
+// Key represents an unique key for a key-value object.
+type Key = document.Key
+
+// NewKey returns a new blank key.
+func NewKey() Key {
+	return document.NewKey()
 }
 
-// An KeyEncoder encodes the specified key.
-type KeyEncoder interface {
-	// EncodeKey returns the encoded bytes from the specified key if available, otherwise returns an error.
-	EncodeKey(Key) ([]byte, error)
-}
-
-// A KeyCoder includes key decoder and encoder interfaces.
-type KeyCoder interface {
-	KeyDecoder
-	KeyEncoder
+// NewKeyWith returns a new key from the specified key elements.
+func NewKeyWith(elems ...any) Key {
+	return document.NewKeyWith(elems...)
 }

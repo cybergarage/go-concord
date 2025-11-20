@@ -12,28 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package concord
 
 import (
-	"errors"
-	"fmt"
+	"github.com/cybergarage/go-concord/concord/coordinator"
 )
 
-var (
-	ErrInvalid      = errors.New("invalid")
-	ErrNotExist     = errors.New("not exist")
-	ErrNotSupported = errors.New("not supported")
-	ErrNoMessage    = errors.New("no message")
-)
-
-func NewKeyNotExistError(v any) error {
-	return fmt.Errorf("key (%s) is %w", v, ErrNotExist)
-}
-
-func NewErrNotSupported(v any) error {
-	return fmt.Errorf("%v is %w", v, ErrNotSupported)
-}
-
-func NewErrObjectNotSupported(v any) error {
-	return fmt.Errorf("%T is %w", v, ErrNotSupported)
-}
+// Observer represents a message observer.
+type Observer = coordinator.Observer

@@ -12,33 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package coordinator
 
-// StateType is a type of the state object.
-type StateType uint8
+// EventType represents a coordinator event type.
+type EventType byte
 
 const (
-	// NodeState represents a node state type.
-	NodeState StateType = 1
+	// CreatedEvent represents a created event.
+	CreatedEvent EventType = 'C'
+	// UpdatedEvent represents a object updated event.
+	UpdatedEvent EventType = 'U'
+	// DeletedEvent represents a object deleted event.
+	DeletedEvent EventType = 'O'
 )
 
-// String returns a string representation of the state type.
-func (t StateType) String() string {
+// String returns the string representation of the message event type.
+func (t EventType) String() string {
 	switch t {
-	case NodeState:
-		return "node"
+	case CreatedEvent:
+		return "created"
+	case UpdatedEvent:
+		return "updated"
+	case DeletedEvent:
+		return "deleted"
 	default:
 		return Unknown
 	}
-}
-
-// NewStateKeyWith returns a new state key.
-func NewStateKeyWith(t StateType, elems ...any) Key {
-	storeKey := []any{StateObjectKeyHeader, t}
-	return append(storeKey, elems...)
-}
-
-// NewScanStateKeyWith returns a new state key with the specified state type for the scan.
-func NewScanStateKeyWith(t StateType) Key {
-	return NewStateKeyWith(t)
 }

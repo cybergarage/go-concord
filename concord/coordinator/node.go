@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package coordinator
 
 import (
 	"time"
 
 	"github.com/cybergarage/go-concord/concord/cluster"
-	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/google/uuid"
 )
 
@@ -49,18 +49,18 @@ func NewNodeWith(obj *NodeObject) (cluster.Node, error) {
 }
 
 // NewNodeScanKey returns a new scan node key to get all node states.
-func NewNodeScanKey() coordinator.Key {
-	return coordinator.NewKeyWith(coordinator.StateObjectKeyHeader[:], byte(NodeState))
+func NewNodeScanKey() document.Key {
+	return document.NewKeyWith(document.StateObjectKeyHeader[:], byte(NodeState))
 }
 
 // NewClusterScanKeyWith returns a new scan node key to get all node states with the specified cluster.
-func NewClusterScanKeyWith(cluster string) coordinator.Key {
-	return coordinator.NewKeyWith(coordinator.StateObjectKeyHeader[:], byte(NodeState), cluster)
+func NewClusterScanKeyWith(cluster string) document.Key {
+	return document.NewKeyWith(document.StateObjectKeyHeader[:], byte(NodeState), cluster)
 }
 
 // NewNodeKeyWith returns a new node key with the specified node.
-func NewNodeKeyWith(node cluster.Node) coordinator.Key {
-	return coordinator.NewKeyWith(coordinator.StateObjectKeyHeader[:], byte(NodeState), node.Cluster(), node.ID().String())
+func NewNodeKeyWith(node cluster.Node) document.Key {
+	return document.NewKeyWith(document.StateObjectKeyHeader[:], byte(NodeState), node.Cluster(), node.ID().String())
 }
 
 // NewNodeObject returns a new node object.

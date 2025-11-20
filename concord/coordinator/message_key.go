@@ -1,4 +1,4 @@
-// Copyright (C) 2022 The go-concord Authors.
+// Copyright (C) 2025 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,14 +15,16 @@
 package coordinator
 
 import (
-	"testing"
-
-	"github.com/cybergarage/go-concord/concord"
+	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/document"
 )
 
-func CoordinatorsTest(t *testing.T, coord []concord.Service) {
-	t.Helper()
-	t.Run("message", func(t *testing.T) {
-		CoordinatorMessageTest(t, coord)
-	})
+// NewMessageScanKey returns a new scan message key to get the latest message clock.
+func NewMessageScanKey() Key {
+	return document.NewKeyWith(document.MessageObjectKeyHeader[:])
+}
+
+// NewMessageKeyWith returns a new message key with the specified message.
+func NewMessageKeyWith(msg Message, clock cluster.Clock) Key {
+	return document.NewKeyWith(document.MessageObjectKeyHeader[:], clock)
 }

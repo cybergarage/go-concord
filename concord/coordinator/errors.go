@@ -1,4 +1,4 @@
-// Copyright (C) 2022 The go-concord Authors.
+// Copyright (C) 2025 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,14 +15,25 @@
 package coordinator
 
 import (
-	"testing"
-
-	"github.com/cybergarage/go-concord/concord"
+	"errors"
+	"fmt"
 )
 
-func CoordinatorsTest(t *testing.T, coord []concord.Service) {
-	t.Helper()
-	t.Run("message", func(t *testing.T) {
-		CoordinatorMessageTest(t, coord)
-	})
+var (
+	ErrInvalid      = errors.New("invalid")
+	ErrNotExist     = errors.New("not exist")
+	ErrNotSupported = errors.New("not supported")
+	ErrNoMessage    = errors.New("no message")
+)
+
+func NewKeyNotExistError(v any) error {
+	return fmt.Errorf("key (%s) is %w", v, ErrNotExist)
+}
+
+func NewErrNotSupported(v any) error {
+	return fmt.Errorf("%v is %w", v, ErrNotSupported)
+}
+
+func NewErrObjectNotSupported(v any) error {
+	return fmt.Errorf("%T is %w", v, ErrNotSupported)
 }

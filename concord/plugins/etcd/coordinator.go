@@ -15,18 +15,19 @@
 package etcd
 
 import (
+	"github.com/cybergarage/go-concord/concord"
 	"github.com/cybergarage/go-concord/concord/coordinator"
-	"github.com/cybergarage/go-concord/concord/plugins/coordinator/core"
+	"github.com/cybergarage/go-concord/concord/plugins"
 )
 
 type etcdCoordinator struct {
-	*core.BaseCoordinator
+	*plugins.BaseCoordinator
 }
 
 // NewCoordinator returns a new etcd coordinator instance.
-func NewCoordinator() core.CoordinatorService {
+func NewCoordinator() concord.Service {
 	return &etcdCoordinator{
-		BaseCoordinator: core.NewBaseCoordinator(),
+		BaseCoordinator: plugins.NewBaseCoordinator(),
 	}
 }
 

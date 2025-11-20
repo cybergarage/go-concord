@@ -12,30 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package coordinator
 
-// EventType represents a coordinator event type.
-type EventType byte
-
-const (
-	// CreatedEvent represents a created event.
-	CreatedEvent EventType = 'C'
-	// UpdatedEvent represents a object updated event.
-	UpdatedEvent EventType = 'U'
-	// DeletedEvent represents a object deleted event.
-	DeletedEvent EventType = 'O'
+import (
+	"github.com/cybergarage/go-concord/concord/document"
 )
 
-// String returns the string representation of the message event type.
-func (t EventType) String() string {
-	switch t {
-	case CreatedEvent:
-		return "created"
-	case UpdatedEvent:
-		return "updated"
-	case DeletedEvent:
-		return "deleted"
-	default:
-		return Unknown
-	}
-}
+// Key represents an unique key for a key-value object.
+type Key = document.Key
+
+// KeyCoder represents a key coder for key-value objects.
+type KeyCoder = document.KeyCoder
+
+// Object represents a key-value object.
+type Object = document.Object

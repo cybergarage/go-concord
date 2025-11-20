@@ -12,18 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package coordinator
 
-// Object represents a key-value object.
-type Object interface {
-	// Key returns the object key.
-	Key() Key
-	// Bytes returns the encoded object value.
-	Bytes() []byte
-	// Unmarshal unmarshals the object value to the specified object.
-	Unmarshal(toj any) error
-	// Equals returns true if the object is equal to the specified object.
-	Equals(Object) bool
-	// String returns the string representation.
-	String() string
+// ResultSet represents a result set which includes range operation results.
+type ResultSet interface {
+	// Next moves the cursor forward next object from its current position.
+	Next() bool
+	// Object returns an object in the current position.
+	Object() Object
 }

@@ -1,4 +1,4 @@
-// Copyright (C) 2025 The go-concord Authors.
+// Copyright (C) 2024 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,21 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package coordinator
 
-import (
-	"github.com/cybergarage/go-concord/concord/document"
-)
-
-// Key represents an unique key for a key-value object.
-type Key = document.Key
-
-// NewKey returns a new blank key.
-func NewKey() Key {
-	return document.NewKey()
-}
-
-// NewKeyWith returns a new key from the specified key elements.
-func NewKeyWith(elems ...any) Key {
-	return document.NewKeyWith(elems...)
+// ReadAllObjects reads all objects from the result set.
+func ReadAllObjects(rs ResultSet) ([]Object, error) {
+	objs := []Object{}
+	for rs.Next() {
+		objs = append(objs, rs.Object())
+	}
+	return objs, nil
 }

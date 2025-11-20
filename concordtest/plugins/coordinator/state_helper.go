@@ -19,11 +19,11 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/cybergarage/go-concord/concord"
 	"github.com/cybergarage/go-concord/concord/cluster"
-	"github.com/cybergarage/go-concord/concord/plugins/coordinator"
 )
 
-func truncateCoordinatorStore(coord coordinator.Service) error {
+func truncateCoordinatorStore(coord concord.Service) error {
 	txn, err := coord.Transact()
 	if err != nil {
 		return err
@@ -36,7 +36,7 @@ func truncateCoordinatorStore(coord coordinator.Service) error {
 }
 
 // nolint:goerr113, gocognit, gci, gocyclo, gosec, maintidx
-func CoordinatorClusterTest(t *testing.T, coords []coordinator.Service) {
+func CoordinatorClusterTest(t *testing.T, coords []concord.Service) {
 	t.Helper()
 
 	for _, coord := range coords {

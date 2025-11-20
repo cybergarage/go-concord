@@ -15,10 +15,10 @@
 package plugins
 
 import (
-	"github.com/cybergarage/go-concord/concord/store/kv"
+	"github.com/cybergarage/go-concord/concord/document"
 )
 
 const (
-	CoordinatorObject  = kv.HeaderType('C')
-	NotificationObject = kv.HeaderType('N')
+	CoordinatorObject  = document.HeaderType('C')
+	NotificationObject = document.HeaderType('N')
 )

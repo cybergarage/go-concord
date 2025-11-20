@@ -17,8 +17,9 @@ package memdb
 import (
 	"errors"
 
+	"github.com/cybergarage/go-concord/concord"
 	"github.com/cybergarage/go-concord/concord/coordinator"
-	"github.com/cybergarage/go-concord/concord/plugins/coordinator/core"
+	"github.com/cybergarage/go-concord/concord/plugins"
 	"github.com/hashicorp/go-memdb"
 )
 
@@ -32,14 +33,14 @@ const (
 var sharedMemDB *memdb.MemDB = nil
 
 type Coordinator struct {
-	*core.BaseCoordinator
+	*plugins.BaseCoordinator
 	*memdb.MemDB
 }
 
 // NewCoordinator returns a new etcd coordinator instance.
-func NewCoordinator() core.CoordinatorService {
+func NewCoordinator() concord.Service {
 	return &Coordinator{
-		BaseCoordinator: core.NewBaseCoordinator(),
+		BaseCoordinator: plugins.NewBaseCoordinator(),
 		MemDB:           nil,
 	}
 }

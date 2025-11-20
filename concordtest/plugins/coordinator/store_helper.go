@@ -20,10 +20,11 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/cybergarage/go-concord/concord"
 	"github.com/cybergarage/go-concord/concord/coordinator"
-	"github.com/cybergarage/go-concord/concord/plugins/coder/key/tuple"
-	"github.com/cybergarage/go-concord/concord/plugins/coordinator/core"
+	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/cybergarage/go-pict/pict"
+	"github.com/cybergarage/go-serix/serix/plugins/coder/key/tuple"
 )
 
 //go:embed go_types.pict
@@ -33,21 +34,21 @@ func newTestKeyCoder() coordinator.KeyCoder {
 	return tuple.NewCoder()
 }
 
-func generateCoordinatorObjects() ([]coordinator.Object, error) {
+func generateCoordinatorObjects() ([]document.Object, error) {
 	pict := pict.NewParserWithBytes(goTypes)
 	err := pict.Parse()
 	if err != nil {
-		return []coordinator.Object{}, err
+		return []document.Object{}, err
 	}
 
-	keys := make([]coordinator.Key, len(pict.Cases()))
+	keys := make([]document.Key, len(pict.Cases()))
 	for i, pictCase := range pict.Cases() {
-		key := coordinator.NewKey()
+		key := document.NewKey()
 		key = append(key, fmt.Sprintf("key%d", i))
 		for j, pictParam := range pict.Params() {
 			kv, err := pictCase[j].CastType(string(pictParam))
 			if err != nil {
-				return []coordinator.Object{}, err
+				return []document.Object{}, err
 			}
 			key = append(key, fmt.Sprintf("%v", kv))
 		}
@@ -71,7 +72,7 @@ func generateCoordinatorObjects() ([]coordinator.Object, error) {
 
 	objs := make([]coordinator.Object, len(pict.Cases()))
 	for n, key := range keys {
-		obj, err := coordinator.NewObjectFrom(key, vals[n])
+		obj, err := document.NewObjectFrom(key, vals[n])
 		if err != nil {
 			return []coordinator.Object{}, err
 		}
@@ -99,7 +100,7 @@ func updateCoordinatorObjects(objs []coordinator.Object) ([]coordinator.Object, 
 			}
 			val = append(val, v)
 		}
-		obj, err := coordinator.NewObjectFrom(objs[i].Key(), val)
+		obj, err := document.NewObjectFrom(objs[i].Key(), val)
 		if err != nil {
 			return []coordinator.Object{}, err
 		}
@@ -110,7 +111,7 @@ func updateCoordinatorObjects(objs []coordinator.Object) ([]coordinator.Object, 
 }
 
 // nolint:goerr113, gocognit, gci, gocyclo, gosec, maintidx
-func CoordinatorStoreTest(t *testing.T, coord core.CoordinatorService) {
+func CoordinatorStoreTest(t *testing.T, coord concord.Service) {
 	t.Helper()
 
 	coord.SetKeyCoder(newTestKeyCoder())

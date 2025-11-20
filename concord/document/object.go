@@ -1,4 +1,4 @@
-// Copyright (C) 2024 The go-concord Authors.
+// Copyright (C) 2025 The go-concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,13 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package document
 
-// ReadAllObjects reads all objects from the result set.
-func ReadAllObjects(rs ResultSet) ([]Object, error) {
-	objs := []Object{}
-	for rs.Next() {
-		objs = append(objs, rs.Object())
-	}
-	return objs, nil
+// Object represents a key-value object.
+type Object interface {
+	// Key returns the object key.
+	Key() Key
+	// Bytes returns the encoded object value.
+	Bytes() []byte
+	// Unmarshal unmarshals the object value to the specified object.
+	Unmarshal(toj any) error
+	// Equals returns true if the object is equal to the specified object.
+	Equals(Object) bool
+	// String returns the string representation.
+	String() string
 }

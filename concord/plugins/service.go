@@ -12,20 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package plugins
 
 import (
-	"github.com/cybergarage/go-concord/concord/cluster"
-	"github.com/cybergarage/go-concord/concord/coordinator"
-	"github.com/cybergarage/go-concord/concord/plugins"
+	"github.com/cybergarage/go-concord/concord"
 )
 
 // Service is an interface for the coordinator service.
-type Service interface {
-	coordinator.Coordinator
-	plugins.Service
-	// SetNodeState posts the specified node status to the coordinator.
-	SetNodeState(node cluster.Node) error
-	// GetClusterState gets the current cluster state.
-	GetClusterState(cluster string) (cluster.Cluster, error)
-}
+type Service = concord.Service

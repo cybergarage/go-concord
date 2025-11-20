@@ -19,9 +19,9 @@ import (
 	"testing"
 	"time"
 
+	plugin "github.com/cybergarage/go-concord/concord"
 	"github.com/cybergarage/go-concord/concord/cluster"
 	"github.com/cybergarage/go-concord/concord/coordinator"
-	plugin "github.com/cybergarage/go-concord/concord/plugins/coordinator"
 )
 
 type testObserver struct {
@@ -125,7 +125,7 @@ func CoordinatorMessageTest(t *testing.T, coords []plugin.Service) {
 			break
 		}
 		// Waits for the received messages
-		time.Sleep(plugin.DefaultStoreScanInterval)
+		time.Sleep(time.Second)
 	}
 
 	// Checks the received messages

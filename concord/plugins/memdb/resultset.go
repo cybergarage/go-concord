@@ -16,6 +16,7 @@ package memdb
 
 import (
 	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/hashicorp/go-memdb"
 )
 
@@ -70,7 +71,7 @@ func (rs *resultSet) Next() bool {
 	if err != nil {
 		return false
 	}
-	rs.obj = coordinator.NewObjectWith(key, doc.Value)
+	rs.obj = document.NewObjectWith(key, doc.Value)
 	return true
 }
 

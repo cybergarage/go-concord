@@ -15,8 +15,19 @@
 package concord
 
 import (
+	"github.com/cybergarage/go-concord/concord/cluster"
 	"github.com/cybergarage/go-concord/concord/coordinator"
 )
 
-// Message represents a coordinator message.
-type Message = coordinator.Message
+// Service represents a coordinator service.
+type Service interface {
+	coordinator.Coordinator
+	// Start starts the coordinator service.
+	Start() error
+	// Stop stops the coordinator service.
+	Stop() error
+	// SetNodeState posts the specified node status to the coordinator.
+	SetNodeState(node cluster.Node) error
+	// GetClusterState gets the current cluster state.
+	GetClusterState(cluster string) (cluster.Cluster, error)
+}

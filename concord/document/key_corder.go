@@ -12,22 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package document
 
-// Transaction represents a transaction interface.
-type Transaction interface {
-	// Set sets the object for the specified key.
-	Set(obj Object) error
-	// Get gets the object for the specified key.
-	Get(key Key) (Object, error)
-	// GetRange gets the result set for the specified key.
-	GetRange(key Key, opts ...Option) (ResultSet, error)
-	// Remove removes the object for the specified key.
-	Remove(key Key) error
-	// Commit commits this transaction.
-	Commit() error
-	// Cancel cancels this transaction.
-	Cancel() error
-	// Truncate removes all objects.
-	Truncate() error
+// An KeyDecoder decodes the specified bytes.
+type KeyDecoder interface {
+	// DecodeKey returns the decoded key from the specified bytes if available, otherwise returns an error.
+	DecodeKey([]byte) (Key, error)
+}
+
+// An KeyEncoder encodes the specified key.
+type KeyEncoder interface {
+	// EncodeKey returns the encoded bytes from the specified key if available, otherwise returns an error.
+	EncodeKey(Key) ([]byte, error)
+}
+
+// A KeyCoder includes key decoder and encoder interfaces.
+type KeyCoder interface {
+	KeyDecoder
+	KeyEncoder
 }

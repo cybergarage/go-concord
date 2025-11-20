@@ -12,8 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package core
+package coordinator
 
-const (
-	Unknown = "unknown"
-)
+// Transaction represents a transaction interface.
+type Transaction interface {
+	// Set sets the object for the specified key.
+	Set(obj Object) error
+	// Get gets the object for the specified key.
+	Get(key Key) (Object, error)
+	// GetRange gets the result set for the specified key.
+	GetRange(key Key, opts ...Option) (ResultSet, error)
+	// Remove removes the object for the specified key.
+	Remove(key Key) error
+	// Commit commits this transaction.
+	Commit() error
+	// Cancel cancels this transaction.
+	Cancel() error
+	// Truncate removes all objects.
+	Truncate() error
+}
