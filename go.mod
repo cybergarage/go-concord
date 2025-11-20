@@ -4,9 +4,10 @@ go 1.25
 
 require (
 	github.com/apple/foundationdb/bindings/go v0.0.0-20250702211439-37fcf1c8ce08
+	github.com/cybergarage/go-serix v0.9.0
 	github.com/cybergarage/go-cbor v1.3.2
 	github.com/cybergarage/go-logger v1.3.11
-	github.com/cybergarage/go-pict v1.0.0
+	github.com/cybergarage/go-pict v1.0.1
 	github.com/cybergarage/puzzledb-go v1.3.6
 	github.com/google/uuid v1.6.0
 	github.com/hashicorp/go-memdb v1.3.5
