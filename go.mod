@@ -4,10 +4,10 @@ go 1.25
 
 require (
 	github.com/apple/foundationdb/bindings/go v0.0.0-20250702211439-37fcf1c8ce08
-	github.com/cybergarage/go-serix v0.9.0
 	github.com/cybergarage/go-cbor v1.3.2
 	github.com/cybergarage/go-logger v1.3.11
-	github.com/cybergarage/go-pict v1.0.1
+	github.com/cybergarage/go-pict v1.0.2
+	github.com/cybergarage/go-serix v0.9.1-0.20251124080038-8b520a1122cc
 	github.com/cybergarage/puzzledb-go v1.3.6
 	github.com/google/uuid v1.6.0
 	github.com/hashicorp/go-memdb v1.3.5
@@ -23,7 +23,7 @@ require (
 	github.com/cybergarage/go-mysql v1.3.2-0.20250608142800-176d460b696f // indirect
 	github.com/cybergarage/go-postgresql v1.6.5 // indirect
 	github.com/cybergarage/go-redis v1.5.6 // indirect
-	github.com/cybergarage/go-safecast v1.3.4 // indirect
+	github.com/cybergarage/go-safecast v1.3.5 // indirect
 	github.com/cybergarage/go-sasl v1.2.6 // indirect
 	github.com/cybergarage/go-sqlparser v1.6.1-0.20250617035917-ed0ae4240277 // indirect
 	github.com/cybergarage/go-sqltest v1.6.2-0.20250606100156-a91df13ec312 // indirect
