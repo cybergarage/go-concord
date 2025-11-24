@@ -46,7 +46,11 @@ func generateCoordinatorObjects() ([]document.Object, error) {
 		key := document.NewKey()
 		key = append(key, fmt.Sprintf("key%d", i))
 		for j, pictParam := range pict.Params() {
-			kv, err := pictCase[j].CastType(string(pictParam))
+			paramType, err := pictParam.Type()
+			if err != nil {
+				return []document.Object{}, err
+			}
+			kv, err := pictCase[j].CastTo(paramType)
 			if err != nil {
 				return []document.Object{}, err
 			}
@@ -59,9 +63,12 @@ func generateCoordinatorObjects() ([]document.Object, error) {
 	for i, pictCase := range pict.Cases() {
 		val := map[string]any{}
 		for j, pictParam := range pict.Params() {
-			name := string(pictParam)
 			pictElem := pictCase[j]
-			v, err := pictElem.CastType(name)
+			paramType, err := pictParam.Type()
+			if err != nil {
+				return []document.Object{}, err
+			}
+			v, err := pictElem.CastTo(paramType)
 			if err != nil {
 				return []coordinator.Object{}, err
 			}
@@ -92,9 +99,12 @@ func updateCoordinatorObjects(objs []coordinator.Object) ([]coordinator.Object, 
 	for i, pictCase := range pict.Cases() {
 		val := []any{}
 		for j, pictParam := range pict.Params() {
-			name := string(pictParam)
 			pictElem := pictCase[j]
-			v, err := pictElem.CastType(name)
+			paramType, err := pictParam.Type()
+			if err != nil {
+				return []document.Object{}, err
+			}
+			v, err := pictElem.CastTo(paramType)
 			if err != nil {
 				return []coordinator.Object{}, err
 			}
