@@ -35,6 +35,7 @@ func truncateCoordinatorStore(coord concord.Service) error {
 	return txn.Commit()
 }
 
+// CoordinatorClusterTest tests the coordinator cluster functionality.
 // nolint:goerr113, gocognit, gci, gocyclo, gosec, maintidx
 func CoordinatorClusterTest(t *testing.T, coords []concord.Service) {
 	t.Helper()

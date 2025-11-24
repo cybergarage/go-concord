@@ -64,6 +64,7 @@ func generateCoordinatorObjects() ([]document.Object, error) {
 		val := map[string]any{}
 		for j, pictParam := range pict.Params() {
 			pictElem := pictCase[j]
+			paramName := pictParam.Name()
 			paramType, err := pictParam.Type()
 			if err != nil {
 				return []document.Object{}, err
@@ -72,7 +73,7 @@ func generateCoordinatorObjects() ([]document.Object, error) {
 			if err != nil {
 				return []coordinator.Object{}, err
 			}
-			val[name] = v
+			val[paramName] = v
 		}
 		vals[i] = val
 	}
@@ -120,6 +121,7 @@ func updateCoordinatorObjects(objs []coordinator.Object) ([]coordinator.Object, 
 	return objs, nil
 }
 
+// CoordinatorStoreTest tests the coordinator store functionality.
 // nolint:goerr113, gocognit, gci, gocyclo, gosec, maintidx
 func CoordinatorStoreTest(t *testing.T, coord concord.Service) {
 	t.Helper()
