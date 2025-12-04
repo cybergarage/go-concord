@@ -1,0 +1,8 @@
+Support,Statement,Note
+O,DELETE,
+O,INSERT,Does not perform constraint checking on foreign keys
+O,SELECT,Sub-queries and algebraic operations are currently not supported
+O,UPDATE,
+O,TRUNCATE,
+O,VACCUM,(No Current Action)
+O,COPY,Support only text format

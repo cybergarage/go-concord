@@ -1,0 +1,15 @@
+== Plugin Concepts
+
+PuzzleDB is a pluggable database composed of modular components. Interfaces follow a layering concept similar to FoundationDB: query and data model layers are separated from an ordered key‑value storage layer.
+
+image::img/architecture.png[]
+
+Coordinator and storage interfaces allow standalone or distributed operation. With distributed plugins enabled, PuzzleDB becomes a multi‑API, multi‑model database.
+
+
+include::plugin-types.adoc[leveloffset=+1]
+
+=== References
+
+include::fdb/references.adoc[leveloffset=+1]
+include::spanner/references.adoc[leveloffset=+1]

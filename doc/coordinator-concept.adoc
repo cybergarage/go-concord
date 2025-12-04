@@ -1,0 +1,20 @@
+== Coordinator Concept
+
+Coordinator services (e.g., ZooKeeper, etcd, Consul) manage configuration, synchronization, and coordination for distributed applications, helping maintain consistency and availability.
+
+In distributed mode PuzzleDB runs as multiple instances. Each plugin service across instances is coordinated via the configured coordinator plugin.
+
+image::img/architecture.png[]
+
+The coordinator plugin provides synchronization, membership management, and state propagation for PuzzleDB nodes.
+
+=== References
+
+* Coordinator Services
+** https://research.google/pubs/pub41344/[The Chubby lock service for loosely-coupled distributed systems]
+** https://zookeeper.apache.org/[Apache ZooKeeper]
+** https://www.consul.io/[Consul by HashiCorp]
+** https://etcd.io/[etcd by CoreOS]
+
+* https://loneidealist.medium.com/distributed-coordination-5eb8eabb2ff[Distributed Coordination. How distributed systems reach consensus | by Imesha Sudasingha | Medium]
+* https://loneidealist.medium.com/apache-curator-vs-etcd3-9c1362600b26[Apache Zookeeper vs etcd3. A comparison between distributed… | by Imesha Sudasingha | Medium]

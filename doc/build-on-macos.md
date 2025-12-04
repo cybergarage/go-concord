@@ -1,0 +1,20 @@
+# Build on macOS
+
+## Clone Repository
+
+Clone the PuzzleDB repository:
+
+    git clone https://github.com/cybergarage/puzzledb-go
+    cd puzzledb-go
+
+## Build
+
+To build PuzzleDB:
+
+    make build
+
+## Test
+
+PuzzleDB uses Go’s standard testing framework. To run all tests:
+
+    make test

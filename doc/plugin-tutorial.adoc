@@ -1,0 +1,61 @@
+== Building New Plugins
+
+This section describes the plugin interface for adding custom services and registering them with PuzzleDB.
+
+=== Plugin Interface
+
+Each plugin service implements the following `Service` interface (located in `puzzledb/plugins`):
+
+ type Service interface {
+ 	// ServiceType returns the service type.
+ 	ServiceType() ServiceType
+ 	// ServiceName returns the service name.
+ 	ServiceName() string
+ 	// Start starts the service
+ 	Start() error
+ 	// Stop stops the service
+ 	Stop() error
+ } 
+
+=== Standard Plugin Interfaces
+
+Standard plugin service types are listed below; refer to reserved interfaces in the `plugins` directory.
+
+[format="csv", options="header, autowidth"]
+|====
+include::plugin/plugin-types.csv[]
+|====
+
+For implementation examples, see existing plugins under `plugins/`.
+
+=== Registering a Plugin
+
+To register a custom plugin service, override `Server::LoadPlugins()`:
+
+ import (
+ 	"github.com/cybergarage/puzzledb-go/puzzledb"
+ )
+
+ type UserServer struct {
+ 	*puzzledb.Server
+ 	Host string
+ }
+
+ func NewServerWithConfig(config puzzledb.Config) *UserServer {
+ 	server := &UserServer{
+ 		Server: puzzledb.NewServerWithConfig(config),
+ 	}
+ 	return server
+ }
+
+ func (server *UserServer) LoadPlugins() error {
+ 	if err := server.Server.LoadPlugins(); err != nil {
+ 		return err
+ 	}
+	// Register your plugin service
+ 	var service puzzledb.Service = ....
+ 	server.RegisterService(service)			
+ 	return nil
+ }
+
+

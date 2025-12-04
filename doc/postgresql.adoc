@@ -1,0 +1,48 @@
+== PostgreSQL Compatibility
+
+PuzzleDB supports the PostgreSQL protocol via https://github.com/cybergarage/go-postgresql[go-postgresql], a framework for implementing PostgreSQL‑compatible servers in Go.
+
+image::https://raw.githubusercontent.com/cybergarage/go-postgresql/master/doc/img/framework.png[]
+
+The framework handles protocol and system commands; PuzzleDB focuses on implementing primary DDL and DML query processing.
+
+=== Data Model
+
+PuzzleDB maps https://www.postgresql.org/docs/current/datatype.html[PostgreSQL data types] into its internal document model as follows:
+
+[format="csv", options="header, autowidth"]
+|====
+include::model/postgresql.csv[]
+|====
+
+=== Supported Commands
+
+PuzzleDB incrementally supports https://www.postgresql.org/docs/current/plpgsql-statements.html[PostgreSQL statements]. Current status:
+
+==== Data Definition Statements
+
+[format="csv", options="header, autowidth"]
+|====
+include::postgresql/dds.csv[]
+|====
+
+==== Transaction Control Statements
+
+[format="csv", options="header, autowidth"]
+|====
+include::postgresql/tcs.csv[]
+|====
+
+==== Data Manipulation Statements
+
+[format="csv", options="header, autowidth"]
+|====
+include::postgresql/dms.csv[]
+|====
+
+==== Functions
+
+[format="csv", options="header, autowidth"]
+|====
+include::postgresql/function.csv[]
+|====

@@ -1,0 +1,24 @@
+Major Type,Sub Type,Description,Plug-ins,Distributed,Dependency
+System,-,System services,gRPC,O,
+,,,Actor,O,Coordinator
+Query,-,Query handler services,Redis,O,Store (Document)
+,,,MongoDB,O,Store (Document)
+,,,MySQL,O,Store (Document)
+,,,PostgreSQL,O,Store (Document)
+Coordinator,-,Coordination services,memdb,X,-
+,,,FoundationDB,O,-
+,,,etcd (Planning),O,-
+,,,ZooKeeper (Planning),,
+Coder,Document,Document coder services,CBOR,O,-
+,Key,Key coder services,Tuple,O,-
+Store,Document,Doument store services,Key-value based store,O,"Store (Key-value), Coder (Document), Coder (Key)"
+,Key-value,Key-value store services,memdb,X,"Coder (Document), Coder (Key)"
+,,,FoundationDB,O,"Coder (Document), Coder (Key)"
+,,,TiKV (Planning),O,-
+,,,JunoDB (Planning),,
+,Key-Value Cache,Key-value cache store services,Ristretto,O,Store (Key-value)
+Tracer,-,Distributed tracing services,OpenTelemetry,O,
+,,,OpenTracing,O,
+Metric,-,Metrics services,Prometheus,O,
+,,,Graphite (Planning),O,
+Extend,-,User-defined services,-,-,-

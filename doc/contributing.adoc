@@ -1,0 +1,5 @@
+== Contributing
+
+=== Learning Go
+
+All server code for PuzzleDB is written in https://go.dev[Go]. To get started, take the official https://go.dev/tour/welcome/1[Go Tour].

@@ -1,0 +1,55 @@
+== Plugin Service Types
+
+PuzzleDB offers several plugin categories (query, storage, coordinator, system). They are classified by distributed capability and dependency requirements. System plugins (configuration, coordination) are always active by default. Query plugins expose database protocols; storage plugins implement an ordered key‑value store to maintain consistency in distributed environments.
+
+PuzzleDB provides default query, storage, coordinator, tracing, and metrics plugins. Types are defined below:
+
+[format="csv", options="header, autowidth"]
+|====
+include::plugin/plugin-types.csv[]
+|====
+
+* Distributed: Whether the plugin supports distributed operation (non‑distributed ones serve standalone or testing use cases).
+* Dependency: Other plugin types required for activation.
+
+=== Plugin Interfaces
+
+PuzzleDB defines plugin categories and interfaces as follows.
+
+==== System Plugins
+
+System plugins manage configuration, synchronization, and coordination of distributed PuzzleDB nodes.
+
+These are always activated by default. Some (e.g., gRPC) are independent; others (e.g., Actor) depend on additional plugins.
+
+==== Query Interface
+
+Redis, MongoDB, MySQL, and PostgreSQL each use distinct wire protocols for handling queries. PuzzleDB’s query interface aims to support any database protocol with a minimal abstraction.
+
+The abstraction is intentionally minimal to ease implementation of additional protocols.
+
+==== Storage Interface
+
+The storage interface is an ACID‑compliant ordered key‑value abstraction (similar to early Spanner / FoundationDB), enabling efficient range operations and strong consistency.
+
+Ordered storage optimizes range scans, point lookups, and transactional workloads in large‑scale distributed environments.
+
+Maintaining keys in sorted order enables efficient range queries and predictable performance.
+
+==== Coordinator Interface
+
+Coordinator plugins integrate external services (ZooKeeper, etcd, Consul) for cluster membership, leader election, and distributed state.
+
+They provide synchronization and coordination primitives for PuzzleDB nodes.
+
+==== Tracer Interface
+
+Tracing plugins implement distributed trace collection (e.g., OpenTelemetry, OpenTracing) for end‑to‑end request analysis and latency diagnostics.
+
+The tracer interface is minimal to facilitate implementation of diverse tracing backends.
+
+==== Metrics Interface
+
+Metrics plugins collect, store, and export time‑series performance data for monitoring and alerting.
+
+The metrics interface is minimal to enable integration with systems like Prometheus or Graphite.

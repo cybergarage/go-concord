@@ -1,0 +1,12 @@
+== Layer Concept
+
+PuzzleDB adopts an approach similar to FoundationDB and early Google Spanner: high scalability and ACID transactions built atop a simple ordered key‑value substrate without embedded query functionality.
+
+image:img/layer_concept.png[]
+
+PuzzleDB loosely couples the query APIs, data model, and storage engine, enabling tailored compositions for specific workloads. Records, schemas, and indexes are all materialized as key‑value data.
+
+== References
+
+include::fdb/references.adoc[leveloffset=+1]
+include::spanner/references.adoc[leveloffset=+1]

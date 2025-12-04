@@ -1,0 +1,25 @@
+== Storage Concepts
+
+Storage plugins should provide transaction‑enabled, ordered, sharded NoSQL capabilities (similar to Google Spanner or FoundationDB).
+
+=== Ordered Key-Value Store
+
+PuzzleDB defines its storage interface as an ACID‑compliant ordered key‑value store (similar to early Spanner / FoundationDB), contrasting with unordered hash‑based stores.
+
+Ordered stores optimize range scans, point lookups, and transactional semantics in large‑scale distributed deployments.
+
+Sorted keys enable efficient range queries and predictable operational performance.
+
+=== Data Model
+
+PuzzleDB’s logical layer is a document model encoded onto the ordered key‑value substrate. All objects (data, schema, indexes) are documents persisted as key‑value entries.
+
+The document model must be expressive (JSON/BSON level) similar to CosmosDB’s ARS. See link:data-model.md[Data Model] for details.
+
+
+=== References
+
+include::fdb/references.adoc[leveloffset=+1]
+include::spanner/references.adoc[leveloffset=+1]
+include::cosmosdb/references.adoc[leveloffset=+1]
+
