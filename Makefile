@@ -55,8 +55,13 @@ vet: format
 lint: format
 	golangci-lint run ${PKG_SRC_ROOT}/... ${TEST_SRC_ROOT}/...
 
-certs:
-	@pushd ${TEST_SRC_ROOT}/certs && make && popd
+%.md : %.adoc
+	asciidoctor -b docbook -a leveloffset=+1 -o - $< | pandoc -t markdown_strict --wrap=none -f docbook > $@
+
+csvs := $(wildcard doc/*/*.csv doc/*/*/*.csv)
+docs := $(patsubst %.adoc,%.md,$(wildcard *.adoc doc/*.adoc doc/*/*.adoc))
+doc: $(csvs)
+	touch doc/*.adoc doc/*/*.adoc
 
 test: lint
 	go test -v -p 1 -timeout 60m \
