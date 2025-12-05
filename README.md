@@ -11,3 +11,16 @@
 In large-scale distributed environments, multiple nodes must operate cooperatively, requiring reliable mechanisms for agreement, synchronization, and state management. Coordination services address this need by centralizing essential metadata and providing consistent operations.
 
 **Note:** 🌱 This is a spare-time hobby project, so progress may be slow and changes may appear irregular. Thank you for your patience 🙂
+
+## Key Features
+
+go-concord provides:
+
+# Architecture & Concepts
+
+Core architecture and design documents:
+- [Design Concepts](doc/concept.md)
+  - [Data Model](doc/data-model.md)
+  - [Storage Concept](doc/storage-concept.md)
+  - [Consistency Model](doc/consistency-model.md)
+  - [Coordinator Concept](doc/coordinator-concept.md)
