@@ -37,7 +37,7 @@ PKG=${MODULE_ROOT}/${PKG_SRC_ROOT}
 TEST_SRC_ROOT=${PKG_NAME}test
 TEST_PKG=${MODULE_ROOT}/${TEST_SRC_ROOT}
 
-PHONY: test format vet lint clean
+PHONY: test format vet lint clean doc
 .IGNORE: lint
 
 all: test
@@ -57,11 +57,12 @@ lint: format
 
 %.md : %.adoc
 	asciidoctor -b docbook -a leveloffset=+1 -o - $< | pandoc -t markdown_strict --wrap=none -f docbook > $@
+	-git add $@ $< 
+	-git commit $@ $< -m "docs: update $@"
 
 csvs := $(wildcard doc/*/*.csv doc/*/*/*.csv)
 docs := $(patsubst %.adoc,%.md,$(wildcard *.adoc doc/*.adoc doc/*/*.adoc))
-doc: $(csvs)
-	touch doc/*.adoc doc/*/*.adoc
+doc: $(docs) $(csvs)
 
 test: lint
 	go test -v -p 1 -timeout 60m \
