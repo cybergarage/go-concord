@@ -15,9 +15,9 @@
 package etcd
 
 import (
-	"github.com/cybergarage/Concord/concord"
-	"github.com/cybergarage/Concord/concord/coordinator"
-	"github.com/cybergarage/Concord/concord/plugins"
+	"github.com/cybergarage/go-concord/concord"
+	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/plugins"
 )
 
 type etcdCoordinator struct {

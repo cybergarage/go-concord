@@ -15,8 +15,8 @@
 package coordinator
 
 import (
-	"github.com/cybergarage/Concord/concord/cluster"
-	"github.com/cybergarage/Concord/concord/document"
+	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/document"
 )
 
 // NewMessageScanKey returns a new scan message key to get the latest message clock.

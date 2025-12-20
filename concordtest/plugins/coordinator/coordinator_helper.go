@@ -17,7 +17,7 @@ package coordinator
 import (
 	"testing"
 
-	"github.com/cybergarage/Concord/concord"
+	"github.com/cybergarage/go-concord/concord"
 )
 
 func CoordinatorsTest(t *testing.T, coord []concord.Service) {

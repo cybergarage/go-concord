@@ -15,7 +15,7 @@
 package concord
 
 import (
-	"github.com/cybergarage/Concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/cluster"
 )
 
 // Node represents a cluster node.

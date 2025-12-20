@@ -15,7 +15,7 @@
 package coordinator
 
 import (
-	"github.com/cybergarage/Concord/concord/document"
+	"github.com/cybergarage/go-concord/concord/document"
 )
 
 // Key represents an unique key for a key-value object.

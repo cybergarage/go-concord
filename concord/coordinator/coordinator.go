@@ -15,7 +15,7 @@
 package coordinator
 
 import (
-	"github.com/cybergarage/Concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/cluster"
 )
 
 // Store represents a coordination store inteface.

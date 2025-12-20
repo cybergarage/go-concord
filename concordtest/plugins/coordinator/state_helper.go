@@ -19,8 +19,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/cybergarage/Concord/concord"
-	"github.com/cybergarage/Concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord"
+	"github.com/cybergarage/go-concord/concord/cluster"
 )
 
 func truncateCoordinatorStore(coord concord.Service) error {
@@ -64,7 +64,7 @@ func CoordinatorClusterTest(t *testing.T, coords []concord.Service) {
 	}
 
 	for _, coord := range coords {
-		cluster, err := coord.GetClusterState(testCluster)
+		cluster, err := coord.ClusterState(testCluster)
 		if err != nil {
 			t.Error(err)
 			return

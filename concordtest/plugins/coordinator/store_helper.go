@@ -20,9 +20,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/cybergarage/Concord/concord"
-	"github.com/cybergarage/Concord/concord/coordinator"
-	"github.com/cybergarage/Concord/concord/document"
+	"github.com/cybergarage/go-concord/concord"
+	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/cybergarage/go-pict/pict"
 	"github.com/cybergarage/go-serix/serix/plugins/coder/key/tuple"
 )

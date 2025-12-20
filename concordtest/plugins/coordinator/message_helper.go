@@ -19,9 +19,9 @@ import (
 	"testing"
 	"time"
 
-	plugin "github.com/cybergarage/Concord/concord"
-	"github.com/cybergarage/Concord/concord/cluster"
-	"github.com/cybergarage/Concord/concord/coordinator"
+	plugin "github.com/cybergarage/go-concord/concord"
+	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/coordinator"
 )
 
 type testObserver struct {

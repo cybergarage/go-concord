@@ -23,7 +23,7 @@ HOSTNAME=$(shell hostname)
 LOG_DIR=log
 
 GIT_ROOT=github.com/cybergarage
-PRODUCT_NAME=Concord
+PRODUCT_NAME=go-concord
 MODULE_ROOT=${GIT_ROOT}/${PRODUCT_NAME}
 
 PKG_NAME=concord

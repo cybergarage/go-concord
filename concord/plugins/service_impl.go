@@ -20,11 +20,11 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/cybergarage/Concord/concord"
-	"github.com/cybergarage/Concord/concord/cluster"
-	"github.com/cybergarage/Concord/concord/coordinator"
-	"github.com/cybergarage/Concord/concord/document"
 	"github.com/cybergarage/go-cbor/cbor"
+	"github.com/cybergarage/go-concord/concord"
+	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/cybergarage/go-logger/log"
 )
 
@@ -256,8 +256,8 @@ func (coord *serviceImpl) SetNodeState(node cluster.Node) error {
 	return nil
 }
 
-// GetClusterState gets the current cluster state.
-func (coord *serviceImpl) GetClusterState(name string) (cluster.Cluster, error) {
+// ClusterState gets the current cluster state.
+func (coord *serviceImpl) ClusterState(name string) (cluster.Cluster, error) {
 	coord.Lock()
 	defer coord.Unlock()
 

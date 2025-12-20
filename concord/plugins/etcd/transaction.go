@@ -15,7 +15,7 @@
 package etcd
 
 import (
-	"github.com/cybergarage/Concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/coordinator"
 )
 
 type transaction struct {

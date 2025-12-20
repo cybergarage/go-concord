@@ -15,7 +15,7 @@
 package coordinator
 
 import (
-	"github.com/cybergarage/Concord/concord/document"
+	"github.com/cybergarage/go-concord/concord/document"
 )
 
 // StateType is a type of the state object.

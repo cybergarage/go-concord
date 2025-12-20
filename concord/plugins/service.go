@@ -15,7 +15,7 @@
 package plugins
 
 import (
-	"github.com/cybergarage/Concord/concord"
+	"github.com/cybergarage/go-concord/concord"
 )
 
 // Service is an interface for the coordinator service.

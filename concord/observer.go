@@ -15,7 +15,7 @@
 package concord
 
 import (
-	"github.com/cybergarage/Concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/coordinator"
 )
 
 // Observer represents a message observer.

@@ -18,8 +18,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/cybergarage/Concord/concord/cluster"
-	"github.com/cybergarage/Concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/coordinator"
 )
 
 type BaseCoordinator struct {
@@ -85,7 +85,7 @@ func (coord *BaseCoordinator) SetNodeState(node cluster.Node) error {
 	return errors.New("SetNodeState not implemented")
 }
 
-// GetClusterState gets the current cluster state.
-func (coord *BaseCoordinator) GetClusterState(name string) (cluster.Cluster, error) {
-	return nil, errors.New("GetClusterState not implemented")
+// ClusterState gets the current cluster state.
+func (coord *BaseCoordinator) ClusterState(name string) (cluster.Cluster, error) {
+	return nil, errors.New("ClusterState not implemented")
 }

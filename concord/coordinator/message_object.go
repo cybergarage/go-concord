@@ -17,8 +17,8 @@ package coordinator
 import (
 	"fmt"
 
-	"github.com/cybergarage/Concord/concord/cluster"
 	"github.com/cybergarage/go-cbor/cbor"
+	"github.com/cybergarage/go-concord/concord/cluster"
 	"github.com/google/uuid"
 )
 
