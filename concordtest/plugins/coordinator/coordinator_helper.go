@@ -1,4 +1,4 @@
-// Copyright (C) 2022 The go-concord Authors.
+// Copyright (C) 2022 The Concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package coordinator
 import (
 	"testing"
 
-	"github.com/cybergarage/go-concord/concord"
+	"github.com/cybergarage/Concord/concord"
 )
 
 func CoordinatorsTest(t *testing.T, coord []concord.Service) {

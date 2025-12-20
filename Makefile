@@ -1,4 +1,4 @@
-# Copyright (C) 2025 The go-concord Authors.
+# Copyright (C) 2025 The Concord Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ HOSTNAME=$(shell hostname)
 LOG_DIR=log
 
 GIT_ROOT=github.com/cybergarage
-PRODUCT_NAME=go-concord
+PRODUCT_NAME=Concord
 MODULE_ROOT=${GIT_ROOT}/${PRODUCT_NAME}
 
 PKG_NAME=concord

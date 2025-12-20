@@ -1,4 +1,4 @@
-// Copyright (C) 2025 The go-concord Authors.
+// Copyright (C) 2025 The Concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 package concord
 
 import (
-	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/Concord/concord/coordinator"
 )
 
 // Observer represents a message observer.

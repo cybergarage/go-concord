@@ -1,4 +1,4 @@
-module github.com/cybergarage/go-concord
+module github.com/cybergarage/Concord
 
 go 1.25
 

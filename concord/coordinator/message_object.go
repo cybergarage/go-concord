@@ -1,4 +1,4 @@
-// Copyright (C) 2025 The go-concord Authors.
+// Copyright (C) 2025 The Concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@ package coordinator
 import (
 	"fmt"
 
+	"github.com/cybergarage/Concord/concord/cluster"
 	"github.com/cybergarage/go-cbor/cbor"
-	"github.com/cybergarage/go-concord/concord/cluster"
 	"github.com/google/uuid"
 )
 
