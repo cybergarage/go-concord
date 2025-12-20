@@ -20,6 +20,7 @@ import (
 
 	"github.com/cybergarage/go-concord/concord/cluster"
 	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/store"
 )
 
 type BaseCoordinator struct {
@@ -71,7 +72,7 @@ func (coord *BaseCoordinator) GetStateObject(t coordinator.StateType, key coordi
 }
 
 // GetStateObjects gets the result set for the specified key and state type.
-func (coord *BaseCoordinator) GetStateObjects(t coordinator.StateType) (coordinator.ResultSet, error) {
+func (coord *BaseCoordinator) GetStateObjects(t coordinator.StateType) (store.ResultSet, error) {
 	return nil, errors.New("GetStateObjects not implemented")
 }
 

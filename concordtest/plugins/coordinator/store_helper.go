@@ -23,6 +23,7 @@ import (
 	"github.com/cybergarage/go-concord/concord"
 	"github.com/cybergarage/go-concord/concord/coordinator"
 	"github.com/cybergarage/go-concord/concord/document"
+	"github.com/cybergarage/go-concord/concord/store"
 	"github.com/cybergarage/go-pict/pict"
 	"github.com/cybergarage/go-serix/serix/plugins/coder/key/tuple"
 )
@@ -128,7 +129,7 @@ func CoordinatorStoreTest(t *testing.T, coord concord.Service) {
 
 	coord.SetKeyCoder(newTestKeyCoder())
 
-	cancel := func(t *testing.T, txn document.Transaction) {
+	cancel := func(t *testing.T, txn store.Transaction) {
 		t.Helper()
 		if err := txn.Cancel(); err != nil {
 			t.Error(err)

@@ -25,6 +25,7 @@ import (
 	"github.com/cybergarage/go-concord/concord/cluster"
 	"github.com/cybergarage/go-concord/concord/coordinator"
 	"github.com/cybergarage/go-concord/concord/document"
+	"github.com/cybergarage/go-concord/concord/store"
 	"github.com/cybergarage/go-logger/log"
 )
 
@@ -93,7 +94,7 @@ func (coord *serviceImpl) GetStateObject(t coordinator.StateType, key coordinato
 }
 
 // GetStateObjects gets the result set for the specified key and state type.
-func (coord *serviceImpl) GetStateObjects(t coordinator.StateType) (coordinator.ResultSet, error) {
+func (coord *serviceImpl) GetStateObjects(t coordinator.StateType) (store.ResultSet, error) {
 	txn, err := coord.Transact()
 	if err != nil {
 		return nil, err
@@ -113,15 +114,15 @@ func (coord *serviceImpl) nofityMessage(msg coordinator.Message) {
 	}
 }
 
-func (coord *serviceImpl) getLatestMessages(txn document.Transaction) (coordinator.ResultSet, error) {
+func (coord *serviceImpl) getLatestMessages(txn store.Transaction) (store.ResultSet, error) {
 	key := coordinator.NewMessageScanKey()
 	rs, err := txn.GetRange(
 		key,
-		document.NewOrderOptionWith(document.OrderDesc))
+		store.NewOrderOptionWith(store.OrderDesc))
 	return rs, err
 }
 
-func (coord *serviceImpl) notifyUpdateMessages(txn document.Transaction) error {
+func (coord *serviceImpl) notifyUpdateMessages(txn store.Transaction) error {
 	rs, err := coord.getLatestMessages(txn)
 	if err != nil {
 		return err
@@ -162,7 +163,7 @@ func (coord *serviceImpl) notifyUpdateMessages(txn document.Transaction) error {
 	return nil
 }
 
-func (coord *serviceImpl) getLatestMessageClock(txn document.Transaction) (cluster.Clock, error) {
+func (coord *serviceImpl) getLatestMessageClock(txn store.Transaction) (cluster.Clock, error) {
 	rs, err := coord.getLatestMessages(txn)
 	if err != nil {
 		return 0, err
@@ -193,7 +194,7 @@ func (coord *serviceImpl) PostMessage(msg coordinator.Message) error {
 }
 
 // postMessage posts the specified message to the coordinator.
-func (coord *serviceImpl) postMessage(txn document.Transaction, msg coordinator.Message) error {
+func (coord *serviceImpl) postMessage(txn store.Transaction, msg coordinator.Message) error {
 	localClock := coord.IncrementClock()
 
 	obj, err := coordinator.NewMessageObjectWith(msg, coord, localClock)
@@ -217,7 +218,7 @@ func (coord *serviceImpl) postMessage(txn document.Transaction, msg coordinator.
 	return nil
 }
 
-func (coord *serviceImpl) postNodeState(txn document.Transaction, node cluster.Node) error {
+func (coord *serviceImpl) postNodeState(txn store.Transaction, node cluster.Node) error {
 	key := coordinator.NewNodeKeyWith(node)
 	obj := coordinator.NewNodeObjectWith(node)
 	objBytes, err := cbor.Marshal(obj)

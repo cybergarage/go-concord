@@ -17,6 +17,7 @@ package memdb
 import (
 	"github.com/cybergarage/go-concord/concord/coordinator"
 	"github.com/cybergarage/go-concord/concord/document"
+	"github.com/cybergarage/go-concord/concord/store"
 	"github.com/hashicorp/go-memdb"
 )
 
@@ -31,7 +32,7 @@ type resultSet struct {
 	nRead  uint
 }
 
-func newResultSet(coder coordinator.KeyCoder, key coordinator.Key, it memdb.ResultIterator, offset uint, limit int) coordinator.ResultSet {
+func newResultSet(coder coordinator.KeyCoder, key coordinator.Key, it memdb.ResultIterator, offset uint, limit int) store.ResultSet {
 	return &resultSet{
 		KeyCoder: coder,
 		it:       it,
@@ -45,7 +46,7 @@ func newResultSet(coder coordinator.KeyCoder, key coordinator.Key, it memdb.Resu
 
 // Next moves the cursor forward next object from its current position.
 func (rs *resultSet) Next() bool {
-	if document.NoLimit < rs.limit && uint(rs.limit) <= rs.nRead {
+	if store.NoLimit < rs.limit && uint(rs.limit) <= rs.nRead {
 		return false
 	}
 

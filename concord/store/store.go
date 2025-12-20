@@ -12,7 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package document
+package store
+
+import (
+	"github.com/cybergarage/go-concord/concord/document"
+)
+
+// Key represents a document key.
+type Key = document.Key
+
+// KeyCoder represents a key coder for document keys.
+type KeyCoder = document.KeyCoder
+
+// Object represents a document object.
+type Object = document.Object
 
 // ResultSet represents a result set which includes range operation results.
 type ResultSet interface {
