@@ -1,6 +1,6 @@
 # Key Object
 
-In PuzzleDB, records, schemas, and indices are all represented as key-value pairs. This section describes the format of the key object in detail.
+In Concord, records, schemas, and indices are all represented as key-value pairs. This section describes the format of the key object in detail.
 
 ## Key Header Specification
 

@@ -4,7 +4,7 @@ Storage plugins should provide transaction‑enabled, ordered, sharded NoSQL cap
 
 ## Ordered Key-Value Store
 
-PuzzleDB defines its storage interface as an ACID‑compliant ordered key‑value store (similar to early Spanner / FoundationDB), contrasting with unordered hash‑based stores.
+Concord defines its storage interface as an ACID‑compliant ordered key‑value store (similar to early Spanner / FoundationDB), contrasting with unordered hash‑based stores.
 
 Ordered stores optimize range scans, point lookups, and transactional semantics in large‑scale distributed deployments.
 
@@ -12,7 +12,7 @@ Sorted keys enable efficient range queries and predictable operational performan
 
 ## Data Model
 
-PuzzleDB’s logical layer is a document model encoded onto the ordered key‑value substrate. All objects (data, schema, indexes) are documents persisted as key‑value entries.
+Concord’s logical layer is a document model encoded onto the ordered key‑value substrate. All objects (data, schema, indexes) are documents persisted as key‑value entries.
 
 The document model must be expressive (JSON/BSON level) similar to CosmosDB’s ARS. See [Data Model](data-model.md) for details.
 

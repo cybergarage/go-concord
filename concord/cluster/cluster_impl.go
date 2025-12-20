@@ -15,7 +15,7 @@
 package cluster
 
 const (
-	DefaultClusterName = "puzzledb"
+	DefaultClusterName = "Concord"
 )
 
 type clusterImpl struct {

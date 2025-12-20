@@ -1,10 +1,10 @@
 # Coordinator Key-value Store
 
-The coordinator sevice has a key-value store to commuicate with other nodes in PuzzleDB. The key-value store is a collection of key-value records, where each record is a key-value pair, consisting of a header as the key and a value as the value. The key-value store supports the following categories of key-value records:
+The coordinator sevice has a key-value store to commuicate with other nodes in Concord. The key-value store is a collection of key-value records, where each record is a key-value pair, consisting of a header as the key and a value as the value. The key-value store supports the following categories of key-value records:
 
 ![coordinator compo](img/coordinator_compo.png)
 
-The coordinator service provides a distributed key-value store for PuzzleDB nodes. The key-value store is a collection of key-value records, where each record is a key-value pair, consisting of a header as the key and a value as the value.
+The coordinator service provides a distributed key-value store for Concord nodes. The key-value store is a collection of key-value records, where each record is a key-value pair, consisting of a header as the key and a value as the value.
 
 ## Key Categories
 
@@ -106,7 +106,7 @@ The key header begins with a 1-byte identifier for the key type, enabling key ty
 
 ## State Objects
 
-The coordinator service defines standard state objects to share state among the PuzzleDB nodes. The state object values are defined by category, but the standard state object header and key order are defined as follows:
+The coordinator service defines standard state objects to share state among the Concord nodes. The state object values are defined by category, but the standard state object header and key order are defined as follows:
 
 <table style="width:100%;">
 <colgroup>

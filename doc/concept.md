@@ -1,14 +1,14 @@
 # Design Concepts
 
-PuzzleDB applies a NewSQL-style architecture built on an ordered key-value foundation for its data model, indexes, and queries—enabling high scalability with ACID transactions. This section outlines the core architecture and design concepts.
+Concord applies a NewSQL-style architecture built on an ordered key-value foundation for its data model, indexes, and queries—enabling high scalability with ACID transactions. This section outlines the core architecture and design concepts.
 
 # Layer Concept
 
-PuzzleDB adopts an approach similar to FoundationDB and early Google Spanner: high scalability and ACID transactions built atop a simple ordered key‑value substrate without embedded query functionality.
+Concord adopts an approach similar to FoundationDB and early Google Spanner: high scalability and ACID transactions built atop a simple ordered key‑value substrate without embedded query functionality.
 
 ![layer concept](img/layer_concept.png)
 
-PuzzleDB loosely couples the query APIs, data model, and storage engine, enabling tailored compositions for specific workloads. Records, schemas, and indexes are all materialized as key‑value data.
+Concord loosely couples the query APIs, data model, and storage engine, enabling tailored compositions for specific workloads. Records, schemas, and indexes are all materialized as key‑value data.
 
 # References
 
@@ -34,19 +34,19 @@ PuzzleDB loosely couples the query APIs, data model, and storage engine, enablin
 
 # Data Model
 
-PuzzleDB is a multi‑model database. The core logical model is a document model layered atop an ordered key‑value store. All objects (data, schema, indexes) are represented as documents and ultimately persisted as key‑value pairs.
+Concord is a multi‑model database. The core logical model is a document model layered atop an ordered key‑value store. All objects (data, schema, indexes) are represented as documents and ultimately persisted as key‑value pairs.
 
 <figure>
 <img src="img/storage.png" alt="storage" />
 </figure>
 
-PuzzleDB defines a storage plugin interface enabling use of local in‑memory stores (e.g. memdb) or large distributed stores (e.g. FoundationDB, TiKV).
+Concord defines a storage plugin interface enabling use of local in‑memory stores (e.g. memdb) or large distributed stores (e.g. FoundationDB, TiKV).
 
 ## Document Model
 
 The document model must be expressive (JSON / BSON level) similar to ARS (Atom‑Record‑Sequence) in CosmosDB.
 
-PuzzleDB maps external data models (relational, document, key‑value) into its internal document representation:
+Concord maps external data models (relational, document, key‑value) into its internal document representation:
 
 <table style="width:100%;">
 <colgroup>
@@ -60,7 +60,7 @@ PuzzleDB maps external data models (relational, document, key‑value) into its 
 <thead>
 <tr>
 <th style="text-align: left;">Type</th>
-<th style="text-align: left;">PuzzleDB</th>
+<th style="text-align: left;">Concord</th>
 <th style="text-align: left;">Redis</th>
 <th style="text-align: left;">MongoDB</th>
 <th style="text-align: left;">MySQL</th>
@@ -217,9 +217,9 @@ PuzzleDB maps external data models (relational, document, key‑value) into its 
 
 ### See also
 
-- [plugins.query.sql.NewDocumentElementTypeFrom()](https://github.com/cybergarage/puzzledb-go/blob/main/puzzledb/plugins/query/sql/type.go)
+- [plugins.query.sql.NewDocumentElementTypeFrom()](https://github.com/cybergarage/Concord-go/blob/main/Concord/plugins/query/sql/type.go)
 
-- [plugins.query.mongo.BSONEncoder::EncodeBSON()](https://github.com/cybergarage/puzzledb-go/blob/main/puzzledb/plugins/query/mongo/encoder.go)
+- [plugins.query.mongo.BSONEncoder::EncodeBSON()](https://github.com/cybergarage/Concord-go/blob/main/Concord/plugins/query/mongo/encoder.go)
 
 ## Key-Value Object Model
 
@@ -229,7 +229,7 @@ All higher‑level objects are encoded as documents and stored as key‑value en
 
 # Key Object
 
-In PuzzleDB, records, schemas, and indices are all represented as key-value pairs. This section describes the format of the key object in detail.
+In Concord, records, schemas, and indices are all represented as key-value pairs. This section describes the format of the key object in detail.
 
 ## Key Header Specification
 
@@ -397,7 +397,7 @@ Primary keys and secondary indices may comprise one or more columns. Although om
 
 ### See also
 
-- [plugins.coder.key.tuple.Coder::EncodeKey()](https://github.com/cybergarage/puzzledb-go/blob/main/puzzledb/plugins/coder/key/tuple/coder.go)
+- [plugins.coder.key.tuple.Coder::EncodeKey()](https://github.com/cybergarage/Concord-go/blob/main/Concord/plugins/coder/key/tuple/coder.go)
 
 ### Document (Value) Object
 
@@ -414,7 +414,7 @@ Documents are encoded using the active coder (CBOR by default) and persisted as 
 <thead>
 <tr>
 <th style="text-align: left;">Type</th>
-<th style="text-align: left;">PuzzleDB</th>
+<th style="text-align: left;">Concord</th>
 <th style="text-align: left;">CBOR</th>
 </tr>
 </thead>
@@ -489,7 +489,7 @@ Documents are encoded using the active coder (CBOR by default) and persisted as 
 
 #### See also
 
-- [plugins.coder.document.cbor.Coder::EncodeDocument()](https://github.com/cybergarage/puzzledb-go/blob/main/puzzledb/plugins/coder/document/cbor/coder.go)
+- [plugins.coder.document.cbor.Coder::EncodeDocument()](https://github.com/cybergarage/Concord-go/blob/main/Concord/plugins/coder/document/cbor/coder.go)
 
 ### References
 
@@ -509,7 +509,7 @@ Storage plugins should provide transaction‑enabled, ordered, sharded NoSQL cap
 
 ### Ordered Key-Value Store
 
-PuzzleDB defines its storage interface as an ACID‑compliant ordered key‑value store (similar to early Spanner / FoundationDB), contrasting with unordered hash‑based stores.
+Concord defines its storage interface as an ACID‑compliant ordered key‑value store (similar to early Spanner / FoundationDB), contrasting with unordered hash‑based stores.
 
 Ordered stores optimize range scans, point lookups, and transactional semantics in large‑scale distributed deployments.
 
@@ -517,7 +517,7 @@ Sorted keys enable efficient range queries and predictable operational performan
 
 ### Data Model
 
-PuzzleDB’s logical layer is a document model encoded onto the ordered key‑value substrate. All objects (data, schema, indexes) are documents persisted as key‑value entries.
+Concord’s logical layer is a document model encoded onto the ordered key‑value substrate. All objects (data, schema, indexes) are documents persisted as key‑value entries.
 
 The document model must be expressive (JSON/BSON level) similar to CosmosDB’s ARS. See [Data Model](data-model.md) for details.
 
@@ -553,27 +553,27 @@ The document model must be expressive (JSON/BSON level) similar to CosmosDB’s 
 
 ## Consistency Model
 
-PuzzleDB is a multi‑data‑model database; storage layer modules are expected to satisfy ACID semantics through a common interface.
+Concord is a multi‑data‑model database; storage layer modules are expected to satisfy ACID semantics through a common interface.
 
-PuzzleDB defines its top-level storage plugin as a document model interface composed of transaction and document primitives.
+Concord defines its top-level storage plugin as a document model interface composed of transaction and document primitives.
 
 <figure>
 <img src="img/consistency_model.png" alt="consistency model" />
 </figure>
 
-While non‑ACID backends could be implemented, PuzzleDB strongly recommends ACID‑compliant ordered key‑value storage for correctness and predictable consistency.
+While non‑ACID backends could be implemented, Concord strongly recommends ACID‑compliant ordered key‑value storage for correctness and predictable consistency.
 
 ## Coordinator Concept
 
 Coordinator services (e.g., ZooKeeper, etcd, Consul) manage configuration, synchronization, and coordination for distributed applications, helping maintain consistency and availability.
 
-In distributed mode PuzzleDB runs as multiple instances. Each plugin service across instances is coordinated via the configured coordinator plugin.
+In distributed mode Concord runs as multiple instances. Each plugin service across instances is coordinated via the configured coordinator plugin.
 
 <figure>
 <img src="img/architecture.png" alt="architecture" />
 </figure>
 
-The coordinator plugin provides synchronization, membership management, and state propagation for PuzzleDB nodes.
+The coordinator plugin provides synchronization, membership management, and state propagation for Concord nodes.
 
 ### References
 
@@ -593,7 +593,7 @@ The coordinator plugin provides synchronization, membership management, and stat
 
 ## Authentication
 
-PuzzleDB includes an authenticator manager that manages authentication for query plugins.
+Concord includes an authenticator manager that manages authentication for query plugins.
 
 <figure>
 <img src="img/authenticator.png" alt="authenticator" />
@@ -609,7 +609,7 @@ The authenticator manager supports multiple methods including:
 
 ### Authentication Plugin Summary
 
-PuzzleDB currently supports the following authentication mechanisms for query plugins.
+Concord currently supports the following authentication mechanisms for query plugins.
 
 - Plain
 
@@ -730,19 +730,19 @@ O: Supported, X: Unsupported, -: Not yet supported
 
 ## Plugin Concepts
 
-PuzzleDB is a pluggable database composed of modular components. Interfaces follow a layering concept similar to FoundationDB: query and data model layers are separated from an ordered key‑value storage layer.
+Concord is a pluggable database composed of modular components. Interfaces follow a layering concept similar to FoundationDB: query and data model layers are separated from an ordered key‑value storage layer.
 
 <figure>
 <img src="img/architecture.png" alt="architecture" />
 </figure>
 
-Coordinator and storage interfaces allow standalone or distributed operation. With distributed plugins enabled, PuzzleDB becomes a multi‑API, multi‑model database.
+Coordinator and storage interfaces allow standalone or distributed operation. With distributed plugins enabled, Concord becomes a multi‑API, multi‑model database.
 
 ## Plugin Service Types
 
-PuzzleDB offers several plugin categories (query, storage, coordinator, system). They are classified by distributed capability and dependency requirements. System plugins (configuration, coordination) are always active by default. Query plugins expose database protocols; storage plugins implement an ordered key‑value store to maintain consistency in distributed environments.
+Concord offers several plugin categories (query, storage, coordinator, system). They are classified by distributed capability and dependency requirements. System plugins (configuration, coordination) are always active by default. Query plugins expose database protocols; storage plugins implement an ordered key‑value store to maintain consistency in distributed environments.
 
-PuzzleDB provides default query, storage, coordinator, tracing, and metrics plugins. Types are defined below:
+Concord provides default query, storage, coordinator, tracing, and metrics plugins. Types are defined below:
 
 <table style="width:100%;">
 <colgroup>
@@ -957,17 +957,17 @@ PuzzleDB provides default query, storage, coordinator, tracing, and metrics plug
 
 ### Plugin Interfaces
 
-PuzzleDB defines plugin categories and interfaces as follows.
+Concord defines plugin categories and interfaces as follows.
 
 #### System Plugins
 
-System plugins manage configuration, synchronization, and coordination of distributed PuzzleDB nodes.
+System plugins manage configuration, synchronization, and coordination of distributed Concord nodes.
 
 These are always activated by default. Some (e.g., gRPC) are independent; others (e.g., Actor) depend on additional plugins.
 
 #### Query Interface
 
-Redis, MongoDB, MySQL, and PostgreSQL each use distinct wire protocols for handling queries. PuzzleDB’s query interface aims to support any database protocol with a minimal abstraction.
+Redis, MongoDB, MySQL, and PostgreSQL each use distinct wire protocols for handling queries. Concord’s query interface aims to support any database protocol with a minimal abstraction.
 
 The abstraction is intentionally minimal to ease implementation of additional protocols.
 
@@ -983,7 +983,7 @@ Maintaining keys in sorted order enables efficient range queries and predictable
 
 Coordinator plugins integrate external services (ZooKeeper, etcd, Consul) for cluster membership, leader election, and distributed state.
 
-They provide synchronization and coordination primitives for PuzzleDB nodes.
+They provide synchronization and coordination primitives for Concord nodes.
 
 #### Tracer Interface
 

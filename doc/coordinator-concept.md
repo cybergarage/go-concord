@@ -2,13 +2,13 @@
 
 Coordinator services (e.g., ZooKeeper, etcd, Consul) manage configuration, synchronization, and coordination for distributed applications, helping maintain consistency and availability.
 
-In distributed mode PuzzleDB runs as multiple instances. Each plugin service across instances is coordinated via the configured coordinator plugin.
+In distributed mode Concord runs as multiple instances. Each plugin service across instances is coordinated via the configured coordinator plugin.
 
 <figure>
 <img src="img/architecture.png" alt="architecture" />
 </figure>
 
-The coordinator plugin provides synchronization, membership management, and state propagation for PuzzleDB nodes.
+The coordinator plugin provides synchronization, membership management, and state propagation for Concord nodes.
 
 ## References
 

@@ -1,18 +1,18 @@
 # Data Model
 
-PuzzleDB is a multi‑model database. The core logical model is a document model layered atop an ordered key‑value store. All objects (data, schema, indexes) are represented as documents and ultimately persisted as key‑value pairs.
+Concord is a multi‑model database. The core logical model is a document model layered atop an ordered key‑value store. All objects (data, schema, indexes) are represented as documents and ultimately persisted as key‑value pairs.
 
 <figure>
 <img src="img/storage.png" alt="storage" />
 </figure>
 
-PuzzleDB defines a storage plugin interface enabling use of local in‑memory stores (e.g. memdb) or large distributed stores (e.g. FoundationDB, TiKV).
+Concord defines a storage plugin interface enabling use of local in‑memory stores (e.g. memdb) or large distributed stores (e.g. FoundationDB, TiKV).
 
 ## Document Model
 
 The document model must be expressive (JSON / BSON level) similar to ARS (Atom‑Record‑Sequence) in CosmosDB.
 
-PuzzleDB maps external data models (relational, document, key‑value) into its internal document representation:
+Concord maps external data models (relational, document, key‑value) into its internal document representation:
 
 <table style="width:100%;">
 <colgroup>
@@ -26,7 +26,7 @@ PuzzleDB maps external data models (relational, document, key‑value) into its 
 <thead>
 <tr>
 <th style="text-align: left;">Type</th>
-<th style="text-align: left;">PuzzleDB</th>
+<th style="text-align: left;">Concord</th>
 <th style="text-align: left;">Redis</th>
 <th style="text-align: left;">MongoDB</th>
 <th style="text-align: left;">MySQL</th>
@@ -183,9 +183,9 @@ PuzzleDB maps external data models (relational, document, key‑value) into its 
 
 ### See also
 
-- [plugins.query.sql.NewDocumentElementTypeFrom()](https://github.com/cybergarage/puzzledb-go/blob/main/puzzledb/plugins/query/sql/type.go)
+- [plugins.query.sql.NewDocumentElementTypeFrom()](https://github.com/cybergarage/Concord-go/blob/main/Concord/plugins/query/sql/type.go)
 
-- [plugins.query.mongo.BSONEncoder::EncodeBSON()](https://github.com/cybergarage/puzzledb-go/blob/main/puzzledb/plugins/query/mongo/encoder.go)
+- [plugins.query.mongo.BSONEncoder::EncodeBSON()](https://github.com/cybergarage/Concord-go/blob/main/Concord/plugins/query/mongo/encoder.go)
 
 ## Key-Value Object Model
 
@@ -195,7 +195,7 @@ All higher‑level objects are encoded as documents and stored as key‑value en
 
 # Key Object
 
-In PuzzleDB, records, schemas, and indices are all represented as key-value pairs. This section describes the format of the key object in detail.
+In Concord, records, schemas, and indices are all represented as key-value pairs. This section describes the format of the key object in detail.
 
 ## Key Header Specification
 
@@ -363,7 +363,7 @@ Primary keys and secondary indices may comprise one or more columns. Although om
 
 ### See also
 
-- [plugins.coder.key.tuple.Coder::EncodeKey()](https://github.com/cybergarage/puzzledb-go/blob/main/puzzledb/plugins/coder/key/tuple/coder.go)
+- [plugins.coder.key.tuple.Coder::EncodeKey()](https://github.com/cybergarage/Concord-go/blob/main/Concord/plugins/coder/key/tuple/coder.go)
 
 ### Document (Value) Object
 
@@ -380,7 +380,7 @@ Documents are encoded using the active coder (CBOR by default) and persisted as 
 <thead>
 <tr>
 <th style="text-align: left;">Type</th>
-<th style="text-align: left;">PuzzleDB</th>
+<th style="text-align: left;">Concord</th>
 <th style="text-align: left;">CBOR</th>
 </tr>
 </thead>
@@ -455,7 +455,7 @@ Documents are encoded using the active coder (CBOR by default) and persisted as 
 
 #### See also
 
-- [plugins.coder.document.cbor.Coder::EncodeDocument()](https://github.com/cybergarage/puzzledb-go/blob/main/puzzledb/plugins/coder/document/cbor/coder.go)
+- [plugins.coder.document.cbor.Coder::EncodeDocument()](https://github.com/cybergarage/Concord-go/blob/main/Concord/plugins/coder/document/cbor/coder.go)
 
 ### References
 

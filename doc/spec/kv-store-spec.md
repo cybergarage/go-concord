@@ -1,6 +1,6 @@
 # Key-Value Store Specification
 
-In PuzzleDB, both the coordinator service and the store service use key-value stores to store data. The coordinator uses a key-value store to store states, messages, jobs, and indices, while the store uses a key-value store to store to store records, schemas, and indices.
+In Concord, both the coordinator service and the store service use key-value stores to store data. The coordinator uses a key-value store to store states, messages, jobs, and indices, while the store uses a key-value store to store to store records, schemas, and indices.
 
 Since both services may use the same key-value store implementation, the key-value store specifications are designed not to affect each other. This document provides a list of these specifications.
 

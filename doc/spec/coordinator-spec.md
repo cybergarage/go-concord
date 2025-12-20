@@ -1,22 +1,22 @@
 # Coordinator Specification
 
-The coordinator service provides distributed synchronization and coordination for PuzzleDB nodes, as well as a distributed key-value store. This document describes the specifications of the information stored in the key-value store provided by the coordinator service.
+The coordinator service provides distributed synchronization and coordination for Concord nodes, as well as a distributed key-value store. This document describes the specifications of the information stored in the key-value store provided by the coordinator service.
 
 ## Coordinator Messaging
 
-The message box is used to store messages sent between PuzzleDB nodes in the cluster to notify any node and store status changes using the message key-value store.
+The message box is used to store messages sent between Concord nodes in the cluster to notify any node and store status changes using the message key-value store.
 
 ### Message Clock
 
-Logical clocks, such as the Lamport Clock, are important in distributed systems because they can order events across different nodes; in PuzzleDB, to manage the message clock for the coordinator service, the conceptual Lamport Clock algorithm:
+Logical clocks, such as the Lamport Clock, are important in distributed systems because they can order events across different nodes; in Concord, to manage the message clock for the coordinator service, the conceptual Lamport Clock algorithm:
 
 ![coordinator clock](img/coordinator_clock.png)
 
-In practice, the coordinator node acts as a virtual message relay node between PuzzleDB nodes. The coordinator service uses the message clock to provide the total order of messages at all nodes in the system. To manage the message clock, PuzzleDB uses the Lamport Clock algorithm, which assigns a unique timestamp to each message sent by a node.
+In practice, the coordinator node acts as a virtual message relay node between Concord nodes. The coordinator service uses the message clock to provide the total order of messages at all nodes in the system. To manage the message clock, Concord uses the Lamport Clock algorithm, which assigns a unique timestamp to each message sent by a node.
 
 ![coordinator message clock](img/coordinator_message_clock.png)
 
-When sending a message, a PuzzleDB node obtains the latest logical clock from the coordinator node and uses it to timestamp the message. When a PuzzleDB node receives or retrieves a message from a coordinator node, it updates its own logical clock with the logical clock included in the message.
+When sending a message, a Concord node obtains the latest logical clock from the coordinator node and uses it to timestamp the message. When a Concord node receives or retrieves a message from a coordinator node, it updates its own logical clock with the logical clock included in the message.
 
 ## Message Object
 
@@ -197,11 +197,11 @@ The user (U) message preserves only the message type, and the event type and mes
 
 # Coordinator Key-value Store
 
-The coordinator sevice has a key-value store to commuicate with other nodes in PuzzleDB. The key-value store is a collection of key-value records, where each record is a key-value pair, consisting of a header as the key and a value as the value. The key-value store supports the following categories of key-value records:
+The coordinator sevice has a key-value store to commuicate with other nodes in Concord. The key-value store is a collection of key-value records, where each record is a key-value pair, consisting of a header as the key and a value as the value. The key-value store supports the following categories of key-value records:
 
 ![coordinator compo](img/coordinator_compo.png)
 
-The coordinator service provides a distributed key-value store for PuzzleDB nodes. The key-value store is a collection of key-value records, where each record is a key-value pair, consisting of a header as the key and a value as the value.
+The coordinator service provides a distributed key-value store for Concord nodes. The key-value store is a collection of key-value records, where each record is a key-value pair, consisting of a header as the key and a value as the value.
 
 ## Key Categories
 
@@ -303,7 +303,7 @@ The key header begins with a 1-byte identifier for the key type, enabling key ty
 
 ## State Objects
 
-The coordinator service defines standard state objects to share state among the PuzzleDB nodes. The state object values are defined by category, but the standard state object header and key order are defined as follows:
+The coordinator service defines standard state objects to share state among the Concord nodes. The state object values are defined by category, but the standard state object header and key order are defined as follows:
 
 <table style="width:100%;">
 <colgroup>

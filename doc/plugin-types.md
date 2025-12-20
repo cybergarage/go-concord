@@ -1,8 +1,8 @@
 # Plugin Service Types
 
-PuzzleDB offers several plugin categories (query, storage, coordinator, system). They are classified by distributed capability and dependency requirements. System plugins (configuration, coordination) are always active by default. Query plugins expose database protocols; storage plugins implement an ordered key‑value store to maintain consistency in distributed environments.
+Concord offers several plugin categories (query, storage, coordinator, system). They are classified by distributed capability and dependency requirements. System plugins (configuration, coordination) are always active by default. Query plugins expose database protocols; storage plugins implement an ordered key‑value store to maintain consistency in distributed environments.
 
-PuzzleDB provides default query, storage, coordinator, tracing, and metrics plugins. Types are defined below:
+Concord provides default query, storage, coordinator, tracing, and metrics plugins. Types are defined below:
 
 <table style="width:100%;">
 <colgroup>
@@ -217,17 +217,17 @@ PuzzleDB provides default query, storage, coordinator, tracing, and metrics plug
 
 ## Plugin Interfaces
 
-PuzzleDB defines plugin categories and interfaces as follows.
+Concord defines plugin categories and interfaces as follows.
 
 ### System Plugins
 
-System plugins manage configuration, synchronization, and coordination of distributed PuzzleDB nodes.
+System plugins manage configuration, synchronization, and coordination of distributed Concord nodes.
 
 These are always activated by default. Some (e.g., gRPC) are independent; others (e.g., Actor) depend on additional plugins.
 
 ### Query Interface
 
-Redis, MongoDB, MySQL, and PostgreSQL each use distinct wire protocols for handling queries. PuzzleDB’s query interface aims to support any database protocol with a minimal abstraction.
+Redis, MongoDB, MySQL, and PostgreSQL each use distinct wire protocols for handling queries. Concord’s query interface aims to support any database protocol with a minimal abstraction.
 
 The abstraction is intentionally minimal to ease implementation of additional protocols.
 
@@ -243,7 +243,7 @@ Maintaining keys in sorted order enables efficient range queries and predictable
 
 Coordinator plugins integrate external services (ZooKeeper, etcd, Consul) for cluster membership, leader election, and distributed state.
 
-They provide synchronization and coordination primitives for PuzzleDB nodes.
+They provide synchronization and coordination primitives for Concord nodes.
 
 ### Tracer Interface
 

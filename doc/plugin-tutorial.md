@@ -1,10 +1,10 @@
 # Building New Plugins
 
-This section describes the plugin interface for adding custom services and registering them with PuzzleDB.
+This section describes the plugin interface for adding custom services and registering them with Concord.
 
 ## Plugin Interface
 
-Each plugin service implements the following `Service` interface (located in `puzzledb/plugins`):
+Each plugin service implements the following `Service` interface (located in `Concord/plugins`):
 
     type Service interface {
         // ServiceType returns the service type.
@@ -235,17 +235,17 @@ For implementation examples, see existing plugins under `plugins/`.
 To register a custom plugin service, override `Server::LoadPlugins()`:
 
     import (
-        "github.com/cybergarage/puzzledb-go/puzzledb"
+        "github.com/cybergarage/Concord-go/Concord"
     )
 
     type UserServer struct {
-        *puzzledb.Server
+        *Concord.Server
         Host string
     }
 
-    func NewServerWithConfig(config puzzledb.Config) *UserServer {
+    func NewServerWithConfig(config Concord.Config) *UserServer {
         server := &UserServer{
-            Server: puzzledb.NewServerWithConfig(config),
+            Server: Concord.NewServerWithConfig(config),
         }
         return server
     }
@@ -255,7 +255,7 @@ To register a custom plugin service, override `Server::LoadPlugins()`:
             return err
         }
     // Register your plugin service
-        var service puzzledb.Service = ....
+        var service Concord.Service = ....
         server.RegisterService(service)
         return nil
     }
