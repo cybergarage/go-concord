@@ -118,7 +118,7 @@ func (coord *serviceImpl) getLatestMessages(txn store.Transaction) (store.Result
 	key := coordinator.NewMessageScanKey()
 	rs, err := txn.GetRange(
 		key,
-		store.NewOrderOptionWith(store.OrderDesc))
+		store.OrderDesc)
 	return rs, err
 }
 

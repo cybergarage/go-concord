@@ -80,16 +80,16 @@ func (txn *transaction) GetRange(key coordinator.Key, opts ...store.Option) (sto
 	}
 
 	offset := uint(0)
-	limit := int(-1)
+	limit := uint(0)
 	order := store.OrderNone
 	for _, opt := range opts {
 		switch v := opt.(type) {
-		case *store.OffsetOption:
-			offset = v.Offset
-		case *store.LimitOption:
-			limit = v.Limit
-		case *store.OrderOption:
-			order = v.Order
+		case store.Offset:
+			offset = uint(v)
+		case store.Limit:
+			limit = uint(v)
+		case store.Order:
+			order = v
 		}
 	}
 
