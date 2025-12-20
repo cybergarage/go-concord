@@ -12,7 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package document
+
+// ResultSet represents a result set which includes range operation results.
+type ResultSet interface {
+	// Next moves the cursor forward next object from its current position.
+	Next() bool
+	// Object returns an object in the current position.
+	Object() Object
+}
 
 // Transaction represents a transaction interface.
 type Transaction interface {
@@ -30,4 +38,16 @@ type Transaction interface {
 	Cancel() error
 	// Truncate removes all objects.
 	Truncate() error
+}
+
+// Store represents a coordination store inteface.
+type Store interface {
+	// SetKeyCoder sets the key coder.
+	SetKeyCoder(coder KeyCoder)
+	// DecodeKey returns the decoded key from the specified bytes if available, otherwise returns an error.
+	DecodeKey([]byte) (Key, error)
+	// EncodeKey returns the encoded bytes from the specified key if available, otherwise returns an error.
+	EncodeKey(Key) ([]byte, error)
+	// Transact begin a new transaction.
+	Transact() (Transaction, error)
 }

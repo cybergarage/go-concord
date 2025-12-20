@@ -16,6 +16,7 @@ package memdb
 
 import (
 	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/hashicorp/go-memdb"
 )
 
@@ -25,7 +26,7 @@ type transaction struct {
 }
 
 // NewTransaction returns a new transaction.
-func newTransactionWith(coder coordinator.KeyCoder, txn *memdb.Txn) coordinator.Transaction {
+func newTransactionWith(coder coordinator.KeyCoder, txn *memdb.Txn) document.Transaction {
 	return &transaction{
 		KeyCoder: coder,
 		Txn:      txn,
@@ -72,7 +73,7 @@ func (txn *transaction) Get(key coordinator.Key) (coordinator.Object, error) {
 }
 
 // GetRange gets the result set for the specified key.
-func (txn *transaction) GetRange(key coordinator.Key, opts ...coordinator.Option) (coordinator.ResultSet, error) {
+func (txn *transaction) GetRange(key coordinator.Key, opts ...document.Option) (coordinator.ResultSet, error) {
 	keyBytes, err := txn.KeyCoder.EncodeKey(key)
 	if err != nil {
 		return nil, err
@@ -80,20 +81,20 @@ func (txn *transaction) GetRange(key coordinator.Key, opts ...coordinator.Option
 
 	offset := uint(0)
 	limit := int(-1)
-	order := coordinator.OrderNone
+	order := document.OrderNone
 	for _, opt := range opts {
 		switch v := opt.(type) {
-		case *coordinator.OffsetOption:
+		case *document.OffsetOption:
 			offset = v.Offset
-		case *coordinator.LimitOption:
+		case *document.LimitOption:
 			limit = v.Limit
-		case *coordinator.OrderOption:
+		case *document.OrderOption:
 			order = v.Order
 		}
 	}
 
 	var it memdb.ResultIterator
-	if order != coordinator.OrderDesc {
+	if order != document.OrderDesc {
 		it, err = txn.Txn.Get(tableName, idName+prefix, keyBytes)
 	} else {
 		it, err = txn.Txn.GetReverse(tableName, idName+prefix, keyBytes)

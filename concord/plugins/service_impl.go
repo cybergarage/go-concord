@@ -113,15 +113,15 @@ func (coord *serviceImpl) nofityMessage(msg coordinator.Message) {
 	}
 }
 
-func (coord *serviceImpl) getLatestMessages(txn coordinator.Transaction) (coordinator.ResultSet, error) {
+func (coord *serviceImpl) getLatestMessages(txn document.Transaction) (coordinator.ResultSet, error) {
 	key := coordinator.NewMessageScanKey()
 	rs, err := txn.GetRange(
 		key,
-		coordinator.NewOrderOptionWith(coordinator.OrderDesc))
+		document.NewOrderOptionWith(document.OrderDesc))
 	return rs, err
 }
 
-func (coord *serviceImpl) notifyUpdateMessages(txn coordinator.Transaction) error {
+func (coord *serviceImpl) notifyUpdateMessages(txn document.Transaction) error {
 	rs, err := coord.getLatestMessages(txn)
 	if err != nil {
 		return err
@@ -162,7 +162,7 @@ func (coord *serviceImpl) notifyUpdateMessages(txn coordinator.Transaction) erro
 	return nil
 }
 
-func (coord *serviceImpl) getLatestMessageClock(txn coordinator.Transaction) (cluster.Clock, error) {
+func (coord *serviceImpl) getLatestMessageClock(txn document.Transaction) (cluster.Clock, error) {
 	rs, err := coord.getLatestMessages(txn)
 	if err != nil {
 		return 0, err
@@ -193,7 +193,7 @@ func (coord *serviceImpl) PostMessage(msg coordinator.Message) error {
 }
 
 // postMessage posts the specified message to the coordinator.
-func (coord *serviceImpl) postMessage(txn coordinator.Transaction, msg coordinator.Message) error {
+func (coord *serviceImpl) postMessage(txn document.Transaction, msg coordinator.Message) error {
 	localClock := coord.IncrementClock()
 
 	obj, err := coordinator.NewMessageObjectWith(msg, coord, localClock)
@@ -217,7 +217,7 @@ func (coord *serviceImpl) postMessage(txn coordinator.Transaction, msg coordinat
 	return nil
 }
 
-func (coord *serviceImpl) postNodeState(txn coordinator.Transaction, node cluster.Node) error {
+func (coord *serviceImpl) postNodeState(txn document.Transaction, node cluster.Node) error {
 	key := coordinator.NewNodeKeyWith(node)
 	obj := coordinator.NewNodeObjectWith(node)
 	objBytes, err := cbor.Marshal(obj)

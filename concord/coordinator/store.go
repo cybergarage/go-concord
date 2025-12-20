@@ -1,4 +1,4 @@
-// Copyright (C) 2025 The Concord Authors.
+// Copyright (C) 2024 The Concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,10 +14,21 @@
 
 package coordinator
 
-// ResultSet represents a result set which includes range operation results.
-type ResultSet interface {
-	// Next moves the cursor forward next object from its current position.
-	Next() bool
-	// Object returns an object in the current position.
-	Object() Object
-}
+import (
+	"github.com/cybergarage/go-concord/concord/document"
+)
+
+// Key represents a document key.
+type Key = document.Key
+
+// KeyCoder represents a key coder for key-value objects.
+type KeyCoder = document.KeyCoder
+
+// Object represents a key-value object.
+type Object = document.Object
+
+// ResultSet represents a result set for key-value objects.
+type ResultSet = document.ResultSet
+
+// Store represents a document store.
+type Store = document.Store

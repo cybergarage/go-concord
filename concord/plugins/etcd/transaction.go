@@ -16,13 +16,14 @@ package etcd
 
 import (
 	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/document"
 )
 
 type transaction struct {
 }
 
 // NewTransaction returns a new transaction.
-func NewTransaction() coordinator.Transaction {
+func NewTransaction() document.Transaction {
 	return &transaction{}
 }
 
@@ -37,7 +38,7 @@ func (txn *transaction) Get(key coordinator.Key) (coordinator.Object, error) {
 }
 
 // GetRange gets the result set for the specified key.
-func (txn *transaction) GetRange(key coordinator.Key, opts ...coordinator.Option) (coordinator.ResultSet, error) {
+func (txn *transaction) GetRange(key coordinator.Key, opts ...document.Option) (coordinator.ResultSet, error) {
 	return nil, nil
 }
 

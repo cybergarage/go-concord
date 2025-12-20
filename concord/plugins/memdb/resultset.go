@@ -45,7 +45,7 @@ func newResultSet(coder coordinator.KeyCoder, key coordinator.Key, it memdb.Resu
 
 // Next moves the cursor forward next object from its current position.
 func (rs *resultSet) Next() bool {
-	if coordinator.NoLimit < rs.limit && uint(rs.limit) <= rs.nRead {
+	if document.NoLimit < rs.limit && uint(rs.limit) <= rs.nRead {
 		return false
 	}
 

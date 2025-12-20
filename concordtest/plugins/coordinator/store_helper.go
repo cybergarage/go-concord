@@ -128,7 +128,7 @@ func CoordinatorStoreTest(t *testing.T, coord concord.Service) {
 
 	coord.SetKeyCoder(newTestKeyCoder())
 
-	cancel := func(t *testing.T, txn coordinator.Transaction) {
+	cancel := func(t *testing.T, txn document.Transaction) {
 		t.Helper()
 		if err := txn.Cancel(); err != nil {
 			t.Error(err)

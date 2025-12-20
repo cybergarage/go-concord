@@ -16,7 +16,7 @@ package etcd
 
 import (
 	"github.com/cybergarage/go-concord/concord"
-	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/cybergarage/go-concord/concord/plugins"
 )
 
@@ -36,7 +36,7 @@ func (coord *etcdCoordinator) ServiceName() string {
 	return "etcd"
 }
 
-func (coord *etcdCoordinator) Transact() (coordinator.Transaction, error) {
+func (coord *etcdCoordinator) Transact() (document.Transaction, error) {
 	return NewTransaction(), nil
 }
 

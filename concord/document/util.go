@@ -1,4 +1,4 @@
-// Copyright (C) 2025 The Concord Authors.
+// Copyright (C) 2024 The Concord Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,17 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package document
 
-import (
-	"github.com/cybergarage/go-concord/concord/document"
-)
-
-// Key represents an unique key for a key-value object.
-type Key = document.Key
-
-// KeyCoder represents a key coder for key-value objects.
-type KeyCoder = document.KeyCoder
-
-// Object represents a key-value object.
-type Object = document.Object
+// ReadAllObjects reads all objects from the result set.
+func ReadAllObjects(rs ResultSet) ([]Object, error) {
+	objs := []Object{}
+	for rs.Next() {
+		objs = append(objs, rs.Object())
+	}
+	return objs, nil
+}

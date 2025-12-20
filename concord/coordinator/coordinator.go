@@ -18,18 +18,6 @@ import (
 	"github.com/cybergarage/go-concord/concord/cluster"
 )
 
-// Store represents a coordination store inteface.
-type Store interface {
-	// SetKeyCoder sets the key coder.
-	SetKeyCoder(coder KeyCoder)
-	// DecodeKey returns the decoded key from the specified bytes if available, otherwise returns an error.
-	DecodeKey([]byte) (Key, error)
-	// EncodeKey returns the encoded bytes from the specified key if available, otherwise returns an error.
-	EncodeKey(Key) ([]byte, error)
-	// Transact begin a new transaction.
-	Transact() (Transaction, error)
-}
-
 // Coordinator represents a coordination service.
 type Coordinator interface {
 	Store

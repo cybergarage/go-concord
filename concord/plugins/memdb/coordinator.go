@@ -18,7 +18,7 @@ import (
 	"errors"
 
 	"github.com/cybergarage/go-concord/concord"
-	"github.com/cybergarage/go-concord/concord/coordinator"
+	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/cybergarage/go-concord/concord/plugins"
 	"github.com/hashicorp/go-memdb"
 )
@@ -50,7 +50,7 @@ func (coord *Coordinator) ServiceName() string {
 	return "memdb"
 }
 
-func (coord *Coordinator) Transact() (coordinator.Transaction, error) {
+func (coord *Coordinator) Transact() (document.Transaction, error) {
 	return newTransactionWith(coord.KeyCoder, coord.MemDB.Txn(true)), nil
 }
 
