@@ -20,16 +20,18 @@ import (
 
 // Coordinator represents a coordination service.
 type Coordinator interface {
-	Store
+	// Node represents the coordinator node.
 	cluster.Node
+	// Store represents the coordinator store.
+	Store
 	// SetNode sets the coordinator node.
 	SetNode(node cluster.Node)
 	// SetStateObject sets the state object for the specified key.
 	SetStateObject(t StateType, obj Object) error
 	// GetObject gets the object for the specified key and state type.
-	GetStateObject(t StateType, key Key) (Object, error)
+	StateObject(t StateType, key Key) (Object, error)
 	// GetRangeObjects gets the result set for the specified key and state type.
-	GetStateObjects(t StateType) (ResultSet, error)
+	StateObjects(t StateType) (ResultSet, error)
 	// PostMessage posts the specified message to the coordinator.
 	PostMessage(msg Message) error
 	// AddObserver adds the specified observer to the coordinator.

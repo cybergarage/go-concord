@@ -78,8 +78,8 @@ func (coord *serviceImpl) SetStateObject(t coordinator.StateType, obj coordinato
 	return txn.Commit()
 }
 
-// GetStateObject gets the object for the specified key and state type.
-func (coord *serviceImpl) GetStateObject(t coordinator.StateType, key coordinator.Key) (coordinator.Object, error) {
+// StateObject gets the object for the specified key and state type.
+func (coord *serviceImpl) StateObject(t coordinator.StateType, key coordinator.Key) (coordinator.Object, error) {
 	txn, err := coord.Transact()
 	if err != nil {
 		return nil, err
@@ -93,8 +93,8 @@ func (coord *serviceImpl) GetStateObject(t coordinator.StateType, key coordinato
 	return obj, err
 }
 
-// GetStateObjects gets the result set for the specified key and state type.
-func (coord *serviceImpl) GetStateObjects(t coordinator.StateType) (store.ResultSet, error) {
+// StateObjects gets the result set for the specified key and state type.
+func (coord *serviceImpl) StateObjects(t coordinator.StateType) (store.ResultSet, error) {
 	txn, err := coord.Transact()
 	if err != nil {
 		return nil, err

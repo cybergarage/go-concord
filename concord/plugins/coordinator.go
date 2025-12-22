@@ -66,14 +66,14 @@ func (coord *BaseCoordinator) SetStateObject(t coordinator.StateType, obj coordi
 	return errors.New("SetStateObject not implemented")
 }
 
-// GetStateObject gets the object for the specified key and state type.
-func (coord *BaseCoordinator) GetStateObject(t coordinator.StateType, key coordinator.Key) (coordinator.Object, error) {
-	return nil, errors.New("GetStateObject not implemented")
+// StateObject gets the object for the specified key and state type.
+func (coord *BaseCoordinator) StateObject(t coordinator.StateType, key coordinator.Key) (coordinator.Object, error) {
+	return nil, errors.New("StateObject not implemented")
 }
 
-// GetStateObjects gets the result set for the specified key and state type.
-func (coord *BaseCoordinator) GetStateObjects(t coordinator.StateType) (store.ResultSet, error) {
-	return nil, errors.New("GetStateObjects not implemented")
+// StateObjects gets the result set for the specified key and state type.
+func (coord *BaseCoordinator) StateObjects(t coordinator.StateType) (store.ResultSet, error) {
+	return nil, errors.New("StateObjects not implemented")
 }
 
 // PostMessage posts the specified message to the coordinator.
