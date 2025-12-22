@@ -31,3 +31,6 @@ type Service interface {
 	// ClusterState gets the current cluster state.
 	ClusterState(cluster string) (cluster.Cluster, error)
 }
+
+// ServiceFactory is a function type for creating a new coordinator service.
+type ServiceFactory func() Service
