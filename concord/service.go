@@ -19,8 +19,11 @@ import (
 	"github.com/cybergarage/go-concord/concord/coordinator"
 )
 
-// Service represents a coordinator service.
+// Service represents a coordinator service interface.
 type Service interface {
+	// ServiceName returns the name of the coordinator service.
+	ServiceName() string
+	// Coordinator represents the coordinator service interface.
 	coordinator.Coordinator
 	// Start starts the coordinator service.
 	Start() error

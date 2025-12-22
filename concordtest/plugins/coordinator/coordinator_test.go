@@ -15,9 +15,12 @@
 package coordinator
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/cybergarage/go-concord/concord"
+	"github.com/cybergarage/go-concord/concord/plugins"
+	"github.com/cybergarage/go-concord/concord/plugins/memdb"
 	"github.com/cybergarage/go-logger/log"
 )
 
@@ -25,50 +28,41 @@ func TestCoordinators(t *testing.T) {
 	log.SetSharedLogger(log.NewStdoutLogger(log.LevelInfo))
 
 	factories := []concord.ServiceFactory{
-		// memdb.NewCoordinator,
+		memdb.NewCoordinator,
 	}
 
 	for _, factory := range factories {
-		// coords01 := []concord.Service{}
-		// coords02 := []concord.Service{}
-		// for i := 0; i < 2; i++ {
-		// 	coord01 := factory()
-		// 	coord02 := factory()
-		// 	coords01 = append(coords01, coord01)
-		// 	coords02 = append(coords02, coord02)
-		// }
-		// for i, coords01 := range coords01 {
-		// 	coords := []concord.Service{coords01, coords02[i]}
-		// 	for j, coord := range coords {
-		// 		coord.SetHost(fmt.Sprintf("coodinator%02d", j))
-		// 		coord.SetKeyCoder(keyCoder)
-		// 		if err := coord.Start(); err != nil {
-		// 			t.Error(err)
-		// 			return
-		// 		}
-		// 	}
+		services := []concord.Service{}
+		for i := range 2 {
+			service := plugins.NewServiceWith(factory())
+			service.SetHost(fmt.Sprintf("coordinator%02d", i+1))
+			if err := service.Start(); err != nil {
+				t.Error(err)
+				return
+			}
+			services = append(services, service)
+		}
 
-		// 	testSuffix := fmt.Sprintf("(%s,%s)", coords[0].ServiceName(), keyCoder.ServiceName())
+		testSuffix := services[0].ServiceName()
 
-		// 	tests := []struct {
-		// 		name string
-		// 		fn   func(t *testing.T, coords []concord.Service)
-		// 	}{
-		// 		{"messaging", CoordinatorsTest},
-		// 		{"clustring", CoordinatorClusterTest},
-		// 	}
-		// 	for _, test := range tests {
-		// 		t.Run(test.name+testSuffix, func(t *testing.T) {
-		// 			test.fn(t, coords)
-		// 		})
-		// 	}
+		tests := []struct {
+			name string
+			fn   func(t *testing.T, coords []concord.Service)
+		}{
+			{"messaging", CoordinatorsTest},
+			{"clustring", CoordinatorClusterTest},
+		}
+		for _, test := range tests {
+			t.Run(test.name+testSuffix, func(t *testing.T) {
+				test.fn(t, services)
+			})
+		}
 
-		// 	for _, coord := range coords {
-		// 		if err := coord.Stop(); err != nil {
-		// 			t.Error(err)
-		// 			return
-		// 		}
-		// 	}
-		// }
+		for _, coord := range services {
+			if err := coord.Stop(); err != nil {
+				t.Error(err)
+				return
+			}
+		}
 	}
 }
