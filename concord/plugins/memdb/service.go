@@ -33,15 +33,15 @@ const (
 var sharedMemDB *memdb.MemDB = nil
 
 type Coordinator struct {
-	*plugins.BaseCoordinator
+	*plugins.ServiceBase
 	*memdb.MemDB
 }
 
 // NewCoordinator returns a new etcd coordinator instance.
 func NewCoordinator() concord.Service {
 	return &Coordinator{
-		BaseCoordinator: plugins.NewBaseCoordinator(),
-		MemDB:           nil,
+		ServiceBase: plugins.NewServiceBase(),
+		MemDB:       nil,
 	}
 }
 

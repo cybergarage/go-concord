@@ -23,16 +23,17 @@ import (
 	"github.com/cybergarage/go-concord/concord/store"
 )
 
-type BaseCoordinator struct {
+// ServiceBase is a base coordinator service implementation.
+type ServiceBase struct {
 	coordinator.KeyCoder
 	cluster.Node
 	*time.Ticker
 	observers []coordinator.Observer
 }
 
-// NewBaseCoordinator returns a new base coordinator instance.
-func NewBaseCoordinator() *BaseCoordinator {
-	return &BaseCoordinator{
+// NewServiceBase returns a new base coordinator instance.
+func NewServiceBase() *ServiceBase {
+	return &ServiceBase{
 		KeyCoder:  nil,
 		Node:      cluster.NewNode(),
 		Ticker:    time.NewTicker(time.Second),
@@ -41,17 +42,17 @@ func NewBaseCoordinator() *BaseCoordinator {
 }
 
 // SetKeyCoder sets the key coder.
-func (coord *BaseCoordinator) SetKeyCoder(coder coordinator.KeyCoder) {
+func (coord *ServiceBase) SetKeyCoder(coder coordinator.KeyCoder) {
 	coord.KeyCoder = coder
 }
 
 // SetNode sets the coordinator node.
-func (coord *BaseCoordinator) SetNode(node cluster.Node) {
+func (coord *ServiceBase) SetNode(node cluster.Node) {
 	coord.Node = node
 }
 
 // AddObserver adds the specified observer.
-func (coord *BaseCoordinator) AddObserver(newObserver coordinator.Observer) error {
+func (coord *ServiceBase) AddObserver(newObserver coordinator.Observer) error {
 	for _, observer := range coord.observers {
 		if observer == newObserver {
 			return nil
@@ -62,31 +63,31 @@ func (coord *BaseCoordinator) AddObserver(newObserver coordinator.Observer) erro
 }
 
 // SetStateObject sets the state object for the specified key.
-func (coord *BaseCoordinator) SetStateObject(t coordinator.StateType, obj coordinator.Object) error {
+func (coord *ServiceBase) SetStateObject(t coordinator.StateType, obj coordinator.Object) error {
 	return errors.New("SetStateObject not implemented")
 }
 
 // StateObject gets the object for the specified key and state type.
-func (coord *BaseCoordinator) StateObject(t coordinator.StateType, key coordinator.Key) (coordinator.Object, error) {
+func (coord *ServiceBase) StateObject(t coordinator.StateType, key coordinator.Key) (coordinator.Object, error) {
 	return nil, errors.New("StateObject not implemented")
 }
 
 // StateObjects gets the result set for the specified key and state type.
-func (coord *BaseCoordinator) StateObjects(t coordinator.StateType) (store.ResultSet, error) {
+func (coord *ServiceBase) StateObjects(t coordinator.StateType) (store.ResultSet, error) {
 	return nil, errors.New("StateObjects not implemented")
 }
 
 // PostMessage posts the specified message to the coordinator.
-func (coord *BaseCoordinator) PostMessage(msg coordinator.Message) error {
+func (coord *ServiceBase) PostMessage(msg coordinator.Message) error {
 	return errors.New("PostMessage not implemented")
 }
 
 // SetNodeState posts the specified node status to the coordinator.
-func (coord *BaseCoordinator) SetNodeState(node cluster.Node) error {
+func (coord *ServiceBase) SetNodeState(node cluster.Node) error {
 	return errors.New("SetNodeState not implemented")
 }
 
 // ClusterState gets the current cluster state.
-func (coord *BaseCoordinator) ClusterState(name string) (cluster.Cluster, error) {
+func (coord *ServiceBase) ClusterState(name string) (cluster.Cluster, error) {
 	return nil, errors.New("ClusterState not implemented")
 }

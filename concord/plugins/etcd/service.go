@@ -21,13 +21,13 @@ import (
 )
 
 type etcdCoordinator struct {
-	*plugins.BaseCoordinator
+	*plugins.ServiceBase
 }
 
 // NewCoordinator returns a new etcd coordinator instance.
 func NewCoordinator() concord.Service {
 	return &etcdCoordinator{
-		BaseCoordinator: plugins.NewBaseCoordinator(),
+		ServiceBase: plugins.NewServiceBase(),
 	}
 }
 
