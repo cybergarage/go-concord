@@ -37,8 +37,8 @@ func (txn *transaction) Get(key coordinator.Key) (coordinator.Object, error) {
 	return nil, nil
 }
 
-// GetRange gets the result set for the specified key.
-func (txn *transaction) GetRange(key coordinator.Key, opts ...store.Option) (store.ResultSet, error) {
+// Scan returns the result set for the specified key.
+func (txn *transaction) Scan(key coordinator.Key, opts ...store.Option) (store.ResultSet, error) {
 	return nil, nil
 }
 

@@ -99,7 +99,7 @@ func (coord *serviceImpl) StateObjects(t coordinator.StateType) (store.ResultSet
 	if err != nil {
 		return nil, err
 	}
-	rs, err := txn.GetRange(coordinator.NewScanStateKeyWith(t))
+	rs, err := txn.Scan(coordinator.NewScanStateKeyWith(t))
 	if err != nil {
 		return nil, errors.Join(err, txn.Cancel())
 	}
@@ -116,7 +116,7 @@ func (coord *serviceImpl) nofityMessage(msg coordinator.Message) {
 
 func (coord *serviceImpl) getLatestMessages(txn store.Transaction) (store.ResultSet, error) {
 	key := coordinator.NewMessageScanKey()
-	rs, err := txn.GetRange(
+	rs, err := txn.Scan(
 		key,
 		store.OrderDesc)
 	return rs, err
@@ -267,7 +267,7 @@ func (coord *serviceImpl) ClusterState(name string) (cluster.Cluster, error) {
 		return nil, err
 	}
 
-	rs, err := txn.GetRange(coordinator.NewClusterScanKeyWith(name))
+	rs, err := txn.Scan(coordinator.NewClusterScanKeyWith(name))
 	if err != nil {
 		return nil, errors.Join(err, txn.Cancel())
 	}

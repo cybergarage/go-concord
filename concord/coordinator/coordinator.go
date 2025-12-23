@@ -30,7 +30,7 @@ type Coordinator interface {
 	SetStateObject(t StateType, obj Object) error
 	// GetObject gets the object for the specified key and state type.
 	StateObject(t StateType, key Key) (Object, error)
-	// GetRangeObjects gets the result set for the specified key and state type.
+	// ScanObjects gets the result set for the specified key and state type.
 	StateObjects(t StateType) (ResultSet, error)
 	// PostMessage posts the specified message to the coordinator.
 	PostMessage(msg Message) error
