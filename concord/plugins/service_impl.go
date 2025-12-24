@@ -41,16 +41,23 @@ type serviceImpl struct {
 	ctxCancel context.CancelFunc
 }
 
+// ServiceOptions represents options for the coordinator service.
+type ServiceOptions func(service concord.Service)
+
 // NewServiceWith returns a new coordinator service with the specified core coordinator service.
-func NewServiceWith(service concord.Service) Service {
+func NewServiceWith(service concord.Service, opts ...ServiceOptions) Service {
 	ctx, cancel := context.WithCancel(context.Background())
-	return &serviceImpl{
+	coord := &serviceImpl{
 		Service:      service,
 		observers:    make([]concord.Observer, 0),
 		MessageQueue: coordinator.NewMessageQueue(),
 		ctx:          ctx,
 		ctxCancel:    cancel,
 	}
+	for _, opt := range opts {
+		opt(coord)
+	}
+	return coord
 }
 
 // AddObserver adds the specified observer.
