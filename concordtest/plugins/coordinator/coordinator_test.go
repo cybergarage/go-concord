@@ -43,20 +43,21 @@ func TestCoordinators(t *testing.T) {
 			services = append(services, service)
 		}
 
-		testSuffix := services[0].ServiceName()
-
-		tests := []struct {
-			name string
-			fn   func(t *testing.T, coords []concord.Service)
-		}{
-			{"messaging", CoordinatorsTest},
-			{"clustring", CoordinatorClusterTest},
-		}
-		for _, test := range tests {
-			t.Run(test.name+testSuffix, func(t *testing.T) {
-				test.fn(t, services)
-			})
-		}
+		name := services[0].ServiceName()
+		t.Run(name, func(t *testing.T) {
+			tests := []struct {
+				name string
+				fn   func(t *testing.T, coords []concord.Service)
+			}{
+				{"messaging", CoordinatorsTest},
+				{"clustring", CoordinatorClusterTest},
+			}
+			for _, test := range tests {
+				t.Run(test.name, func(t *testing.T) {
+					test.fn(t, services)
+				})
+			}
+		})
 
 		for _, coord := range services {
 			if err := coord.Stop(); err != nil {
