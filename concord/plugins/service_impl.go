@@ -27,6 +27,7 @@ import (
 	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/cybergarage/go-concord/concord/store"
 	"github.com/cybergarage/go-logger/log"
+	"github.com/cybergarage/go-serix/serix/plugins/coder/key/tuple"
 )
 
 const (
@@ -44,6 +45,18 @@ type serviceImpl struct {
 // ServiceOptions represents options for the coordinator service.
 type ServiceOptions func(service concord.Service)
 
+// WithServiceKeyCoder sets the key coder for the coordinator service.
+func WithServiceKeyCoder(keyCoder store.KeyCoder) ServiceOptions {
+	return func(service concord.Service) {
+		service.SetKeyCoder(keyCoder)
+	}
+}
+
+// NewDefaultKeyCoder returns a new default key coder for the coordinator service.
+func NewDefaultKeyCoder() store.KeyCoder {
+	return tuple.NewCoder()
+}
+
 // NewServiceWith returns a new coordinator service with the specified core coordinator service.
 func NewServiceWith(service concord.Service, opts ...ServiceOptions) Service {
 	ctx, cancel := context.WithCancel(context.Background())
@@ -54,6 +67,7 @@ func NewServiceWith(service concord.Service, opts ...ServiceOptions) Service {
 		ctx:          ctx,
 		ctxCancel:    cancel,
 	}
+	coord.SetKeyCoder(NewDefaultKeyCoder())
 	for _, opt := range opts {
 		opt(coord)
 	}
