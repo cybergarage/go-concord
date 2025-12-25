@@ -18,7 +18,7 @@ import (
 	"github.com/cybergarage/go-concord/concord/cluster"
 )
 
-// Node represents a coordinator node.
+// Node represents a cluster node.
 type Node = cluster.Node
 
 // Coordinator represents a coordination service.
@@ -27,6 +27,8 @@ type Coordinator interface {
 	Node
 	// Store represents the coordinator store.
 	Store
+	// SetNode sets the coordinator node.
+	SetNode(node Node)
 	// SetStateObject sets the state object for the specified key.
 	SetStateObject(t StateType, obj Object) error
 	// GetObject gets the object for the specified key and state type.
