@@ -57,10 +57,12 @@ type Transaction interface {
 type Store interface {
 	// SetKeyCoder sets the key coder.
 	SetKeyCoder(coder KeyCoder)
-	// DecodeKey returns the decoded key from the specified bytes if available, otherwise returns an error.
-	DecodeKey([]byte) (Key, error)
-	// EncodeKey returns the encoded bytes from the specified key if available, otherwise returns an error.
-	EncodeKey(Key) ([]byte, error)
+	// KeyCoder represents a key decoder and encoder interface.
+	KeyCoder
 	// Transact begin a new transaction.
 	Transact() (Transaction, error)
+	// Start starts this store.
+	Start() error
+	// Stop stops this store.
+	Stop() error
 }
