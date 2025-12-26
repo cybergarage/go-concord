@@ -34,22 +34,21 @@ const (
 	DefaultStoreScanInterval = time.Second
 )
 
+// KeyCoder represents a key coder for document keys.
+type KeyCoder = store.KeyCoder
+
+// Store represents a document store.
+type Store = store.Store
+
 type serviceImpl struct {
-	concord.Service
-	observers []concord.Observer
+	name string
+	Store
+	cluster.Node
+	*time.Ticker
+	observers []coordinator.Observer
 	*coordinator.MessageQueue
 	ctx       context.Context
 	ctxCancel context.CancelFunc
-}
-
-// ServiceOptions represents options for the coordinator service.
-type ServiceOptions func(service concord.Service)
-
-// WithServiceKeyCoder sets the key coder for the coordinator service.
-func WithServiceKeyCoder(keyCoder store.KeyCoder) ServiceOptions {
-	return func(service concord.Service) {
-		service.SetKeyCoder(keyCoder)
-	}
 }
 
 // NewDefaultKeyCoder returns a new default key coder for the coordinator service.
@@ -57,21 +56,44 @@ func NewDefaultKeyCoder() store.KeyCoder {
 	return tuple.NewCoder()
 }
 
+// ServiceOptions represents options for the coordinator service.
+type ServiceOptions func(service *serviceImpl)
+
+// WithServiceName returns a service option with the specified service name.
+func WithServiceName(name string) ServiceOptions {
+	return func(service *serviceImpl) {
+		service.name = name
+	}
+}
+
+// WithServiceStore returns a service option with the specified store.
+func WithServiceStore(store Store) ServiceOptions {
+	return func(service *serviceImpl) {
+		service.Store = store
+	}
+}
+
 // NewServiceWith returns a new coordinator service with the specified core coordinator service.
-func NewServiceWith(service concord.Service, opts ...ServiceOptions) Service {
+func NewService(opts ...ServiceOptions) Service {
 	ctx, cancel := context.WithCancel(context.Background())
 	coord := &serviceImpl{
-		Service:      service,
+		name:         "",
+		Node:         cluster.NewNode(),
+		Ticker:       time.NewTicker(time.Second),
 		observers:    make([]concord.Observer, 0),
 		MessageQueue: coordinator.NewMessageQueue(),
 		ctx:          ctx,
 		ctxCancel:    cancel,
 	}
-	coord.SetKeyCoder(NewDefaultKeyCoder())
 	for _, opt := range opts {
 		opt(coord)
 	}
 	return coord
+}
+
+// ServiceName returns the name of the coordinator service.
+func (coord *serviceImpl) ServiceName() string {
+	return coord.name
 }
 
 // AddObserver adds the specified observer.
@@ -319,7 +341,7 @@ func (coord *serviceImpl) ClusterState(name string) (cluster.Cluster, error) {
 
 // Start starts this etcd coordinator.
 func (coord *serviceImpl) Start() error { // nolint:gocognit
-	if err := coord.Service.Start(); err != nil {
+	if err := coord.Store.Start(); err != nil {
 		return err
 	}
 
@@ -436,7 +458,7 @@ func (coord *serviceImpl) Stop() error {
 	coord.ctxCancel()
 	<-coord.ctx.Done()
 
-	if err := coord.Service.Stop(); err != nil {
+	if err := coord.Store.Stop(); err != nil {
 		return err
 	}
 

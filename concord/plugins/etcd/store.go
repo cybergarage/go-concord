@@ -47,11 +47,6 @@ func NewStore(opts ...StoreOption) Store {
 	return store
 }
 
-// ServiceName returns the plug-in service name.
-func (store *etcdStore) ServiceName() string {
-	return "etcd"
-}
-
 // Transact begin a new transaction.
 func (store *etcdStore) Transact() (store.Transaction, error) {
 	return NewTransaction(), nil

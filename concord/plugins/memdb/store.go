@@ -62,11 +62,6 @@ func NewStore(opts ...StoreOption) Store {
 	return store
 }
 
-// ServiceName returns the plug-in service name.
-func (store *memdbStore) ServiceName() string {
-	return "memdb"
-}
-
 func (store *memdbStore) Transact() (store.Transaction, error) {
 	return newTransactionWith(store.KeyCoder, store.MemDB.Txn(true)), nil
 }

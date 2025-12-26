@@ -127,8 +127,6 @@ func updateCoordinatorObjects(objs []coordinator.Object) ([]coordinator.Object, 
 func CoordinatorStoreTest(t *testing.T, coord concord.Service) {
 	t.Helper()
 
-	coord.SetKeyCoder(newTestKeyCoder())
-
 	cancel := func(t *testing.T, txn store.Transaction) {
 		t.Helper()
 		if err := txn.Cancel(); err != nil {

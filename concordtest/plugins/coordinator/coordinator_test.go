@@ -19,7 +19,6 @@ import (
 	"testing"
 
 	"github.com/cybergarage/go-concord/concord"
-	"github.com/cybergarage/go-concord/concord/plugins"
 	"github.com/cybergarage/go-concord/concord/plugins/memdb"
 	"github.com/cybergarage/go-logger/log"
 )
@@ -28,13 +27,13 @@ func TestCoordinators(t *testing.T) {
 	log.SetSharedLogger(log.NewStdoutLogger(log.LevelInfo))
 
 	factories := []concord.ServiceFactory{
-		memdb.NewCoordinator,
+		memdb.NewService,
 	}
 
 	for _, factory := range factories {
 		services := []concord.Service{}
 		for i := range 2 {
-			service := plugins.NewServiceWith(factory())
+			service := factory()
 			service.SetHost(fmt.Sprintf("coordinator%02d", i+1))
 			if err := service.Start(); err != nil {
 				t.Error(err)
