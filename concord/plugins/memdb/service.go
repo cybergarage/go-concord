@@ -26,11 +26,14 @@ const (
 
 // NewService returns a new memdb coordinator service instance.
 func NewService() (concord.Service, error) {
+	store, err := NewStore(
+		WithStoreKeyCoder(plugins.NewDefaultKeyCoder()),
+	)
+	if err != nil {
+		return nil, err
+	}
 	return plugins.NewService(
 		plugins.WithServiceName(ServiceName),
-		plugins.WithServiceStore(
-			NewStore(
-				WithStoreKeyCoder(plugins.NewDefaultKeyCoder()),
-			)),
+		plugins.WithServiceStore(store),
 	)
 }

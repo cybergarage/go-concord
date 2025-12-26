@@ -55,8 +55,6 @@ type Transaction interface {
 
 // Store represents a coordination store inteface.
 type Store interface {
-	// KeyCoder represents a key decoder and encoder interface.
-	KeyCoder
 	// Transact begin a new transaction.
 	Transact() (Transaction, error)
 	// Start starts this store.

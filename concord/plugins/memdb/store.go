@@ -37,33 +37,40 @@ type Store = store.Store
 var sharedMemDB *memdb.MemDB = nil
 
 type memdbStore struct {
-	KeyCoder
+	keyCorder KeyCoder
 	*memdb.MemDB
 }
 
 // StoreOption represents a function type for memdb store options.
-type StoreOption func(*memdbStore)
+type StoreOption func(*memdbStore) error
 
 // WithStoreKeyCoder returns a store option with the specified key coder.
 func WithStoreKeyCoder(coder KeyCoder) StoreOption {
-	return func(store *memdbStore) {
-		store.KeyCoder = coder
+	return func(store *memdbStore) error {
+		store.keyCorder = coder
+		return nil
 	}
 }
 
 // NewStore returns a new memdb store instance.
-func NewStore(opts ...StoreOption) Store {
+func NewStore(opts ...StoreOption) (Store, error) {
 	store := &memdbStore{
-		MemDB: nil,
+		keyCorder: nil,
+		MemDB:     nil,
 	}
 	for _, opt := range opts {
-		opt(store)
+		if err := opt(store); err != nil {
+			return nil, err
+		}
 	}
-	return store
+	if store.keyCorder == nil {
+		return nil, errors.New("key coder is not set")
+	}
+	return store, nil
 }
 
 func (store *memdbStore) Transact() (store.Transaction, error) {
-	return newTransactionWith(store.KeyCoder, store.MemDB.Txn(true)), nil
+	return newTransactionWith(store.keyCorder, store.MemDB.Txn(true)), nil
 }
 
 // Start starts this memdb store.
