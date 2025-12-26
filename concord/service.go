@@ -39,4 +39,4 @@ type Service interface {
 }
 
 // ServiceFactory is a function type for creating a new coordinator service.
-type ServiceFactory func() Service
+type ServiceFactory func() (Service, error)

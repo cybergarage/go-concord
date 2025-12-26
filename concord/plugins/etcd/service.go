@@ -15,17 +15,19 @@
 package etcd
 
 import (
+	"github.com/cybergarage/go-concord/concord"
 	"github.com/cybergarage/go-concord/concord/plugins"
 )
 
 const (
-	pluginName = "etcd"
+	// ServiceName is the etcd coordinator service name.
+	ServiceName = "etcd"
 )
 
 // NewService returns a new etcd coordinator service instance.
-func NewService() plugins.Service {
+func NewService() (concord.Service, error) {
 	return plugins.NewService(
-		plugins.WithServiceName(pluginName),
+		plugins.WithServiceName(ServiceName),
 		plugins.WithServiceStore(
 			NewStore(
 				WithStoreKeyCoder(plugins.NewDefaultKeyCoder()),

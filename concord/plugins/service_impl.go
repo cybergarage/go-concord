@@ -74,10 +74,11 @@ func WithServiceStore(store Store) ServiceOptions {
 }
 
 // NewServiceWith returns a new coordinator service with the specified core coordinator service.
-func NewService(opts ...ServiceOptions) Service {
+func NewService(opts ...ServiceOptions) (Service, error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	coord := &serviceImpl{
 		name:         "",
+		Store:        nil,
 		Node:         cluster.NewNode(),
 		Ticker:       time.NewTicker(time.Second),
 		observers:    make([]concord.Observer, 0),
@@ -88,7 +89,10 @@ func NewService(opts ...ServiceOptions) Service {
 	for _, opt := range opts {
 		opt(coord)
 	}
-	return coord
+	if coord.Store == nil {
+		return nil, errors.New("store is not set")
+	}
+	return coord, nil
 }
 
 // ServiceName returns the name of the coordinator service.

@@ -33,7 +33,11 @@ func TestCoordinators(t *testing.T) {
 	for _, factory := range factories {
 		services := []concord.Service{}
 		for i := range 2 {
-			service := factory()
+			service, err := factory()
+			if err != nil {
+				t.Error(err)
+				return
+			}
 			service.SetHost(fmt.Sprintf("coordinator%02d", i+1))
 			if err := service.Start(); err != nil {
 				t.Error(err)
