@@ -17,8 +17,6 @@ package memdb
 import (
 	"errors"
 
-	"github.com/cybergarage/go-concord/concord"
-	"github.com/cybergarage/go-concord/concord/plugins"
 	"github.com/cybergarage/go-concord/concord/store"
 	"github.com/hashicorp/go-memdb"
 )
@@ -30,34 +28,53 @@ const (
 	prefix      = "_prefix"
 )
 
+// KeyCoder represents a key coder for document keys.
+type KeyCoder = store.KeyCoder
+
+// Store represents a document store.
+type Store = store.Store
+
 var sharedMemDB *memdb.MemDB = nil
 
-type Coordinator struct {
-	*plugins.ServiceBase
+type memdbStore struct {
+	KeyCoder
 	*memdb.MemDB
 }
 
-// NewCoordinator returns a new etcd coordinator instance.
-func NewCoordinator() concord.Service {
-	return &Coordinator{
-		ServiceBase: plugins.NewServiceBase(),
-		MemDB:       nil,
+// StoreOption represents a function type for memdb store options.
+type StoreOption func(*memdbStore)
+
+// WithStoreKeyCoder returns a store option with the specified key coder.
+func WithStoreKeyCoder(coder KeyCoder) StoreOption {
+	return func(store *memdbStore) {
+		store.KeyCoder = coder
 	}
 }
 
+// NewStore returns a new memdb store instance.
+func NewStore(opts ...StoreOption) Store {
+	store := &memdbStore{
+		MemDB: nil,
+	}
+	for _, opt := range opts {
+		opt(store)
+	}
+	return store
+}
+
 // ServiceName returns the plug-in service name.
-func (coord *Coordinator) ServiceName() string {
+func (store *memdbStore) ServiceName() string {
 	return "memdb"
 }
 
-func (coord *Coordinator) Transact() (store.Transaction, error) {
-	return newTransactionWith(coord.KeyCoder, coord.MemDB.Txn(true)), nil
+func (store *memdbStore) Transact() (store.Transaction, error) {
+	return newTransactionWith(store.KeyCoder, store.MemDB.Txn(true)), nil
 }
 
-// Start starts this etcd coordinator.
-func (coord *Coordinator) Start() error {
+// Start starts this memdb store.
+func (store *memdbStore) Start() error {
 	if sharedMemDB != nil {
-		coord.MemDB = sharedMemDB
+		store.MemDB = sharedMemDB
 		return nil
 	}
 
@@ -78,14 +95,14 @@ func (coord *Coordinator) Start() error {
 	}
 	memDB, err := memdb.NewMemDB(schema)
 	if err != nil {
-		return errors.Join(err, coord.Stop())
+		return errors.Join(err, store.Stop())
 	}
 	sharedMemDB = memDB
-	coord.MemDB = sharedMemDB
+	store.MemDB = sharedMemDB
 	return nil
 }
 
 // Stop stops this etcd coordinator.
-func (coord *Coordinator) Stop() error {
+func (store *memdbStore) Stop() error {
 	return nil
 }

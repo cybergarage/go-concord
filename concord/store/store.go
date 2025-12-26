@@ -55,8 +55,6 @@ type Transaction interface {
 
 // Store represents a coordination store inteface.
 type Store interface {
-	// SetKeyCoder sets the key coder.
-	SetKeyCoder(coder KeyCoder)
 	// KeyCoder represents a key decoder and encoder interface.
 	KeyCoder
 	// Transact begin a new transaction.
