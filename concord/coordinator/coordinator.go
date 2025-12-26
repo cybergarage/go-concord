@@ -16,7 +16,26 @@ package coordinator
 
 import (
 	"github.com/cybergarage/go-concord/concord/cluster"
+	"github.com/cybergarage/go-concord/concord/store"
 )
+
+// Key represents a document key.
+type Key = store.Key
+
+// KeyCoder represents a key coder for key-value objects.
+type KeyCoder = store.KeyCoder
+
+// Object represents a key-value object.
+type Object = store.Object
+
+// ResultSet represents a result set for key-value objects.
+type ResultSet = store.ResultSet
+
+// Node represents a coordinator node.
+type Node = cluster.Node
+
+// Store represents a document store.
+type Store = store.Store
 
 // Coordinator represents a coordination service.
 type Coordinator interface {
