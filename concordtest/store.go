@@ -15,6 +15,7 @@
 package concordtest
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/cybergarage/go-concord/concord/document"
@@ -50,35 +51,14 @@ func (s *Store) Dump() ([]string, error) {
 			continue
 		}
 		for rs.Next() {
-			_, err := rs.Object()
+			obj, err := rs.Object()
 			if err != nil {
 				continue
 			}
-			/*
-				keys := obj.Key().Elements()
-				keyHeaderBytes, ok := keys[0].([]byte)
-				if !ok {
-					lines = append(lines, fmt.Sprintf("%v: %v", keys[1:], obj.Value()))
-				}
-				keyHeader := document.NewKeyHeaderFrom(keyHeaderBytes)
-			*/
-			/*
-
-				switch keyHeader.Type() {
-				case dockv.DatabaseObject, dockv.CollectionObject, dockv.DocumentObject:
-					r := bytes.NewReader(obj.Value())
-					val, err := docStore.DecodeDocument(r)
-					if err != nil {
-						lines = append(lines, fmt.Sprintf("%v %v: %v", keyHeader, keys[1:], obj.Value()))
-						continue
-					}
-					lines = append(lines, fmt.Sprintf("%v %v: %v", keyHeader, keys[1:], val))
-				case dockv.IndexObject:
-					lines = append(lines, fmt.Sprintf("%v %v:", keyHeader, keys[1:]))
-				}
-			*/
+			lines = append(lines, fmt.Sprintf("%v: %v", obj.Key(), obj))
 		}
 	}
+
 	return lines, tx.Commit()
 }
 
