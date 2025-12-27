@@ -36,7 +36,6 @@ const (
 var (
 	StateObjectKeyHeader   = [2]byte{byte(StateHeaderObject), byte(byte(CBOR) | HeaderByteFromVersion(V1))}
 	MessageObjectKeyHeader = [2]byte{byte(MessageHeaderObject), byte(byte(CBOR) | HeaderByteFromVersion(V1))}
-	JobObjectKeyHeader     = [2]byte{byte(JobHeaderObject), byte(byte(CBOR) | HeaderByteFromVersion(V1))}
 )
 
 func HeaderByteFromVersion(v KeyVersion) byte {
@@ -51,8 +50,8 @@ func TypeFromHeaderByte(b byte) byte {
 	return (b & 0x07)
 }
 
-// GetAllHeaderTypes returns all header types.
-func GetAllHeaderTypes() []HeaderType {
+// HeaderTypes returns all header types.
+func HeaderTypes() []HeaderType {
 	return []HeaderType{
 		StateHeaderObject,
 		MessageHeaderObject,
@@ -60,11 +59,20 @@ func GetAllHeaderTypes() []HeaderType {
 	}
 }
 
-// GetAllHeaderPrefixes returns all header prefixes.
-func GetAllHeaderPrefixes() [][]byte {
+// HeaderPrefixes returns all header prefixes.
+func HeaderPrefixes() [][]byte {
 	return [][]byte{
 		StateObjectKeyHeader[:],
 		MessageObjectKeyHeader[:],
-		JobObjectKeyHeader[:],
 	}
+}
+
+// HeaderPrefixKeys returns all header prefix keys.
+func HeaderPrefixKeys() []Key {
+	keys := []Key{}
+	for _, prefix := range HeaderPrefixes() {
+		key := NewKeyWith(prefix)
+		keys = append(keys, key)
+	}
+	return keys
 }

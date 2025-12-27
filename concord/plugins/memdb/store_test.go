@@ -31,5 +31,5 @@ func TestStore(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	concordtest.StoreTest(t, store)
+	concordtest.ValidateStoreOperations(t, store)
 }
