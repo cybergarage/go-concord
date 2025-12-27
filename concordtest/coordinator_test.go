@@ -38,7 +38,7 @@ func TestCoordinators(t *testing.T) {
 				t.Error(err)
 				return
 			}
-			service.SetHost(fmt.Sprintf("coordinator%02d", i+1))
+			service.SetHost(fmt.Sprintf("service%02d", i+1))
 			if err := service.Start(); err != nil {
 				t.Error(err)
 				return
@@ -52,8 +52,8 @@ func TestCoordinators(t *testing.T) {
 				name string
 				fn   func(t *testing.T, coords []concord.Service)
 			}{
-				{"messaging", CoordinatorsTest},
-				{"clustring", CoordinatorClusterTest},
+				{"messaging", ValidateCoordinatorMessageFlow},
+				{"clustring", ValidateCoordinatorClusterState},
 			}
 			for _, test := range tests {
 				t.Run(test.name, func(t *testing.T) {

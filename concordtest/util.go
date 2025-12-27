@@ -15,14 +15,19 @@
 package concordtest
 
 import (
-	"testing"
+	"errors"
 
 	"github.com/cybergarage/go-concord/concord"
 )
 
-func CoordinatorsTest(t *testing.T, coord []concord.Service) {
-	t.Helper()
-	t.Run("message", func(t *testing.T) {
-		CoordinatorMessageTest(t, coord)
-	})
+func truncateCoordinatorStore(coord concord.Service) error {
+	txn, err := coord.Transact()
+	if err != nil {
+		return err
+	}
+	err = txn.Truncate()
+	if err != nil {
+		return errors.Join(err, txn.Cancel())
+	}
+	return txn.Commit()
 }

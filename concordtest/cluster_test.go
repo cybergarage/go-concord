@@ -15,7 +15,6 @@
 package concordtest
 
 import (
-	"errors"
 	"fmt"
 	"testing"
 
@@ -23,21 +22,9 @@ import (
 	"github.com/cybergarage/go-concord/concord/cluster"
 )
 
-func truncateCoordinatorStore(coord concord.Service) error {
-	txn, err := coord.Transact()
-	if err != nil {
-		return err
-	}
-	err = txn.Truncate()
-	if err != nil {
-		return errors.Join(err, txn.Cancel())
-	}
-	return txn.Commit()
-}
-
-// CoordinatorClusterTest tests the coordinator cluster functionality.
+// ValidateCoordinatorClusterState validates the coordinator cluster functionality.
 // nolint:goerr113, gocognit, gci, gocyclo, gosec, maintidx
-func CoordinatorClusterTest(t *testing.T, coords []concord.Service) {
+func ValidateCoordinatorClusterState(t *testing.T, coords []concord.Service) {
 	t.Helper()
 
 	for _, coord := range coords {
@@ -51,7 +38,7 @@ func CoordinatorClusterTest(t *testing.T, coords []concord.Service) {
 
 	for n, coord := range coords {
 		coord.SetCluster(testCluster)
-		coord.SetHost(fmt.Sprintf("coord%d", n))
+		coord.SetHost(fmt.Sprintf("service%02d", n+1))
 	}
 
 	for _, coord := range coords {

@@ -67,7 +67,8 @@ func (observer *testObserver) IsEventReceived(msg coordinator.Message) bool {
 	return false
 }
 
-func CoordinatorMessageTest(t *testing.T, coords []plugin.Service) {
+// ValidateCoordinatorMessageFlow validates the coordinator message flow functionality.
+func ValidateCoordinatorMessageFlow(t *testing.T, coords []plugin.Service) {
 	t.Helper()
 
 	observer := newTestObserver()

@@ -121,9 +121,9 @@ func updateStoreObjects(objs []store.Object) ([]store.Object, error) {
 	return objs, nil
 }
 
-// StoreTest tests the coordinator store functionality.
+// ValidateStoreOperations validates the store operations.
 // nolint:goerr113, gocognit, gci, gocyclo, gosec, maintidx
-func StoreTest(t *testing.T, coord store.Store) {
+func ValidateStoreOperations(t *testing.T, coord store.Store) {
 	t.Helper()
 
 	cancel := func(t *testing.T, txn store.Transaction) {
