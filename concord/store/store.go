@@ -32,7 +32,7 @@ type ResultSet interface {
 	// Next moves the cursor forward next object from its current position.
 	Next() bool
 	// Object returns an object in the current position.
-	Object() Object
+	Object() (Object, error)
 }
 
 // Transaction represents a transaction interface.

@@ -15,6 +15,8 @@
 package memdb
 
 import (
+	"fmt"
+
 	"github.com/cybergarage/go-concord/concord/coordinator"
 	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/cybergarage/go-concord/concord/store"
@@ -24,12 +26,13 @@ import (
 // Memdb represents a Memdb instance.
 type resultSet struct {
 	coordinator.KeyCoder
-	it     memdb.ResultIterator
-	key    coordinator.Key
-	obj    coordinator.Object
-	offset uint
-	limit  uint
-	nRead  uint
+	it       memdb.ResultIterator
+	key      coordinator.Key
+	obj      coordinator.Object
+	offset   uint
+	limit    uint
+	nRead    uint
+	lastElem any
 }
 
 func newResultSet(coder coordinator.KeyCoder, key coordinator.Key, it memdb.ResultIterator, offset uint, limit uint) store.ResultSet {
@@ -41,6 +44,7 @@ func newResultSet(coder coordinator.KeyCoder, key coordinator.Key, it memdb.Resu
 		offset:   offset,
 		limit:    limit,
 		nRead:    0,
+		lastElem: nil,
 	}
 }
 
@@ -62,21 +66,22 @@ func (rs *resultSet) Next() bool {
 	if elem == nil {
 		return false
 	}
+	rs.lastElem = elem
 	rs.nRead++
 
-	doc, ok := elem.(*Document)
-	if !ok {
-		return false
-	}
-	key, err := rs.DecodeKey([]byte(doc.Key))
-	if err != nil {
-		return false
-	}
-	rs.obj = document.NewObjectWith(key, doc.Value)
 	return true
 }
 
 // Object returns an object in the current position.
-func (rs *resultSet) Object() coordinator.Object {
-	return rs.obj
+func (rs *resultSet) Object() (coordinator.Object, error) {
+	doc, ok := rs.lastElem.(*Document)
+	if !ok {
+		return nil, fmt.Errorf("invalid element type: %T", rs.lastElem)
+	}
+	key, err := rs.DecodeKey([]byte(doc.Key))
+	if err != nil {
+		return nil, err
+	}
+	rs.obj = document.NewObjectWith(key, doc.Value)
+	return rs.obj, nil
 }

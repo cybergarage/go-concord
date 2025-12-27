@@ -180,7 +180,10 @@ func (coord *serviceImpl) notifyUpdateMessages(txn store.Transaction) error {
 	msgs := []coordinator.Message{}
 	for rs.Next() {
 		msgObj := coordinator.NewMessageObject()
-		obj := rs.Object()
+		obj, err := rs.Object()
+		if err != nil {
+			return err
+		}
 		err = obj.Unmarshal(msgObj)
 		if err != nil {
 			return err
@@ -221,7 +224,10 @@ func (coord *serviceImpl) getLatestMessageClock(txn store.Transaction) (cluster.
 	}
 
 	msgObj := coordinator.NewMessageObject()
-	obj := rs.Object()
+	obj, err := rs.Object()
+	if err != nil {
+		return 0, err
+	}
 	err = obj.Unmarshal(msgObj)
 	if err != nil {
 		return 0, err
@@ -322,7 +328,10 @@ func (coord *serviceImpl) ClusterState(name string) (cluster.Cluster, error) {
 	nodes := []cluster.Node{}
 	for rs.Next() {
 		nodeObj := coordinator.NewNodeObject()
-		obj := rs.Object()
+		obj, err := rs.Object()
+		if err != nil {
+			return nil, errors.Join(err, txn.Cancel())
+		}
 		err = obj.Unmarshal(nodeObj)
 		if err != nil {
 			return nil, errors.Join(err, txn.Cancel())

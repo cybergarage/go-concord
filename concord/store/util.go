@@ -18,7 +18,11 @@ package store
 func ReadAllObjects(rs ResultSet) ([]Object, error) {
 	objs := []Object{}
 	for rs.Next() {
-		objs = append(objs, rs.Object())
+		obj, err := rs.Object()
+		if err != nil {
+			return objs, err
+		}
+		objs = append(objs, obj)
 	}
 	return objs, nil
 }

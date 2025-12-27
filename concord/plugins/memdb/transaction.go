@@ -69,7 +69,7 @@ func (txn *transaction) Get(key coordinator.Key) (coordinator.Object, error) {
 	if !rs.Next() {
 		return nil, coordinator.NewKeyNotExistError(key)
 	}
-	return rs.Object(), nil
+	return rs.Object()
 }
 
 // Scan returns the result set for the specified key.

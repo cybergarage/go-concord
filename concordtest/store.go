@@ -45,22 +45,24 @@ func (s *Store) Dump() ([]string, error) {
 	keys := document.HeaderPrefixKeys()
 
 	for _, key := range keys {
-		_, err := tx.Scan(key)
+		rs, err := tx.Scan(key)
 		if err != nil {
 			continue
 		}
-		/*
-			for rs.Next() {
-				obj, err := rs.Object()
-				if err != nil {
-					continue
-				}
+		for rs.Next() {
+			_, err := rs.Object()
+			if err != nil {
+				continue
+			}
+			/*
 				keys := obj.Key().Elements()
 				keyHeaderBytes, ok := keys[0].([]byte)
 				if !ok {
 					lines = append(lines, fmt.Sprintf("%v: %v", keys[1:], obj.Value()))
 				}
-				keyHeader := dockv.NewKeyHeaderFrom(keyHeaderBytes)
+				keyHeader := document.NewKeyHeaderFrom(keyHeaderBytes)
+			*/
+			/*
 
 				switch keyHeader.Type() {
 				case dockv.DatabaseObject, dockv.CollectionObject, dockv.DocumentObject:
@@ -74,8 +76,8 @@ func (s *Store) Dump() ([]string, error) {
 				case dockv.IndexObject:
 					lines = append(lines, fmt.Sprintf("%v %v:", keyHeader, keys[1:]))
 				}
-			}
-		*/
+			*/
+		}
 	}
 	return lines, tx.Commit()
 }
