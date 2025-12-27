@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package coordinator
+package concordtest
 
 import (
 	_ "embed"
@@ -20,7 +20,6 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/cybergarage/go-concord/concord"
 	"github.com/cybergarage/go-concord/concord/coordinator"
 	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/cybergarage/go-concord/concord/store"
@@ -35,7 +34,7 @@ func newTestKeyCoder() coordinator.KeyCoder {
 	return tuple.NewCoder()
 }
 
-func generateCoordinatorObjects() ([]document.Object, error) {
+func generateStoreObjects() ([]document.Object, error) {
 	pict := pict.NewParserWithBytes(goTypes)
 	err := pict.Parse()
 	if err != nil {
@@ -91,7 +90,7 @@ func generateCoordinatorObjects() ([]document.Object, error) {
 	return objs, nil
 }
 
-func updateCoordinatorObjects(objs []coordinator.Object) ([]coordinator.Object, error) {
+func updateStoreObjects(objs []store.Object) ([]store.Object, error) {
 	pict := pict.NewParserWithBytes(goTypes)
 	err := pict.Parse()
 	if err != nil {
@@ -122,9 +121,9 @@ func updateCoordinatorObjects(objs []coordinator.Object) ([]coordinator.Object, 
 	return objs, nil
 }
 
-// CoordinatorStoreTest tests the coordinator store functionality.
+// StoreTest tests the coordinator store functionality.
 // nolint:goerr113, gocognit, gci, gocyclo, gosec, maintidx
-func CoordinatorStoreTest(t *testing.T, coord concord.Service) {
+func StoreTest(t *testing.T, coord store.Store) {
 	t.Helper()
 
 	cancel := func(t *testing.T, txn store.Transaction) {
@@ -151,7 +150,7 @@ func CoordinatorStoreTest(t *testing.T, coord concord.Service) {
 
 	// Generates test keys and objects
 
-	objs, err := generateCoordinatorObjects()
+	objs, err := generateStoreObjects()
 	if err != nil {
 		t.Error(err)
 		return
@@ -203,7 +202,7 @@ func CoordinatorStoreTest(t *testing.T, coord concord.Service) {
 
 	// Updates inserted objects
 
-	objs, err = updateCoordinatorObjects(objs)
+	objs, err = updateStoreObjects(objs)
 	if err != nil {
 		t.Error(err)
 		return
