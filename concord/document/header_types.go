@@ -25,7 +25,6 @@ const (
 const (
 	StateHeaderObject   = HeaderType('S')
 	MessageHeaderObject = HeaderType('M')
-	JobHeaderObject     = HeaderType('J')
 )
 
 const (
@@ -55,7 +54,6 @@ func HeaderTypes() []HeaderType {
 	return []HeaderType{
 		StateHeaderObject,
 		MessageHeaderObject,
-		JobHeaderObject,
 	}
 }
 
