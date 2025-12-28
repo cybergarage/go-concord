@@ -18,13 +18,12 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/cybergarage/go-concord/concord"
 	"github.com/cybergarage/go-concord/concord/cluster"
 )
 
 // ValidateCoordinatorClusterState validates the coordinator cluster functionality.
 // nolint:goerr113, gocognit, gci, gocyclo, gosec, maintidx
-func ValidateCoordinatorClusterState(t *testing.T, coords []concord.Service) {
+func ValidateCoordinatorClusterState(t *testing.T, coords []*Service) {
 	t.Helper()
 
 	for _, coord := range coords {

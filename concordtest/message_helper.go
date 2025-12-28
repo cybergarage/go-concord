@@ -19,7 +19,6 @@ import (
 	"testing"
 	"time"
 
-	plugin "github.com/cybergarage/go-concord/concord"
 	"github.com/cybergarage/go-concord/concord/cluster"
 	"github.com/cybergarage/go-concord/concord/coordinator"
 )
@@ -68,7 +67,7 @@ func (observer *testObserver) IsEventReceived(msg coordinator.Message) bool {
 }
 
 // ValidateCoordinatorMessageFlow validates the coordinator message flow functionality.
-func ValidateCoordinatorMessageFlow(t *testing.T, coords []plugin.Service) {
+func ValidateCoordinatorMessageFlow(t *testing.T, coords []*Service) {
 	t.Helper()
 
 	observer := newTestObserver()

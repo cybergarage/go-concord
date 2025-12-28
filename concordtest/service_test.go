@@ -23,7 +23,7 @@ import (
 	"github.com/cybergarage/go-logger/log"
 )
 
-func TestCoordinators(t *testing.T) {
+func TestServices(t *testing.T) {
 	log.SetSharedLogger(log.NewStdoutLogger(log.LevelInfo))
 
 	factories := []concord.ServiceFactory{
@@ -31,7 +31,7 @@ func TestCoordinators(t *testing.T) {
 	}
 
 	for _, factory := range factories {
-		services := []concord.Service{}
+		services := []*Service{}
 		for i := range 2 {
 			service, err := factory()
 			if err != nil {
@@ -43,30 +43,36 @@ func TestCoordinators(t *testing.T) {
 				t.Error(err)
 				return
 			}
-			services = append(services, service)
+			services = append(services, NewServiceWith(service))
 		}
 
-		name := services[0].ServiceName()
-		t.Run(name, func(t *testing.T) {
-			tests := []struct {
-				name string
-				fn   func(t *testing.T, coords []concord.Service)
-			}{
-				{"messaging", ValidateCoordinatorMessageFlow},
-				{"clustring", ValidateCoordinatorClusterState},
-			}
-			for _, test := range tests {
-				t.Run(test.name, func(t *testing.T) {
-					test.fn(t, services)
-				})
-			}
-		})
+		ValidateServiceCoordinationSuite(t, services)
+	}
+}
 
-		for _, coord := range services {
-			if err := coord.Stop(); err != nil {
-				t.Error(err)
-				return
-			}
+// ValidateServiceCoordinationSuite validates the service coordination functionality.
+func ValidateServiceCoordinationSuite(t *testing.T, services []*Service) {
+	t.Helper()
+	name := services[0].ServiceName()
+	t.Run(name, func(t *testing.T) {
+		tests := []struct {
+			name string
+			fn   func(t *testing.T, coords []*Service)
+		}{
+			{"messaging", ValidateCoordinatorMessageFlow},
+			{"clustring", ValidateCoordinatorClusterState},
+		}
+		for _, test := range tests {
+			t.Run(test.name, func(t *testing.T) {
+				test.fn(t, services)
+			})
+		}
+	})
+
+	for _, coord := range services {
+		if err := coord.Stop(); err != nil {
+			t.Error(err)
+			return
 		}
 	}
 }
