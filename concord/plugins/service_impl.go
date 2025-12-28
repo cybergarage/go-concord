@@ -73,7 +73,7 @@ func WithServiceStore(store Store) ServiceOptions {
 	}
 }
 
-// NewServiceWith returns a new coordinator service with the specified core coordinator service.
+// NewService returns a new coordinator service instance.
 func NewService(opts ...ServiceOptions) (Service, error) {
 	ctx, cancel := context.WithCancel(context.Background())
 	coord := &serviceImpl{

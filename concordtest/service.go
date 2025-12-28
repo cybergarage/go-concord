@@ -33,7 +33,7 @@ func NewServiceWith(service concord.Service) *Service {
 	}
 }
 
-// Dump returns a string representation of the service.
+// Store returns the store instance.
 func (service *Service) Store() (*Store, error) {
 	store, ok := service.Service.(store.Store)
 	if !ok {
