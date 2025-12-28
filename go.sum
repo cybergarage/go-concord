@@ -10,6 +10,8 @@ github.com/cybergarage/go-serix v0.9.1-0.20251124080038-8b520a1122cc h1:7b2SGtHc
 github.com/cybergarage/go-serix v0.9.1-0.20251124080038-8b520a1122cc/go.mod h1:gNkmT9JOS7XliSTHsxY4sjy9j8pOwBklcSweSf8nt7s=
 github.com/cybergarage/go-serix v0.9.1-0.20251204110510-eb9edaa992ee h1:rV0GwqSV8zkQQZpHcg6meQpl/QTCuQ0N52U2F1eN3+0=
 github.com/cybergarage/go-serix v0.9.1-0.20251204110510-eb9edaa992ee/go.mod h1:gNkmT9JOS7XliSTHsxY4sjy9j8pOwBklcSweSf8nt7s=
+github.com/cybergarage/go-serix v0.9.1-0.20251228122851-1bb86777cf57 h1:34Wdd/KU2f4u5RqD7qYScdzzMSuHE0U0x8ZKM++VQXs=
+github.com/cybergarage/go-serix v0.9.1-0.20251228122851-1bb86777cf57/go.mod h1:gNkmT9JOS7XliSTHsxY4sjy9j8pOwBklcSweSf8nt7s=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/hashicorp/go-immutable-radix v1.3.1 h1:DKHmCUm2hRBK510BaiZlwvpD40f8bJFeZnpfm2KLowc=
