@@ -34,14 +34,10 @@ func NewServiceWith(service concord.Service) *Service {
 }
 
 // Dump returns a string representation of the service.
-func (s *Service) Dump() ([]string, error) {
-	store, ok := s.Service.(store.Store)
+func (service *Service) Store() (*Store, error) {
+	store, ok := service.Service.(store.Store)
 	if !ok {
-		return []string{}, fmt.Errorf("service does not implement store interface: %T", s.Service)
+		return nil, fmt.Errorf("service is not a store")
 	}
-	lines, err := NewStoreWith(store).Dump()
-	if err != nil {
-		return lines, err
-	}
-	return lines, nil
+	return NewStoreWith(store), nil
 }

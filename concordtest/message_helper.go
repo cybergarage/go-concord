@@ -70,6 +70,20 @@ func (observer *testObserver) IsEventReceived(msg coordinator.Message) bool {
 func ValidateCoordinatorMessageFlow(t *testing.T, coords []*Service) {
 	t.Helper()
 
+	dump := func(service *Service) {
+		store, err := service.Store()
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		lines, err := store.Dump()
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		t.Logf("Service %s store dump:\n%s", service.Host(), lines)
+	}
+
 	observer := newTestObserver()
 	for _, coord := range coords {
 		if err := truncateCoordinatorStore(coord); err != nil {
@@ -132,6 +146,7 @@ func ValidateCoordinatorMessageFlow(t *testing.T, coords []*Service) {
 
 	if len(observer.receivedMsgs) != len(msgs) {
 		t.Errorf("the number of received messages (%d) is not matched to the number of posted messages (%d)", len(observer.receivedMsgs), len(msgs))
+		dump(coords[0])
 		return
 	}
 
