@@ -6,7 +6,7 @@ require (
 	github.com/cybergarage/go-cbor v1.3.2
 	github.com/cybergarage/go-logger v1.3.11
 	github.com/cybergarage/go-pict v1.0.2
-	github.com/cybergarage/go-serix v0.9.1-0.20251228122851-1bb86777cf57
+	github.com/cybergarage/go-serix v0.9.1-0.20251229130835-5b61be5c8128
 	github.com/google/uuid v1.6.0
 	github.com/hashicorp/go-memdb v1.3.5
 )
