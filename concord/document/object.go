@@ -22,8 +22,8 @@ type Object interface {
 	Bytes() []byte
 	// Unmarshal unmarshals the object value to the specified object.
 	Unmarshal(toj any) error
-	// Equals returns true if the object is equal to the specified object.
-	Equals(Object) bool
+	// Equal returns true if the object is equal to the specified object.
+	Equal(Object) bool
 	// String returns the string representation.
 	String() string
 }

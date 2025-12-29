@@ -69,7 +69,7 @@ func ValidateCoordinatorClusterState(t *testing.T, coords []*Service) {
 			}
 			foundNode := false
 			for _, coord := range coords {
-				if coord.Equals(clusterNode) {
+				if coord.Equal(clusterNode) {
 					foundNode = true
 					break
 				}

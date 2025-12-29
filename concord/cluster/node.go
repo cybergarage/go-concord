@@ -50,8 +50,8 @@ type Node interface {
 	SetStatus(state NodeStatus)
 	// Status returns a status of the cluster node.
 	Status() NodeStatus
-	// Equals returns true if the specified cluster node is same as this node.
-	Equals(node Node) bool
+	// Equal returns true if the specified cluster node is same as this node.
+	Equal(node Node) bool
 	// Lock locks the cluster node.
 	Lock()
 	// Unlock unlocks the cluster node.

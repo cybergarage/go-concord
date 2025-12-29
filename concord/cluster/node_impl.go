@@ -129,8 +129,8 @@ func (node *nodeImpl) Status() NodeStatus {
 	return node.status
 }
 
-// Equals returns true if the specified cluster node is same as this node.
-func (node *nodeImpl) Equals(other Node) bool {
+// Equal returns true if the specified cluster node is same as this node.
+func (node *nodeImpl) Equal(other Node) bool {
 	if node.cluster != other.Cluster() {
 		return false
 	}

@@ -27,7 +27,7 @@ import (
 	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/cybergarage/go-concord/concord/store"
 	"github.com/cybergarage/go-logger/log"
-	"github.com/cybergarage/go-serix/serix/plugins/coder/key/tuple"
+	"github.com/cybergarage/go-serix/serix/plugins/document/key/composite"
 )
 
 const (
@@ -53,7 +53,7 @@ type serviceImpl struct {
 
 // NewDefaultKeyCoder returns a new default key coder for the coordinator service.
 func NewDefaultKeyCoder() store.KeyCoder {
-	return tuple.NewCoder()
+	return composite.NewCoder()
 }
 
 // ServiceOptions represents options for the coordinator service.

@@ -32,8 +32,8 @@ type Message interface {
 	Object() (any, error)
 	// UnmarshalTo unmarshals the object value to the specified object.
 	UnmarshalTo(to any) error
-	// Equals returns true if the message is equal to the specified event.
-	Equals(Message) bool
+	// Equal returns true if the message is equal to the specified event.
+	Equal(Message) bool
 	// String returns the string representation of the message.
 	String() string
 }

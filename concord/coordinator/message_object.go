@@ -128,8 +128,8 @@ func (obj *MessageObject) UnmarshalTo(to any) error {
 	return cbor.UnmarshalTo(obj.EncBytes, to)
 }
 
-// Equals returns true if the message is equal to the specified message.
-func (obj *MessageObject) Equals(other Message) bool {
+// Equal returns true if the message is equal to the specified message.
+func (obj *MessageObject) Equal(other Message) bool {
 	if obj.Type() != other.Type() {
 		return false
 	}

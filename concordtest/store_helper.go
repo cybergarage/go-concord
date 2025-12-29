@@ -24,14 +24,14 @@ import (
 	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/cybergarage/go-concord/concord/store"
 	"github.com/cybergarage/go-pict/pict"
-	"github.com/cybergarage/go-serix/serix/plugins/coder/key/tuple"
+	"github.com/cybergarage/go-serix/serix/plugins/document/key/composite"
 )
 
 //go:embed go_types.pict
 var goTypes []byte
 
 func newTestKeyCoder() coordinator.KeyCoder {
-	return tuple.NewCoder()
+	return composite.NewCoder()
 }
 
 func generateStoreObjects() ([]document.Object, error) {
@@ -189,7 +189,7 @@ func ValidateStoreOperations(t *testing.T, coord store.Store) {
 			t.Error(err)
 			return
 		}
-		if !retObj.Equals(obj) {
+		if !retObj.Equal(obj) {
 			cancel(t, tx)
 			t.Error(err)
 			return
@@ -240,7 +240,7 @@ func ValidateStoreOperations(t *testing.T, coord store.Store) {
 			return
 		}
 
-		if !retObj.Equals(obj) {
+		if !retObj.Equal(obj) {
 			cancel(t, tx)
 			t.Error(err)
 			return

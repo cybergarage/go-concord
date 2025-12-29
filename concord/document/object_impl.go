@@ -61,12 +61,12 @@ func (obj *object) Unmarshal(to any) error {
 	return cbor.UnmarshalTo(obj.bytes, to)
 }
 
-// Equals returns true if the object is equal to the specified object.
-func (obj *object) Equals(other Object) bool {
+// Equal returns true if the object is equal to the specified object.
+func (obj *object) Equal(other Object) bool {
 	if obj == nil || other == nil {
 		return false
 	}
-	if !obj.key.Equals(other.Key()) {
+	if !obj.key.Equal(other.Key()) {
 		return false
 	}
 	if reflect.DeepEqual(obj.bytes, other.Bytes()) {
