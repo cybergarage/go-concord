@@ -14,10 +14,55 @@
 
 package coordinator
 
-const (
-	createdAtKey      = "_created_at"
-	updatedAtKey      = "_updated_at"
-	createRevisionKey = "_create_revision"
-	modRevisionKey    = "_mod_revision"
-	versionKey        = "_version"
+import (
+	"github.com/cybergarage/go-concord/concord/document"
+	"github.com/cybergarage/go-concord/concord/store"
 )
+
+// Key represents a document key.
+type Key = document.Key
+
+// KeyCoder represents a key coder for document keys.
+type KeyCoder = document.KeyCoder
+
+// Object represents a document object.
+type Object = document.Object
+
+// StoreOption represents a store option.
+type StoreOption = store.Option
+
+// ResultSet represents a result set which includes range operation results.
+type ResultSet interface {
+	// Next moves the cursor forward next object from its current position.
+	Next() bool
+	// Object returns an object in the current position.
+	Object() (Object, error)
+}
+
+// Transaction represents a transaction interface.
+type Transaction interface {
+	// Set sets the object for the specified key.
+	Set(obj Object) error
+	// Get gets the object for the specified key.
+	Get(key Key) (Object, error)
+	// Scan returns the result set for the specified key.
+	Scan(key Key, opts ...StoreOption) (ResultSet, error)
+	// Remove removes the object for the specified key.
+	Remove(key Key) error
+	// Commit commits this transaction.
+	Commit() error
+	// Cancel cancels this transaction.
+	Cancel() error
+	// Truncate removes all objects.
+	Truncate() error
+}
+
+// Store represents a coordination store inteface.
+type Store interface {
+	// Transact begin a new transaction.
+	Transact() (Transaction, error)
+	// Start starts this store.
+	Start() error
+	// Stop stops this store.
+	Stop() error
+}

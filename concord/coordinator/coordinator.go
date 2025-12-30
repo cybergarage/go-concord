@@ -19,36 +19,21 @@ import (
 	"github.com/cybergarage/go-concord/concord/store"
 )
 
-// Key represents a document key.
-type Key = store.Key
-
-// KeyCoder represents a key coder for key-value objects.
-type KeyCoder = store.KeyCoder
-
-// Object represents a key-value object.
-type Object = store.Object
-
-// ResultSet represents a result set for key-value objects.
-type ResultSet = store.ResultSet
-
 // Node represents a coordinator node.
 type Node = cluster.Node
-
-// Store represents a document store.
-type Store = store.Store
 
 // Coordinator represents a coordination service.
 type Coordinator interface {
 	// Node represents the coordinator node.
 	Node
 	// Store represents the coordinator store.
-	Store
+	store.Store
 	// SetStateObject sets the state object for the specified key.
-	SetStateObject(t StateType, obj Object) error
+	SetStateObject(t StateType, obj store.Object) error
 	// GetObject gets the object for the specified key and state type.
-	StateObject(t StateType, key Key) (Object, error)
+	StateObject(t StateType, key store.Key) (store.Object, error)
 	// ScanObjects gets the result set for the specified key and state type.
-	StateObjects(t StateType) (ResultSet, error)
+	StateObjects(t StateType) (store.ResultSet, error)
 	// PostMessage posts the specified message to the coordinator.
 	PostMessage(msg Message) error
 	// AddObserver adds the specified observer to the coordinator.
