@@ -18,17 +18,17 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/cybergarage/go-concord/concord/coordinator"
 	"github.com/cybergarage/go-concord/concord/document"
-	"github.com/cybergarage/go-concord/concord/store"
 )
 
 // Store represents a document store.
 type Store struct {
-	store.Store
+	coordinator.Store
 }
 
 // NewStoreWith creates a new store with the given object.
-func NewStoreWith(store store.Store) *Store {
+func NewStoreWith(store coordinator.Store) *Store {
 	return &Store{
 		Store: store,
 	}

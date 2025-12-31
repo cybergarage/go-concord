@@ -18,7 +18,7 @@ import (
 	"fmt"
 
 	"github.com/cybergarage/go-concord/concord"
-	"github.com/cybergarage/go-concord/concord/store"
+	"github.com/cybergarage/go-concord/concord/coordinator"
 )
 
 // Service represents a concord service.
@@ -35,7 +35,7 @@ func NewServiceWith(service concord.Service) *Service {
 
 // Store returns the store instance.
 func (service *Service) Store() (*Store, error) {
-	store, ok := service.Service.(store.Store)
+	store, ok := service.Service.(coordinator.Store)
 	if !ok {
 		return nil, fmt.Errorf("service is not a store")
 	}

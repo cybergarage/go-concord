@@ -14,6 +14,8 @@
 
 package coordinator
 
+import "github.com/cybergarage/go-concord/concord/store"
+
 const (
 	createdAtKey      = "_created_at"
 	updatedAtKey      = "_updated_at"
@@ -22,13 +24,52 @@ const (
 	versionKey        = "_version"
 )
 
+// storeImpl represents a store implementation.
 type storeImpl struct {
-	Store
+	store.Store
 }
 
 // NewStoreWith creates a new store with the given object.
-func NewStoreWith(store Store) Store {
+func NewStoreWith(store store.Store) Store {
 	return &storeImpl{
 		Store: store,
+	}
+}
+
+func (s *storeImpl) Transact() (Transaction, error) {
+	txn, err := s.Store.Transact()
+	if err != nil {
+		return nil, err
+	}
+	return newTransactionWith(txn), nil
+}
+
+// txnImpl represents a transaction implementation.
+type txnImpl struct {
+	store.Transaction
+}
+
+func newTransactionWith(txn store.Transaction) Transaction {
+	return &txnImpl{
+		Transaction: txn,
+	}
+}
+
+func (t *txnImpl) Scan(key Key, opts ...StoreOption) (ResultSet, error) {
+	resultSet, err := t.Transaction.Scan(key, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return newResultSetWith(resultSet), nil
+}
+
+// resultSetImpl represents a result set implementation.
+type resultSetImpl struct {
+	store.ResultSet
+}
+
+func newResultSetWith(resultSet store.ResultSet) ResultSet {
+	return &resultSetImpl{
+		ResultSet: resultSet,
 	}
 }

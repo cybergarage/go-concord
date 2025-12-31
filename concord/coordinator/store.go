@@ -15,18 +15,17 @@
 package coordinator
 
 import (
-	"github.com/cybergarage/go-concord/concord/document"
 	"github.com/cybergarage/go-concord/concord/store"
 )
 
 // Key represents a document key.
-type Key = document.Key
+type Key = store.Key
 
 // KeyCoder represents a key coder for document keys.
-type KeyCoder = document.KeyCoder
+type KeyCoder = store.KeyCoder
 
 // Object represents a document object.
-type Object = document.Object
+type Object = store.Object
 
 // StoreOption represents a store option.
 type StoreOption = store.Option
