@@ -17,6 +17,7 @@ package store
 // ReadAllObjects reads all objects from the result set.
 func ReadAllObjects(rs ResultSet) ([]Object, error) {
 	objs := []Object{}
+	defer rs.Close()
 	for rs.Next() {
 		obj, err := rs.Object()
 		if err != nil {

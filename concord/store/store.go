@@ -33,6 +33,8 @@ type ResultSet interface {
 	Next() bool
 	// Object returns an object in the current position.
 	Object() (Object, error)
+	// Close closes this result set.
+	Close() error
 }
 
 // Transaction represents a transaction interface.

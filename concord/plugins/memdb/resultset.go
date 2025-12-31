@@ -85,3 +85,9 @@ func (rs *resultSet) Object() (coordinator.Object, error) {
 	rs.obj = document.NewObjectWith(key, doc.Value)
 	return rs.obj, nil
 }
+
+// Close closes this result set.
+func (rs *resultSet) Close() error {
+	// No resources to release in this implementation.
+	return nil
+}

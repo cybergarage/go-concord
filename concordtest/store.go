@@ -61,6 +61,9 @@ func (s *Store) Dump() ([]string, error) {
 			}
 			lines = append(lines, fmt.Sprintf("%v: %v", obj.Key(), obj))
 		}
+		if err := rs.Close(); err != nil {
+			continue
+		}
 	}
 
 	return lines, tx.Commit()
