@@ -141,7 +141,7 @@ func (coord *serviceImpl) StateObject(t coordinator.StateType, key coordinator.K
 }
 
 // StateObjects gets the result set for the specified key and state type.
-func (coord *serviceImpl) StateObjects(t coordinator.StateType) (store.ResultSet, error) {
+func (coord *serviceImpl) StateObjects(t coordinator.StateType) (coordinator.ResultSet, error) {
 	txn, err := coord.Transact()
 	if err != nil {
 		return nil, err
@@ -161,7 +161,7 @@ func (coord *serviceImpl) nofityMessage(msg coordinator.Message) {
 	}
 }
 
-func (coord *serviceImpl) getLatestMessages(txn coordinator.Transaction) (store.ResultSet, error) {
+func (coord *serviceImpl) getLatestMessages(txn coordinator.Transaction) (coordinator.ResultSet, error) {
 	key := coordinator.NewMessageScanKey()
 	rs, err := txn.Scan(
 		key,
@@ -180,7 +180,11 @@ func (coord *serviceImpl) notifyUpdateMessages(txn coordinator.Transaction) erro
 	msgs := []coordinator.Message{}
 	for rs.Next() {
 		msgObj := coordinator.NewMessageObject()
-		obj, err := rs.Object()
+		r, err := rs.Result()
+		if err != nil {
+			return err
+		}
+		obj, err := r.Object()
 		if err != nil {
 			return err
 		}
@@ -224,7 +228,11 @@ func (coord *serviceImpl) getLatestMessageClock(txn coordinator.Transaction) (cl
 	}
 
 	msgObj := coordinator.NewMessageObject()
-	obj, err := rs.Object()
+	r, err := rs.Result()
+	if err != nil {
+		return 0, err
+	}
+	obj, err := r.Object()
 	if err != nil {
 		return 0, err
 	}
@@ -328,7 +336,11 @@ func (coord *serviceImpl) ClusterState(name string) (cluster.Cluster, error) {
 	nodes := []cluster.Node{}
 	for rs.Next() {
 		nodeObj := coordinator.NewNodeObject()
-		obj, err := rs.Object()
+		r, err := rs.Result()
+		if err != nil {
+			return nil, errors.Join(err, txn.Cancel())
+		}
+		obj, err := r.Object()
 		if err != nil {
 			return nil, errors.Join(err, txn.Cancel())
 		}

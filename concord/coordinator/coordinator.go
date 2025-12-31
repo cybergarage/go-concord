@@ -16,7 +16,6 @@ package coordinator
 
 import (
 	"github.com/cybergarage/go-concord/concord/cluster"
-	"github.com/cybergarage/go-concord/concord/store"
 )
 
 // Node represents a coordinator node.
@@ -29,11 +28,11 @@ type Coordinator interface {
 	// Store represents the coordinator store.
 	Store
 	// SetStateObject sets the state object for the specified key.
-	SetStateObject(t StateType, obj store.Object) error
+	SetStateObject(t StateType, obj Object) error
 	// GetObject gets the object for the specified key and state type.
-	StateObject(t StateType, key store.Key) (store.Object, error)
+	StateObject(t StateType, key Key) (Object, error)
 	// ScanObjects gets the result set for the specified key and state type.
-	StateObjects(t StateType) (store.ResultSet, error)
+	StateObjects(t StateType) (ResultSet, error)
 	// PostMessage posts the specified message to the coordinator.
 	PostMessage(msg Message) error
 	// AddObserver adds the specified observer to the coordinator.

@@ -73,3 +73,25 @@ func newResultSetWith(resultSet store.ResultSet) ResultSet {
 		ResultSet: resultSet,
 	}
 }
+
+func (rs *resultSetImpl) Result() (Result, error) {
+	obj, err := rs.ResultSet.Object()
+	if err != nil {
+		return nil, err
+	}
+	return newResultWith(obj), nil
+}
+
+type resultImpl struct {
+	object Object
+}
+
+func newResultWith(obj Object) Result {
+	return &resultImpl{
+		object: obj,
+	}
+}
+
+func (r *resultImpl) Object() (Object, error) {
+	return r.object, nil
+}

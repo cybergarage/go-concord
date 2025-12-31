@@ -51,7 +51,11 @@ func (s *Store) Dump() ([]string, error) {
 			continue
 		}
 		for rs.Next() {
-			obj, err := rs.Object()
+			r, err := rs.Result()
+			if err != nil {
+				continue
+			}
+			obj, err := r.Object()
 			if err != nil {
 				continue
 			}
