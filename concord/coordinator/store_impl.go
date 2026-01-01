@@ -82,6 +82,10 @@ func (rs *resultSetImpl) Result() (Result, error) {
 	return newResultWith(obj), nil
 }
 
+func (rs *resultSetImpl) Err() error {
+	return rs.ResultSet.Err()
+}
+
 type resultImpl struct {
 	object Object
 }

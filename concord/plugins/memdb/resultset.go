@@ -91,3 +91,10 @@ func (rs *resultSet) Close() error {
 	// No resources to release in this implementation.
 	return nil
 }
+
+// Err returns the error, if any, that was encountered during iteration.
+// The memdb implementation reads from an in-memory iterator and does not
+// accumulate iteration errors, so Err always returns nil.
+func (rs *resultSet) Err() error {
+	return nil
+}

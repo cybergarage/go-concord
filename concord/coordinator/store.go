@@ -43,6 +43,8 @@ type ResultSet interface {
 	Result() (Result, error)
 	// Close closes this result set.
 	Close() error
+	// Err returns the error, if any, that was encountered during iteration.
+	Err() error
 }
 
 // Transaction represents a transaction interface.
