@@ -73,6 +73,13 @@ func WithServiceStore(store store.Store) ServiceOptions {
 	}
 }
 
+// WithServiceNode returns a service option with the specified cluster node.
+func WithServiceNode(node cluster.Node) ServiceOptions {
+	return func(service *serviceImpl) {
+		service.Node = node
+	}
+}
+
 // NewService returns a new coordinator service instance.
 func NewService(opts ...ServiceOptions) (Service, error) {
 	ctx, cancel := context.WithCancel(context.Background())

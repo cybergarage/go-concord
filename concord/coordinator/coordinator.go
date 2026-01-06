@@ -27,8 +27,6 @@ type Coordinator interface {
 	Node
 	// Store represents the coordinator store.
 	Store
-	// SetNode sets the coordinator node.
-	SetNode(node Node)
 	// SetStateObject sets the state object for the specified key.
 	SetStateObject(t StateType, obj Object) error
 	// GetObject gets the object for the specified key and state type.
