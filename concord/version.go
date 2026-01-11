@@ -15,5 +15,5 @@
 package concord
 
 const (
-	Version = ".."
+	Version = "v1.3.7"
 )
