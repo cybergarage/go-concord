@@ -30,17 +30,12 @@ type Object = store.Object
 // StoreOption represents a store option.
 type StoreOption = store.Option
 
-// Result represents a result which includes a single object.
-type Result interface {
-	Object() (Object, error)
-}
-
 // ResultSet represents a result set which includes range operation results.
 type ResultSet interface {
 	// Next moves the cursor forward next object from its current position.
 	Next() bool
-	// Result returns the current result object.
-	Result() (Result, error)
+	// Object returns the current object.
+	Object() (Object, error)
 	// Close closes this result set.
 	Close() error
 	// Err returns the error, if any, that was encountered during iteration.
