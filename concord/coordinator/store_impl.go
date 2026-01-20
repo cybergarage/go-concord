@@ -14,14 +14,8 @@
 
 package coordinator
 
-import "github.com/cybergarage/go-concord/concord/store"
-
-const (
-	createdAtKey      = "_created_at"
-	updatedAtKey      = "_updated_at"
-	createRevisionKey = "_create_revision"
-	modRevisionKey    = "_mod_revision"
-	versionKey        = "_version"
+import (
+	"github.com/cybergarage/go-concord/concord/store"
 )
 
 // storeImpl represents a store implementation.
@@ -79,19 +73,9 @@ func (rs *resultSetImpl) Object() (Object, error) {
 	if err != nil {
 		return nil, err
 	}
-	return newResultWith(obj), nil
+	return newObjectWith(obj), nil
 }
 
 func (rs *resultSetImpl) Err() error {
 	return rs.ResultSet.Err()
-}
-
-type resultImpl struct {
-	Object
-}
-
-func newResultWith(obj Object) Object {
-	return &resultImpl{
-		Object: obj,
-	}
 }

@@ -24,9 +24,6 @@ type Key = store.Key
 // KeyCoder represents a key coder for document keys.
 type KeyCoder = store.KeyCoder
 
-// Object represents a document object.
-type Object = store.Object
-
 // StoreOption represents a store option.
 type StoreOption = store.Option
 
