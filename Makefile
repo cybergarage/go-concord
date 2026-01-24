@@ -65,13 +65,12 @@ docs := $(patsubst %.adoc,%.md,$(wildcard *.adoc doc/*.adoc doc/*/*.adoc))
 doc: $(docs) $(csvs)
 
 test: lint
-	rm -f ${PKG_COVER}.out ${PKG_COVER}.local.out ${PKG_COVER}.html
+	rm -f ${PKG_COVER}.out ${PKG_COVER}.html
 	go test -v -count=1 -p 1 -timeout 60m \
 	-gcflags=${GCFLAGS} -ldflags=${LDFLAGS} \
 	-cover -coverpkg=${PKG}/... -coverprofile=${PKG_COVER}.out \
 	${PKG}/... ${TEST_PKG}/...
-	@sed -e 's|^${MODULE_ROOT}/|${CURDIR}/|' ${PKG_COVER}.out > ${PKG_COVER}.local.out
-	go tool cover -html=${PKG_COVER}.local.out -o ${PKG_COVER}.html
+	go tool cover -html=${PKG_COVER}.out -o ${PKG_COVER}.html
 
 build:
 	go build -v -gcflags=${GCFLAGS} -ldflags=${LDFLAGS} ${BINS}
@@ -82,4 +81,4 @@ log:
 clean:
 	go clean -i ${PKG}
 	find . -name "*.log" -or -name "*.prof" | xargs -I{} rm -f {}
-	rm -f ${PKG_COVER}.out ${PKG_COVER}.local.out ${PKG_COVER}.html
+	rm -f ${PKG_COVER}.out ${PKG_COVER}.html
