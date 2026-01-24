@@ -15,19 +15,33 @@
 package document
 
 import (
-	"fmt"
+	"github.com/cybergarage/go-serix/serix/document/kv"
 )
 
-type HeaderType byte
+const (
+	V1 = Version(1)
+)
 
-// DocumentType represents a document type.
-type DocumentType byte
+const (
+	CBOR = Format(1)
+)
+
+const (
+	StateHeaderObject   = Category('S')
+	MessageHeaderObject = Category('M')
+)
 
 // KeyHeader represents a header for all keys.
-type KeyHeader [2]byte
+type KeyHeader = kv.KeyHeader
 
-// KeyVersion represents a version.
-type KeyVersion byte
+// Category represents a category.
+type Category = kv.Category
+
+// Version represents a version.
+type Version = kv.Version
+
+// Format represents a format.
+type Format = kv.Format
 
 // IndexType represents an index type.
 type IndexType byte
@@ -39,32 +53,33 @@ func NewKeyHeaderFrom(b []byte) KeyHeader {
 	return header
 }
 
-// Type returns a header type.
-func (header KeyHeader) Type() HeaderType {
-	return HeaderType(header[0])
+var (
+	StateObjectKeyHeader   = [2]byte{byte(StateHeaderObject), byte(byte(CBOR) | V1.HeaderByte())}
+	MessageObjectKeyHeader = [2]byte{byte(MessageHeaderObject), byte(byte(CBOR) | V1.HeaderByte())}
+)
+
+// Categorys returns all header types.
+func Categorys() []Category {
+	return []Category{
+		StateHeaderObject,
+		MessageHeaderObject,
+	}
 }
 
-// Version returns a version.
-func (header KeyHeader) Version() KeyVersion {
-	return VertionFromHeaderByte(header[1])
+// HeaderPrefixes returns all header prefixes.
+func HeaderPrefixes() [][]byte {
+	return [][]byte{
+		StateObjectKeyHeader[:],
+		MessageObjectKeyHeader[:],
+	}
 }
 
-// DocumentType returns a document type.
-func (header KeyHeader) DocumentType() DocumentType {
-	return DocumentType(TypeFromHeaderByte(header[1]))
-}
-
-// IndexType returns an index type.
-func (header KeyHeader) IndexType() IndexType {
-	return IndexType(TypeFromHeaderByte(header[1]))
-}
-
-// Bytes returns a byte array.
-func (header KeyHeader) Bytes() []byte {
-	return header[:]
-}
-
-// String returns a string.
-func (header KeyHeader) String() string {
-	return fmt.Sprintf("%c %02x", header.Type(), header[1])
+// HeaderPrefixKeys returns all header prefix keys.
+func HeaderPrefixKeys() []Key {
+	keys := []Key{}
+	for _, prefix := range HeaderPrefixes() {
+		key := NewKeyWith(prefix)
+		keys = append(keys, key)
+	}
+	return keys
 }

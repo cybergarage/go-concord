@@ -19,6 +19,6 @@ import (
 )
 
 const (
-	CoordinatorObject  = document.HeaderType('C')
-	NotificationObject = document.HeaderType('N')
+	CoordinatorObject  = document.Category('C')
+	NotificationObject = document.Category('N')
 )
